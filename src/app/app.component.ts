@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,21 @@ import { ReactiveFormsModule } from '@angular/forms';
   <router-outlet/>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'myredditclone';
+
+  
+  
+
+
+
+  ngOnInit(): void {
+    // log out the environment we are currently in
+    console.log("Environment: ", environment.buildType);
+  }
+
+
+
+
+
 }
