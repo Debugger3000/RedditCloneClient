@@ -5,6 +5,7 @@ import { SideThreadsComponent } from '../../components/side-threads/side-threads
 import { Subscription } from 'rxjs';
 import { GeneralService } from '../../services/general.service';
 import { MainSectionComponent } from '../main-section/main-section.component';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ import { MainSectionComponent } from '../main-section/main-section.component';
 })
 export class HomeComponent implements OnInit, OnDestroy{
 
-  constructor(private generalService: GeneralService) {}
+  constructor(private generalService: GeneralService, private loginService: LoginService) {}
 
   // just for side panel
   sidePanelState = false;
@@ -30,6 +31,18 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.subscription = this.generalService.currentView$.subscribe((value: string) => {
       this.currentViewVariable = value; // Update the component variable when the service variable changes
     });
+
+    // check user auth to get header and stuff
+    //check if user is logged in...
+    this.loginService.checkAuth().subscribe({
+      next: (data) => {
+        console.log("Data from is user Authenticated ", data);
+        this.loginService.isAuthenticated = true;
+      },
+      error: (error) => {
+        console.log("Error with checking if user is Authenticated:", error);
+      }
+    })
   }
 
   ngOnDestroy(): void {

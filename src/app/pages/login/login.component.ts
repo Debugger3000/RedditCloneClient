@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
@@ -10,7 +10,7 @@ import { GeneralService } from '../../services/general.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   constructor(private router: Router){}
 
   loginService = inject(LoginService);
@@ -33,6 +33,24 @@ export class LoginComponent {
         console.log("Error on login: ", error);
       }
     });
+  }
+
+
+  ngOnInit(): void {
+    //check if user is logged in...
+    this.loginService.checkAuth().subscribe({
+      next: (data) => {
+        console.log("Data from is user Authenticated ", data);
+        this.loginService.isAuthenticated = true;
+      },
+      error: (error) => {
+        this.loginService.isAuthenticated = false;
+        console.log("Error with checking if user is Authenticated:", error);
+      }
+})
+
+
+
   }
 
 }

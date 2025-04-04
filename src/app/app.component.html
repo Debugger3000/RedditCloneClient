@@ -1,11 +1,41 @@
 <main>
 
+
+  @if(!this.loginService.isAuthenticated) {
+  <router-outlet />
+  }
+  @else {
+    <section>
+      <!-- Header... -->
+      <app-header/>
+
+      <!-- under header part of page -->
+      <section class="flex">
+        <!-- sidepanel -->
+        <app-side-panel/>
+
+         <!-- main section of page... -->
+        <section class="ml-[600px] mt-2 w-[30%]">
+          <router-outlet class=""/>
+
+        </section>
+        
+
+
+      </section>
+
+      
+
+
+    </section>
+    
+
+  }
+
+  
+
   <section>
-    <div class="p-1 bg-green-700">
-      test
-    </div>
-    <h1>HEHEHEHEHEHEHEHEHEHEHEHEHEH</h1>
     
   </section>
 </main>
-<router-outlet />
+
