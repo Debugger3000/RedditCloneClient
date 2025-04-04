@@ -1,18 +1,39 @@
 
 <section>
-    <div class="border-b border-gray-300 p-2 flex justify-between items-center">
-        <div class="flex gap-3 ml-4">
+    <div class="border-b border-gray-400 p-2 flex justify-between items-center px-6">
+        <div class="flex gap-3">
             <!-- <img src="/Reddit-Logomark-Color-Logo.wine.svg"/> -->
             <img src="/Reddit-Logo.png" height="100" width="125"/>
             <!-- <link rel="icon" type="image/" href="Reddit-Logomark-Logo.wine.svg"> -->
             <!-- <h1 class="text-orange-600 font-bold text-3xl">Reddit</h1> -->
         </div>
-        <div class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none w-[500px] focus:border-blue-500">
+        <div class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none focus:border-blue-500 shadow">
             <i class="bi bi-search text-gray-800"></i>
-            <input type="text" class="text-gray-800 focus:outline-none" placeholder="Search Reddit"/>
+            <input type="text" class="text-gray-800 focus:outline-none w-[500px]" placeholder="Search Reddit"/>
         </div>
-        <div>
+
+        <div class="flex items-center justify-center gap-3">
             <app-logoutbutton/>
+            <!-- Chat -->
+            <div class="flex justify-center items-center p-2 main-hover-bg-color rounded-full w-[40px] h-[40px] hover:cursor-pointer">
+                <i class="bi bi-chat-dots text-2xl"></i>
+            </div>
+            <!-- + Create thread -->
+            <div class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
+                <i class="bi bi-plus-lg text-2xl"></i>
+                <h1 class="">Create</h1>
+            </div>
+            <!-- notifiications -->
+            <div class="flex justify-center items-center hover:cursor-pointer main-hover-bg-color rounded-full w-[40px] h-[40px]">
+                <i class="bi bi-bell text-2xl"></i>
+            </div>
+            <!-- profile  -->
+            <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover">
+                <i class="bi bi-person text-3xl text-gray-700"></i>
+                <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div>
+            </div>
+            
+            
         </div>
 
 

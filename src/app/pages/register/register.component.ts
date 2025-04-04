@@ -3,6 +3,7 @@ import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { RegisterService } from '../../services/register.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-register',
@@ -14,6 +15,7 @@ export class RegisterComponent {
   constructor(private router: Router) {}
   
   registerService = inject(RegisterService);
+  generalService = inject(GeneralService);
 
   // create form items
   userRegisterForm = new FormGroup({

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { GeneralService } from '../../services/general.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent {
   constructor(private router: Router){}
 
   loginService = inject(LoginService);
+  generalService = inject(GeneralService);
 
 
   // create form items

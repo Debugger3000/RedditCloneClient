@@ -1,0 +1,27 @@
+
+
+
+
+
+<section class="border-b border-gray-200 pb-4 mt-4">
+    <div>
+        <!-- title panel thing -->
+        <div (click)="titleClick()" class="flex justify-between py-2 px-4 hover:bg-[#e5ebee] rounded-xl hover:cursor-pointer">
+            <h1 class="text-gray-500">Communities</h1>
+            <!-- icon -->
+            @if (!this.clickState) {
+                <i class="bi bi-chevron-up fs-4"></i>
+            }
+            @else {
+                <i class="bi bi-chevron-down fs-4"></i>
+            }
+            
+        </div>
+        
+        <!--  -->
+        <app-side-panel-block [name]="'Thread 1'" [icon]="'bi bi-house'"/>
+        <app-side-panel-block [name]="'Thread 2'" [icon]="'bi bi-arrow-up-right-circle'"/>
+        <app-side-panel-block [name]="'Thread 3'" [icon]="'bi bi-people'"/>
+        <app-side-panel-block [name]="'Thread 3'" [icon]="'bi bi-graph-up'"/>
+    </div>
+</section>

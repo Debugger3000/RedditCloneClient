@@ -14,8 +14,11 @@
                 <label class="font-bold text-gray-700 mr-4">Password</label>
                 <input type="password" name="password" id="password" formControlName="password" required class=" rounded border border-gray-300"/>
             </div>
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-center mb-4">
                 <button type="submit" class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center">Submit</button>
+            </div>
+            <div class="flex justify-center">
+                <h1 (click)="this.generalService.LinkToPage('/login')" class="text-xl text-blue-400 hover:cursor-pointer">Login</h1>
             </div>
         </form>
     </div>

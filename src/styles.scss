@@ -1,2 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+
+.main-hover-bg-color:hover{
+   background-color: #e5ebee;
+}
+
+.circle-div{
+    border-radius: 50%;
+}
+
+.profile-hover:hover{
+    // border: 1px #e5ebee solid;
+    // box-shadow: 0 4px 5px #e5ebee;
+    // padding: 64px;
+}
