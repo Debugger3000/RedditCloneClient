@@ -6,12 +6,12 @@ import { environment } from '../environments/environment';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, ReactiveFormsModule],
-  // templateUrl: './app.component.html',
-  // styleUrl: './app.component.scss',
-  template: `
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  // template: `
   
-  <router-outlet/>
-  `
+  // <router-outlet/>
+  // `
 })
 export class AppComponent implements OnInit{
   title = 'myredditclone';
@@ -24,6 +24,9 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // log out the environment we are currently in
     console.log("Environment: ", environment.buildType);
+
+    //check if user is logged in...
+
   }
 
 
