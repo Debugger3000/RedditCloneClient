@@ -24,6 +24,11 @@ export class GeneralService {
     this.router.navigate([route]);
   }
 
+  // params link
+  linkWithParams(page: string, param: string) {
+    this.router.navigate([page,param]);
+  }
+
   // change current View
   changeMainView(newView: string): void {
     this.currentView.next(newView);

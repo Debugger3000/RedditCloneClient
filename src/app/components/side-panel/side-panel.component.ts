@@ -22,4 +22,9 @@ export class SidePanelComponent {
     this.sidePanelState = !this.sidePanelState;
   }
 
+  // router function to pass down
+  routeTo(route: string) {
+    this.generalService.LinkToPage(route);
+  }
+
 }
