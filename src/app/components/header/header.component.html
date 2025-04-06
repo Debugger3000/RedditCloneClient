@@ -7,9 +7,16 @@
             <!-- <link rel="icon" type="image/" href="Reddit-Logomark-Logo.wine.svg"> -->
             <!-- <h1 class="text-orange-600 font-bold text-3xl">Reddit</h1> -->
         </div>
-        <div class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none focus:border-blue-500 shadow">
+        <div class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none focus:border-blue-500 shadow relative">
             <i class="bi bi-search text-gray-800"></i>
-            <input type="text" class="text-gray-800 focus:outline-none w-[500px]" placeholder="Search Reddit"/>
+            <input type="text" class="text-gray-800 focus:outline-none w-[500px]" id="search" placeholder="Search Reddit" (change)="searchThreads('search')" (focus)="onFocus()"/>
+            @if(this.focusState) {
+            <div class="absolute top-11 left-0 border border border-gray-200 rounded flex flex-col bg-white z-99 w-[550px]">
+                @for (item of currentSearchData; track $index) {
+                    <app-thread-display [title]="item!.title" [threadId]="item!._id"/>
+                }
+            </div>
+            }
         </div>
 
         <div class="flex items-center justify-center gap-3">
@@ -19,11 +26,11 @@
                 <i class="bi bi-chat-dots text-2xl"></i>
             </div>
             <!-- + Create thread -->
-            <div class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
+            <div (click)="linkTo('thread-new')" class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
                 <i class="bi bi-plus-lg text-2xl"></i>
                 <h1 class="">Create</h1>
             </div>
-            <!-- notifiications -->
+            <!-- Notifications -->
             <div class="flex justify-center items-center hover:cursor-pointer main-hover-bg-color rounded-full w-[40px] h-[40px]">
                 <i class="bi bi-bell text-2xl"></i>
             </div>

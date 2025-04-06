@@ -13,7 +13,17 @@ export class ThreadsService {
 
   // Create a new thread
   createThread(threadData: Thread){
-    return this.http.post(`${environment.apiRoute}/threads`, threadData, {withCredentials: true});
+    return this.http.post(`${environment.apiRoute}/thread`, threadData, {withCredentials: true});
+  }
+
+  // get single thread by id
+  getThread(id: string | null) {
+    return this.http.get(`${environment.apiRoute}/thread/${id}`, {withCredentials: true});
+  }
+
+  // search bar for a thread by title
+  getThreadByTitle(title: string) {
+    return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true})
   }
 
 
