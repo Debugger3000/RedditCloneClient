@@ -8,9 +8,9 @@
             <!-- user display generic pic with username -->
              <div class="flex items-center gap-1 ml-1">
                 <div class="circle-div w-[20px] h-[20px] bg-blue-500 border border-gray-300"></div>
-                <h4 class="font-semibold text-sm">u/FakeUser</h4>
+                <h4 class="font-semibold text-sm">u/{{username}}</h4>
                 <i class="bi bi-dot text-gray-600"></i>
-                <h4 class="text-sm text-gray-500">5 hours ago</h4>
+                <h4 class="text-sm text-gray-500">{{createdAt}}</h4>
              </div>
              <div>
                 <i class="bi bi-three-dots"></i>
@@ -21,20 +21,20 @@
            
         <!-- title -->
         <div class="mb-2">
-            <h4 class="font-semibold text-xl">Faker Title even though we need one haha</h4>
+            <h4 class="font-semibold text-xl">{{title}}</h4>
 
         </div>
 
         <!-- text content... -->
         <div class="mb-2">
-            <h4 class="text-gray-700 text-base">Bunch fo text ontent to see what it looks like oh yeah boy lkets go. Thats is one nice dog and se the ahsasd. hthehtreh df. dfdf dfd d ffd fd fd.d fdfdf d.</h4>
+            <h4 class="text-gray-700 text-base">{{textContent}}</h4>
 
         </div>
 
         <!-- Tag -->
         <div class="mb-3 w-fit">
             <div class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1">
-                <h4 class="text-sm text-white">Question</h4>
+                <h4 class="text-sm text-white">{{tag}}</h4>
             </div>
         </div>
 

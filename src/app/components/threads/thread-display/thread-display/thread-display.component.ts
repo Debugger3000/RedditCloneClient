@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { GeneralService } from '../../../../services/general.service';
+import { PostData } from '../../../../types/post';
 
 @Component({
   selector: 'app-thread-display',
@@ -14,6 +15,10 @@ export class ThreadDisplayComponent {
   @Input() image: string | null = '';
   @Input() threadId: string = '';
   @Input() type: string = '';
+
+  // post stuff
+  @Input() postObject: {posts: PostData} | null = null;
+  @Input() username: string = '';
 
   // use general service route
   linkRoute() {
