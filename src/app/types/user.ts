@@ -14,3 +14,9 @@ export type UserLoginData = Partial<{
     email: String | null;
     password: String | null;
 }>
+
+export type UserData = {
+    _id: string;
+    username: String | null;
+    // image eventually....
+} | null;

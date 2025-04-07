@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit{
     this.loginService.loginUser(this.userLoginForm.value).subscribe({
       next: (data) => {
         console.log("Data received back from login: ", data);
+        // set user data
+        this.generalService.setUserData({username: data.username, _id: data._id});
         this.router.navigate(['/home']);
       },
       error: (error) => {

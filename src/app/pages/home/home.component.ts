@@ -28,9 +28,9 @@ export class HomeComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     // Subscribe to the observable from the service
-    this.subscription = this.generalService.currentView$.subscribe((value: string) => {
-      this.currentViewVariable = value; // Update the component variable when the service variable changes
-    });
+    // this.subscription = this.generalService.currentView$.subscribe((value: string) => {
+    //   this.currentViewVariable = value; // Update the component variable when the service variable changes
+    // });
 
     // check user auth to get header and stuff
     //check if user is logged in...

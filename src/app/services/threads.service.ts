@@ -26,5 +26,10 @@ export class ThreadsService {
     return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true})
   }
 
+  // join Thread / Un join 
+  joinThread(threadId: string) {
+    return this.http.post(`${environment.apiRoute}/thread/join/${threadId}`, {withCredentials: true});
+  }
+
 
 }

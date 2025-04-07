@@ -12,7 +12,7 @@
             <!-- New post, bell, options... -->
             <div class="flex items-center gap-3 pr-4">
                 <!-- + Create thread -->
-                <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 h-[40px] p-2 gap-1 rounded-full">
+                <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 h-[40px] p-2 gap-1 rounded-full" (click)="createPost()">
                     <i class="bi bi-plus-lg text-2xl"></i>
                     <h1 class="font-semibold">Create Post</h1>
                 </div>
@@ -21,8 +21,13 @@
                     <i class="bi bi-bell text-2xl"></i>
                 </div>
                 <!-- join / joined thread -->
-                <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full w-[40px] h-[40px] p-2">
-                    <h1 class="font-semibold">Join</h1>
+                <div class='flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full p-2' [ngClass]="{'bg-blue-600': !isJoined,'text-white': !isJoined}" (click)="joinThread()">
+                    @if(isJoined){
+                        <h1 class="font-semibold">Joined</h1>
+                    }
+                    @else{
+                        <h1 class="font-semibold">Join</h1>
+                    }
                 </div>
                 <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full w-[40px] h-[40px]">
                     <i class="bi bi-three-dots"></i>
@@ -48,12 +53,18 @@
                     </div>
                 </div>
 
+                @if(postData && !isLoading) {
                 <!-- posts -->
-                <div>
-
-                    <app-post-view-outside />
-                    
+                
+                <div *ngFor="let item of postData.posts; let i = index">
+                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" (click)="postClicked(i)"/>
                 </div>
+                }
+                @else {
+                    <div class="flex w-full h-full justify-center items-center" id="isLoading-arrow">
+                        <i class="bi bi-arrow-clockwise text-5xl text-gray-700"></i>
+                    </div>
+                }
             </div>
 
             <!-- right side bar -->
@@ -64,7 +75,7 @@
                     <h4 class="font-semibold mb-1">{{threadData?.bio}}</h4>
                     <div class="flex items-center gap-2">
                         <i class="bi bi-credit-card-2-front text-gray-600"></i>
-                        <h4 class="text-sm text-gray-600">Created April 4, 2023</h4>
+                        <h4 class="text-sm text-gray-600">Created {{threadData?.createdAt}}</h4>
                     </div>
                     <div class="flex items-center gap-2">
                         <i class="bi bi-globe text-gray-600"></i>
@@ -82,7 +93,7 @@
                             <h4 class="font-semibold">33</h4>
                             <div class="flex gap-1 items-center">
                                 <div class="circle-div h-[10px] w-[10px] bg-green-500"></div>
-                                <h4 class="text-sm text-gray-600">Members</h4>
+                                <h4 class="text-sm text-gray-600">Active</h4>
                             </div>
                         </div>
                         <!-- Top 1 -->

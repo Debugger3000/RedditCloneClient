@@ -1,17 +1,39 @@
 
 
-@if(type != 'thread-page'){
-<div class="flex items-center gap-3 border-b border-gray-200 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2" (click)="linkRoute()">
-    <!-- thead image -->
-    <div class="circle-div bg-blue-300 h-[20px] w-[20px]"></div>
-    <h4 class="font-semibold text-xl">r/{{this.title}}</h4>
-</div>
-}
-@else {
-    <div class="flex items-center gap-5 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2">
+@if(type == 'thread-page'){
+
+    <div class="flex items-center gap-5 rounded pl-2 py-2">
         <!-- thead image -->
         <div class="circle-div bg-blue-300 h-[65px] w-[65px]"></div>
-        <h4 class="font-bold text-3xl">r/{{this.title}}</h4>
+        <h4 class="font-bold text-3xl">r/ {{this.title}}</h4>
+    </div>
+
+}
+@else if (type == 'post-view') {
+    <div class="flex items-center gap-3 border-b border-gray-200 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2" (click)="linkRoute()">
+        <div>
+            <!-- thead image -->
+            <div class="circle-div bg-blue-300 h-[40px] w-[40px]"></div>
+        </div>
+        <div class="flex flex-col">
+            <div>
+                <h4 class="font-semibold text-xl">r/{{this.title}}</h4>
+                <i class="bi bi-dot text-gray-600"></i>
+                <h4 class="font-semibold text-xl">{{this.postObject?.posts?.createdAt}}</h4>
+            </div>
+
+            <h4 class="font-semibold text-xl">{{this.username}}</h4>
+        </div>
+        
+       
+    </div>
+
+}
+@else {
+    <div class="flex items-center gap-3 border-b border-gray-200 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2" (click)="linkRoute()">
+        <!-- thead image -->
+        <div class="circle-div bg-blue-300 h-[20px] w-[20px]"></div>
+        <h4 class="font-semibold text-xl">r/{{this.title}}</h4>
     </div>
 
 }

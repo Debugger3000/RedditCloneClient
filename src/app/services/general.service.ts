@@ -1,22 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { UserData } from '../types/user';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralService {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpClient) { }
 
   // controller for home/main middle section
   // variable controlling the current view of the middle section 
   // (new/edit thread, new post, home page showing threads, a thread / its posts)
-  currentViewObject = '';
+  // currentViewObject = '';
 
-  private currentView = new BehaviorSubject<string>(''); // Initial value
-  public currentView$ = this.currentView.asObservable(); // Observable for the component to subscribe to
+  // private currentView = new BehaviorSubject<string>('');
+  // public currentView$ = this.currentView.asObservable(); 
+  currentUserData: UserData = null;
+  
 
+  // Get and store current user Data
+  setUserData(data: UserData) {
+    this.currentUserData = data;
+    console.log("Current user data variable: ",this.currentUserData);
+  }
+
+  // Get a user by ID
+  getUserById(userId: string | null){
+    return this.http.get(`${environment.apiRoute}/user/${userId}`,{withCredentials: true});
+  }
 
 
   // Link to another page function for whole application
@@ -30,8 +45,8 @@ export class GeneralService {
   }
 
   // change current View
-  changeMainView(newView: string): void {
-    this.currentView.next(newView);
-  }
+  // changeMainView(newView: string): void {
+  //   this.currentView.next(newView);
+  // }
 
 }
