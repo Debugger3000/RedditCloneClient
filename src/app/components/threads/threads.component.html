@@ -29,8 +29,34 @@
                         <h1 class="font-semibold">Join</h1>
                     }
                 </div>
-                <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full w-[40px] h-[40px]">
+                <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 hover:cursor-pointer rounded-full w-[40px] h-[40px] relative" (click)="openEditMenu()">
                     <i class="bi bi-three-dots"></i>
+                    @if(isEditMenuUp){
+                        
+                        <div class="flex flex-col border border-gray-200 rounded bg-white absolute top-11 left-0 z-99">
+                            <!-- info -->
+                            <div class="flex gap-3 items-center justify-between border-b border-gray-200 p-2 hover:cursor-pointer hover:bg-gray-200">
+                                <h4 class="text-sm text-gray-800">Info</h4>
+                                <i class="bi bi-info-circle text-base text-gray-800"></i>
+                            </div>
+                            @if(this.threadData?.owner === generalService.currentUserData?._id) {
+                                <!-- edit -->
+                                <div class="flex gap-3 items-center justify-between border-b border-gray-200 p-2 hover:cursor-pointer hover:bg-gray-200" (click)="editThread()">
+                                    <h4 class="text-sm text-gray-800">Edit</h4>
+                                    <i class="bi bi-pencil text-base text-gray-800"></i>
+                                </div>
+                                <!-- delete -->
+                                <!-- only show if current user -->
+                                
+                                <div class="flex gap-3 items-center justify-between p-2 hover:cursor-pointer hover:bg-gray-200" (click)="deleteThread()">
+                                    <h4 class="text-sm text-gray-800 text-red-700">Delete</h4>
+                                    <i class="bi bi-trash3 text-base text-red-700"></i>
+                                </div>
+                            }
+                            
+                        </div>
+                        
+                    }
                 </div>
             </div>
 
@@ -115,8 +141,11 @@
                     </div>
                 </div>
                 <!-- moderators -->
-                <div class="px-4 py-3">
+                <div class="px-4 pb-3">
                     <h4 class="text-gray-500 font-semibold mb-2">Moderators</h4>
+                    <div class="flex justify-center rounded-xl bg-[#eaedef] my-2 mx-1 font-semibold py-1" >
+                        <h4 class="">{{threadData?.owner}}</h4>
+                    </div>
 
                     <!-- <div *ngFor="let item of threadData?.links; let i = index">
                         <a class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1" [href]="item">

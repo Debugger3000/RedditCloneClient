@@ -3,14 +3,15 @@ import { ThreadData } from '../../../types/thread';
 import { PostData } from '../../../types/post';
 import { ThreadDisplayComponent } from '../../threads/thread-display/thread-display/thread-display.component';
 import { ActivatedRoute } from '@angular/router';
-import { Location, NgFor } from '@angular/common';
+import { Location, NgFor, NgClass } from '@angular/common';
 import { ThreadsService } from '../../../services/threads.service';
 import { PostService } from '../../../services/post.service';
 import { GeneralService } from '../../../services/general.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post-view',
-  imports: [ThreadDisplayComponent, NgFor],
+  imports: [ThreadDisplayComponent, NgFor, NgClass],
   templateUrl: './post-view.component.html',
   styleUrl: './post-view.component.scss'
 })
@@ -18,9 +19,11 @@ export class PostViewComponent implements OnInit{
     constructor(private activatedRoute: ActivatedRoute, private location: Location, private threadService: ThreadsService, private postService: PostService, private generalService:GeneralService) {}
 
    // thread data
-    @Input() threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+    @Input() threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], owner: '', links: [''], threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
     // posts data for this thread
-    @Input() postData: {posts: PostData} | null = null;
+    postData: {post: PostData} | null = {post: {_id: '',title: '', textContent: '', user: '', parentThread: '', tag: '', createdAt: '', updatedAt: '', __v: 0}};
+
+    // postData$: Observable<{posts: PostData}>;
 
     // thread id
       threadId: string | null = '';
@@ -29,6 +32,17 @@ export class PostViewComponent implements OnInit{
 
     // username
     username: string = '';
+
+    // focus for comment
+    isFocusComment: boolean = false;
+
+    focusComment() {
+      this.isFocusComment = !this.isFocusComment;
+    }
+
+    deFocusComment() {
+      this.isFocusComment = !this.isFocusComment;
+    }
 
 
 
@@ -46,17 +60,9 @@ export class PostViewComponent implements OnInit{
       //get post data
       this.getPost();
 
-      //get users
-    this.generalService.getUserById(this.postData!.posts!._id).subscribe({
-      next: (data: any) => {
-        console.log("Current User data on post...  ", data);
-        this.username = data.username;
-      },
-      error: (error) => {
-        console.log("Error for getting user by id for post data:", error);
-      }
+      console.log("postData before userGETBYID: ",this.postData);
 
-    });
+    
 
 
 
@@ -83,6 +89,24 @@ export class PostViewComponent implements OnInit{
       next: (data: any) => {
         console.log("Current post data...  ", data);
         this.postData = data;
+
+        console.log("log for data.post._id: ",data.post.user);
+          //get user
+        this.generalService.getUserById(data.post.user).subscribe({
+          next: (data: any) => {
+            console.log("Current User data on post...  ", data);
+            this.username = data.username;
+            console.log("Current username: ", this.username);
+          },
+          error: (error) => {
+            console.log("Error for getting user by id for post data:", error);
+          }
+
+        });
+
+
+
+
       },
       error: (error) => {
         console.log("Error for getting current post page data:", error);

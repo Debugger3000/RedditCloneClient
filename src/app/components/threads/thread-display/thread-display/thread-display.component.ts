@@ -17,7 +17,7 @@ export class ThreadDisplayComponent {
   @Input() type: string = '';
 
   // post stuff
-  @Input() postObject: {posts: PostData} | null = null;
+  @Input() postObject: {post: PostData} | null = null;
   @Input() username: string = '';
 
   // use general service route

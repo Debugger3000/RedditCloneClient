@@ -11,10 +11,89 @@
             </div>
             
         </div>
-        <div class="w-[75%] mt-2">
-            <app-thread-display [title]="threadData!.title" [type]="'post-view'" [postObject]="postData"/>
+        
 
+        
+        <div class="w-[75%] mt-2 pl-2">
+            @if(postData && username) {
+            <app-thread-display [title]="threadData!.title" [type]="'post-view'" [postObject]="postData" [username]="username"/>
+            }
 
+            <!-- title -->
+            <div class="mb-2">
+                <h2 class="font-bold text-2xl">{{postData?.post?.title}}</h2>
+            </div>
+
+            <!-- text content -->
+             <div class="my-5">
+                <p class="text-gray-600">{{postData?.post?.textContent}}</p>
+             </div>
+
+            <!-- post buttons -->
+            <div class="flex gap-3 mb-4">
+                <div class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2">
+                    <i class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold"></i>
+                    <!-- current votes -->
+                    <h4 class=" font-semibold text-xs">0</h4>
+                    <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold"></i>
+                </div>
+
+                <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
+                    <i class="bi bi-chat text-md font-semibold"></i>
+                    <!-- current votes -->
+                    <h4 class="font-semibold text-xs">11</h4>
+                </div>
+
+                <div class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5">
+                    <i class="bi bi-award"></i>
+
+                </div>
+
+                <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
+                    <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
+                    <!-- current votes -->
+                    <h4 class="font-semibold text-xs">Share</h4>
+                </div>
+            </div>
+
+            <!-- comment input -->
+            <div class="w-full border py-2 px-4" [ngClass]="{'rounded-xl': isFocusComment, 'border-gray-700': isFocusComment, 'rounded-full': !isFocusComment, 'border-gray-400': !isFocusComment,}" (focus)="focusComment()">
+                
+                
+                @if(isFocusComment) {
+                    <textarea class="w-full h-full p-1 focus:outline-none" placeholder="Comment"></textarea>
+                    <div class="flex gap-3 justify-end mt-6">
+                        <button class="rounded-full p-2 bg-[#eaedef] text-base text-gray-800 hover:cursor-pointer hover:bg-gray-200" (click)="deFocusComment()">Cancel</button>
+                        <button class="bg-blue-600 rounded-full text-white text-base p-2 hover:cursor-pointer hover:bg-blue-700">Comment</button>
+                    </div>
+                }
+                @else {
+                    <input class="text-base text-gray-500 w-full h-full" (focus)="focusComment()" placeholder="Add a Comment"/>
+                }
+            </div>
+
+            <!-- some sorting things -->
+            <div class="flex items-center mt-4">
+                <div class="flex gap-3">
+                    <h4 class="text-sm text-gray-600">Sort by:</h4>
+                    <div class="flex gap-1 items-center">
+                        <h4 class="text-sm text-gray-600 font-semibold">Best</h4>
+                        <i class="bi bi-chevron-down text-sm"></i>
+                    </div>
+                </div>
+
+                <div class="flex gap-3 ml-5 rounded-full border border-gray-300 py-2 px-4">
+                    <i class="bi bi-search text-gray-500"></i>
+                    <h4 class="text-gray-500">Search Comments</h4>
+                </div>
+            </div>
+
+            <!-- comments -->
+            <div class="mt-4">
+
+                <h4 class="text-xl">...No comments yet...</h4>
+
+            </div>
 
         </div>
 
@@ -26,7 +105,7 @@
 
         <!-- right side bar -->
             <!-- Thread information  -->
-            <div class="rounded-xl bg-[#f9fafa] w-[25%]">
+            <div class="rounded-xl bg-[#f9fafa] w-[25%] ml-6">
                 <!-- Bio / thread details -->
                 <div class="p-4 border-b border-gray-300">
                     <h4 class="font-semibold mb-1 text-xl">r/{{threadData?.title}}</h4>

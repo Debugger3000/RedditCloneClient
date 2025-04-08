@@ -18,6 +18,7 @@ export type ThreadData = {
     posts: string[] | null;
     followersCount: number | null;
     tags: string[] | null;
+    owner: string | null;
     createdAt: string | null;
     updatedAt: string | null;
     __v: number | null;

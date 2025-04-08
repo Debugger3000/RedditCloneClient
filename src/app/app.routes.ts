@@ -6,6 +6,7 @@ import { NewThreadComponent } from './components/threads/new-thread/new-thread.c
 import { ThreadsComponent } from './components/threads/threads.component';
 import { NewPostComponent } from './components/posts/new-post/new-post.component';
 import { PostViewComponent } from './components/posts/post-view/post-view.component';
+import { EditThreadComponent } from './components/threads/edit-thread/edit-thread.component';
 
 // include route names in 'path' and their respective component in 'component'
 export const routes: Routes = [
@@ -13,9 +14,17 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'home', component: HomeComponent },
     { path: 'thread-new', component: NewThreadComponent },
-    { path: 'thread/:id', component: ThreadsComponent },
     { path: 'post-new/:id', component: NewPostComponent },
+
+    // { path: 'thread', children: [
+    //     { path: ':id', component: EditThreadComponent },
+    //     { path: ':id/:idPost', component: PostViewComponent },
+    //     { path: 'edit/:id', component: EditThreadComponent },
+    // ]},
+
+    { path: 'thread/:id', component: ThreadsComponent },
     { path: 'thread/:id/:idPost', component: PostViewComponent },
+    { path: 'edit/thread/:id', component: EditThreadComponent },
     {
         path: 'api/user',
         redirectTo: '/api/user',

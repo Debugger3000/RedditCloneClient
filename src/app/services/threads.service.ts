@@ -23,12 +23,22 @@ export class ThreadsService {
 
   // search bar for a thread by title
   getThreadByTitle(title: string) {
-    return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true})
+    return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true});
   }
 
   // join Thread / Un join 
   joinThread(threadId: string) {
     return this.http.post(`${environment.apiRoute}/thread/join/${threadId}`, {withCredentials: true});
+  }
+
+  // delete thread
+  deleteThread(threadId: string | undefined) {
+    return this.http.delete(`${environment.apiRoute}/thread/${threadId}`, {withCredentials: true});
+  }
+
+  // edit thread
+  editThread(threadId: string | undefined, content: Thread) {
+    return this.http.patch(`${environment.apiRoute}/thread/${threadId}`, content, {withCredentials: true});
   }
 
 
