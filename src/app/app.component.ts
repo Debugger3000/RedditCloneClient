@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
@@ -21,6 +21,7 @@ import { GeneralService } from './services/general.service';
 export class AppComponent implements OnInit{
   loginService = inject(LoginService);
   generalService = inject(GeneralService);
+  router = inject(Router);
 
   title = 'myredditclone';
 
@@ -39,10 +40,12 @@ export class AppComponent implements OnInit{
     this.loginService.checkAuth().subscribe({
       next: (data) => {
         console.log("Data from is user Authenticated ", data);
-        this.generalService.setUserData({_id: data._id, username: data.username});
 
-        console.log("cookie: ",document.cookie);
+        this.generalService.setUserData({_id: data._id, username: data.username});
         this.loginService.isAuthenticated = true;
+        
+        console.log(this.router.url);
+        console.log("cookie: ",document.cookie);
       },
       error: (error) => {
         console.log("Error with checking if user is Authenticated:", error);
