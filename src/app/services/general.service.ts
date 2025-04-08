@@ -44,6 +44,10 @@ export class GeneralService {
     this.router.navigate([page,param]);
   }
 
+  getCurrentUserData() {
+    return this.currentUserData;
+  }
+
   // change current View
   // changeMainView(newView: string): void {
   //   this.currentView.next(newView);

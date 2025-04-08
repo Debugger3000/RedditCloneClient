@@ -19,7 +19,7 @@ export class NewPostComponent implements OnInit{
   // id we use to query for thread data
   itemId: string | null = null;
   // thread data
-  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
 
   selectedTags: string = '';
 

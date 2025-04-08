@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ThreadsService } from '../../services/threads.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ThreadDisplayComponent } from './thread-display/thread-display/thread-display.component';
@@ -16,23 +16,33 @@ import { GeneralService } from '../../services/general.service';
   styleUrl: './threads.component.scss'
 })
 export class ThreadsComponent implements OnInit{
-  constructor(private threadService: ThreadsService, private postService: PostService, private router: Router, private activatedRoute: ActivatedRoute, private generalService: GeneralService) {}
+  constructor(private threadService: ThreadsService, private postService: PostService, private router: Router, private activatedRoute: ActivatedRoute) {}
   itemId: string | null = null;
 
+  generalService = inject(GeneralService);
+
   // thread data
-  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
   // posts data for this thread
   postData: {posts: PostData[]} | null = null;
   // check if user is joined
   isJoined: boolean = false;
   isLoading: boolean = true;
 
+  // edit / delete menu variables
+  isEditMenuUp: boolean = false;
+
+
+  
+
   ngOnInit(): void {
     // Access the 'id' route parameter
     this.activatedRoute.paramMap.subscribe(params => {
       this.itemId = params.get('id');
-      console.log('Item ID:', this.itemId); // You can use this ID to fetch data or perform other operations
+      console.log('Item ID:', this.itemId);
     });
+
+    
 
     this.getThreadCall();
 
@@ -83,7 +93,8 @@ export class ThreadsComponent implements OnInit{
 
   // check if user is joined to thread
   isUserJoined() {
-    if(this.threadData?.followers?.includes(this.generalService.currentUserData!._id)){
+    
+    if(this.threadData?.followers?.includes(this.generalService.getCurrentUserData()!._id)){
       this.isJoined = true;
       console.log("User is joined, state is: ",this.isJoined);
     }
@@ -112,6 +123,37 @@ export class ThreadsComponent implements OnInit{
   postClicked(index: number) {
     console.log("post has been clicked...");
     this.router.navigate(['thread',this.threadData?._id,this.postData?.posts[index]?._id]);
+  }
+
+  // switch for edit menu on click
+  openEditMenu() {
+    this.isEditMenuUp = !this.isEditMenuUp;
+    console.log("inside threads, what is our current user info :",this.generalService.currentUserData);
+  }
+
+
+  // Edit thread
+  editThread() {
+    // thread/edit/:id
+    // route to edit page, pass id, and grab data on load for that page with data in the form...
+    console.log("edit thread was pressed....");
+    this.router.navigate(['edit','thread',this.threadData?._id]);
+    // this.router.navigate(['thread', 'edit', this.threadData?._id]);
+
+  }
+
+
+  // delete thread
+  deleteThread() {
+    this.threadService.deleteThread(this.threadData?._id).subscribe({
+      next: (data: any) => {
+        // re route to home after delete...
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        console.log("Error for delete current thread page data:", error);
+      }
+    })
   }
 
 

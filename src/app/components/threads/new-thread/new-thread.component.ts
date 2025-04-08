@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ReactiveFormsModule, FormControl, FormGroup } from '@angular/forms';
 import { ThreadsService } from '../../../services/threads.service';
 import { Router } from '@angular/router';
+import { GeneralService } from '../../../services/general.service';
 
 @Component({
   selector: 'app-new-thread',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './new-thread.component.scss'
 })
 export class NewThreadComponent {
-    constructor(private threadService: ThreadsService, private router: Router) {}
+    constructor(private threadService: ThreadsService, private router: Router, private generalService: GeneralService) {}
 
 
     linkArray: string[] = [];
@@ -160,7 +161,7 @@ threadFormSubmit() {
   const object = this.threadForm.value;
   console.log("array: ",this.linkArray);
 
-  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray};
+  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray, username: this.generalService.currentUserData?.username };
   console.log("new object: ", newObject);
 
 

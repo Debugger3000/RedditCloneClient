@@ -22,6 +22,11 @@ export class PostService {
     return this.http.get(`${environment.apiRoute}/post/${threadId}`,{withCredentials: true});
   }
 
+  // get posts ALL
+  getPosts(){
+    return this.http.get(`${environment.apiRoute}/post/`,{withCredentials: true});
+  }
+
   // Get post by id
   getPost(postId: string | null){
     return this.http.get(`${environment.apiRoute}/post/single/${postId}`,{withCredentials: true})

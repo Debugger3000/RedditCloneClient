@@ -16,7 +16,22 @@
             </div>
 
         </div>
+
+        <!-- Posts -->
+        <!-- Pull posts into home...  -->
         <div>
+            @if(postData && !isLoading) {
+                <!-- posts -->
+                
+                <div *ngFor="let item of postData.posts; let i = index">
+                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" (click)="postClicked(i)"/>
+                </div>
+                }
+                @else {
+                    <div class="flex w-full h-full justify-center items-center" id="isLoading-arrow">
+                        <i class="bi bi-arrow-clockwise text-5xl text-gray-700"></i>
+                    </div>
+                }
 
 
         </div>

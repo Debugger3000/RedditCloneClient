@@ -49,6 +49,8 @@ export class HeaderComponent {
     }
   }
 
+  // wipe search array
+
   onFocus() {
     this.focusState = !this.focusState;
     console.log("focus state: ", this.focusState);
