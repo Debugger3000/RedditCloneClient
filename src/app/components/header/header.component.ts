@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LogoutbuttonComponent } from './logoutbutton/logoutbutton.component';
 import { GeneralService } from '../../services/general.service';
 import { Router } from '@angular/router';
@@ -13,11 +13,12 @@ import { ThreadDisplayComponent } from '../threads/thread-display/thread-display
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  constructor(private generalService: GeneralService, private router: Router, private threadsService: ThreadsService) {}
-
+  constructor(private router: Router, private threadsService: ThreadsService) {}
+  generalService = inject(GeneralService);
 
   currentSearchData: ThreadData[] | null = null;
   focusState = false;
+  profileClicked = false;
 
   // actionClick(type: string){
   //   this.generalService.changeMainView('new-thread');
@@ -59,6 +60,10 @@ export class HeaderComponent {
   onBlur() {
     this.focusState = !this.focusState;
     console.log("focus blur state: ", this.focusState);
+  }
+
+  openProfile() {
+    this.profileClicked = !this.profileClicked;
   }
 
 }

@@ -49,10 +49,26 @@ export class LoginComponent implements OnInit{
         this.loginService.isAuthenticated = false;
         console.log("Error with checking if user is Authenticated:", error);
       }
-})
+    })
+  }
 
 
+  // login github
+  loginGithub() {
+    console.log("github button pressed.....");
+    this.loginService.githubLogin()
+    
+    // .subscribe({
+    //   next: (data) => {
+    //     console.log("Data from GITHUB LOGIN ", data);
+    //     this.loginService.isAuthenticated = true;
+    //   },
+    //   error: (error) => {
+    //     this.loginService.isAuthenticated = false;
+    //     console.log("Error with checking if GITHUB LOGIN WORKED:", error);
+    //   }
 
+    // })
   }
 
 }

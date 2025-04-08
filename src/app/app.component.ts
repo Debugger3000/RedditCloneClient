@@ -6,6 +6,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { MainSectionComponent } from "./pages/main-section/main-section.component";
 import { LoginService } from './services/login.service';
+import { GeneralService } from './services/general.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import { LoginService } from './services/login.service';
 })
 export class AppComponent implements OnInit{
   loginService = inject(LoginService);
+  generalService = inject(GeneralService);
 
   title = 'myredditclone';
 
@@ -37,6 +39,9 @@ export class AppComponent implements OnInit{
     this.loginService.checkAuth().subscribe({
       next: (data) => {
         console.log("Data from is user Authenticated ", data);
+        this.generalService.setUserData({_id: data._id, username: data.username});
+
+        console.log("cookie: ",document.cookie);
         this.loginService.isAuthenticated = true;
       },
       error: (error) => {
