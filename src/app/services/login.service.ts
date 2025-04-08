@@ -37,6 +37,8 @@ export class LoginService {
     console.log("back in github login first window redirect from github button press");
     
     console.log(document.cookie);
-    this.router.navigate(['/home']);
+    console.log(this.router.url);
+    this.router.navigate(['home']);
+    
   }
 }

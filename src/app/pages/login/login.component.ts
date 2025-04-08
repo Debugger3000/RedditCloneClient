@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
         console.log("Data received back from login: ", data);
         // set user data
         this.generalService.setUserData({username: data.username, _id: data._id});
-        this.router.navigate(['/home']);
+        this.router.navigate(['home']);
       },
       error: (error) => {
         console.log("Error on login: ", error);
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit{
   // login github
   loginGithub() {
     console.log("github button pressed.....");
-    this.loginService.githubLogin()
+    this.loginService.githubLogin();
     
     // .subscribe({
     //   next: (data) => {
