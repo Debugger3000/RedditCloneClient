@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { UserLoginData } from '../types/user';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   // if user is authenticated
   isAuthenticated = false;
@@ -36,5 +37,6 @@ export class LoginService {
     console.log("back in github login first window redirect from github button press");
     
     console.log(document.cookie);
+    this.router.navigate(['/home']);
   }
 }
