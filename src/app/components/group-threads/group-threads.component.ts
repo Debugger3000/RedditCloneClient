@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { SidePanelBlockComponent } from '../micro/side-panel-block/side-panel-block.component';
 import { GeneralService } from '../../services/general.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-group-threads',
@@ -8,9 +9,18 @@ import { GeneralService } from '../../services/general.service';
   templateUrl: './group-threads.component.html',
   styleUrl: './group-threads.component.scss'
 })
-export class GroupThreadsComponent {
+export class GroupThreadsComponent{
 
-  constructor(private generalService : GeneralService) {}
+  constructor(private generalService : GeneralService, private activatedRoute: ActivatedRoute) {}
 
+  // userId: string | null = '';
+
+  // ngOnInit(): void {
+    
+  //   this.activatedRoute.paramMap.subscribe(params => {
+  //     this.userId = params.get('userId');
+  //     console.log('Item ID:', this.userId);
+  //   });
+  // }
 
 }

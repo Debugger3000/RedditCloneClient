@@ -1,5 +1,5 @@
 export const environment = {
 
     buildType: 'production',
-    apiRoute:'https://productionLink/api',
+    apiRoute:'https://redditcloneserver.onrender.com/api',
 };

@@ -25,7 +25,16 @@ export class LoginService {
   }
 
   // check if user is authenticated
-  checkAuth() {
-    return this.http.post(`${environment.apiRoute}/user/isAuth`,{},{withCredentials: true});
+  checkAuth() : Observable<{status: boolean, _id: string, username: string | null}> {
+    return this.http.post<{status: boolean, _id: string, username: string | null}>(`${environment.apiRoute}/user/isAuth`,{}, {withCredentials: true});
+  }
+
+  // login for github
+  githubLogin() {
+    // return this.http.get(`${environment.apiRoute}/user/auth/github`, {withCredentials: true});
+    window.location.href = `${environment.apiRoute}/user/auth/github`;
+    console.log("back in github login first window redirect from github button press");
+    
+    console.log(document.cookie);
   }
 }
