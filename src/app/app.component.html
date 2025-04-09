@@ -1,10 +1,15 @@
 <main>
 
 
-  @if(!this.loginService.isAuthenticated) {
+  <!-- @if(!this.loginService.isAuthenticated) {
   <router-outlet />
+  } -->
+
+  @if(!generalService.showHeader) {
+    <router-outlet />
   }
-  @else {
+  @else{
+ 
     <section>
       <!-- Header... -->
       <app-header/>
@@ -30,12 +35,13 @@
     </section>
     
 
-  }
+  
 
   
 
   <section>
     
   </section>
+}
 </main>
 
