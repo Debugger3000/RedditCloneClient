@@ -35,8 +35,13 @@ export class RegisterComponent {
       error: (error) => {
         console.log("Error on login: ", error);
       }
-      
-
     });
   }
+
+  // go home
+  goHome(route: string) {
+    this.generalService.LinkToPage(route);
+    this.generalService.showHeader = true;
+  }
+
 }

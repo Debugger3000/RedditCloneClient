@@ -20,6 +20,7 @@ export class GeneralService {
   // private currentView = new BehaviorSubject<string>('');
   // public currentView$ = this.currentView.asObservable(); 
   currentUserData: UserData = null;
+  showHeader: boolean = true;
   
 
   // Get and store current user Data

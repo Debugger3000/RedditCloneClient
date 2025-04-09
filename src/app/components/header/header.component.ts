@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ThreadsService } from '../../services/threads.service';
 import { ThreadData } from '../../types/thread';
 import { ThreadDisplayComponent } from '../threads/thread-display/thread-display/thread-display.component';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ import { ThreadDisplayComponent } from '../threads/thread-display/thread-display
 export class HeaderComponent {
   constructor(private router: Router, private threadsService: ThreadsService) {}
   generalService = inject(GeneralService);
+  loginService = inject(LoginService);
 
   currentSearchData: ThreadData[] | null = null;
   focusState = false;
@@ -29,6 +31,7 @@ export class HeaderComponent {
   // connecting function to call link from service
   linkTo(route: string) {
     this.generalService.LinkToPage(route);
+    this.generalService.showHeader = false;
   }
 
 
@@ -64,6 +67,28 @@ export class HeaderComponent {
 
   openProfile() {
     this.profileClicked = !this.profileClicked;
+  }
+
+
+  // logout 
+  logout() { 
+    this.loginService.logoutApi().subscribe({
+      next: (data) => {
+        console.log("Data received back from logout: ", data);
+        this.generalService.showHeader = false;
+        this.router.navigate(['login']);
+        this.generalService.currentUserData = null;
+        setTimeout(() => {
+          this.generalService.showHeader = true;
+          this.router.navigate(['home']);
+
+        }, 2000)
+        
+      },
+      error: (error) => {
+        console.log("Error on logout: ", error);
+      }
+    })
   }
 
 }

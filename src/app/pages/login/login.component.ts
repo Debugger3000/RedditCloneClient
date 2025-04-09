@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit{
         console.log("Data received back from login: ", data);
         // set user data
         this.generalService.setUserData({username: data.username, _id: data._id});
+        this.generalService.showHeader = true;
         this.router.navigate(['home']);
+
       },
       error: (error) => {
         console.log("Error on login: ", error);
@@ -69,6 +71,11 @@ export class LoginComponent implements OnInit{
     //   }
 
     // })
+  }
+
+  goHome(route: string) {
+    this.generalService.LinkToPage(route);
+    this.generalService.showHeader = true;
   }
 
 }

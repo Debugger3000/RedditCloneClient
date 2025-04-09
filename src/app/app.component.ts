@@ -25,6 +25,8 @@ export class AppComponent implements OnInit{
 
   title = 'myredditclone';
 
+  currentRoute: string = '';
+
   
 
 
@@ -36,9 +38,13 @@ export class AppComponent implements OnInit{
     // log out the environment we are currently in
     console.log("Environment: ", environment.buildType);
 
-    if(this.generalService.currentUserData == null){
-      this.router.navigate(['home']);
-    }
+    this.currentRoute = this.router.url;
+
+    console.log("current route: ",this.currentRoute);
+
+    // if(this.generalService.currentUserData == null){
+    //   this.router.navigate(['home']);
+    // }
 
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
