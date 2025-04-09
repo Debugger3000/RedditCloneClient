@@ -36,6 +36,10 @@ export class AppComponent implements OnInit{
     // log out the environment we are currently in
     console.log("Environment: ", environment.buildType);
 
+    if(this.generalService.currentUserData == null){
+      this.router.navigate(['home']);
+    }
+
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
       next: (data) => {
@@ -43,6 +47,7 @@ export class AppComponent implements OnInit{
 
         this.generalService.setUserData({_id: data._id, username: data.username});
         this.loginService.isAuthenticated = true;
+        
         
         console.log(this.router.url);
         console.log("cookie: ",document.cookie);

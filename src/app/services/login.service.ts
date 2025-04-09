@@ -38,7 +38,7 @@ export class LoginService {
     
     console.log(document.cookie);
     console.log(this.router.url);
-    // this.router.navigate(['home']);
+    
     
   }
 }
