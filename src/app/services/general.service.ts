@@ -30,7 +30,7 @@ export class GeneralService {
   }
 
   // Get a user by ID
-  getUserById(userId: string | null){
+  getUserById(userId: string | null | undefined){
     return this.http.get(`${environment.apiRoute}/user/${userId}`,{withCredentials: true});
   }
 
@@ -42,6 +42,8 @@ export class GeneralService {
 
   // params link
   linkWithParams(page: string, param: string) {
+    console.log("link with params ran with: ",page);
+    console.log("link with params ran with: ",param);
     this.router.navigate([page,param]);
   }
 
@@ -53,5 +55,10 @@ export class GeneralService {
   // changeMainView(newView: string): void {
   //   this.currentView.next(newView);
   // }
+
+  // editprofie
+  editProfileApi(object: {username: string | null | undefined; profileImage: string | ArrayBuffer | null | undefined;}, userId: string | null | undefined) {
+    return this.http.post(`${environment.apiRoute}/user/edit-profile/${userId}`,object,{withCredentials: true});
+  }
 
 }

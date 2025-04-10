@@ -26,8 +26,8 @@ export class LoginService {
   }
 
   // check if user is authenticated
-  checkAuth() : Observable<{status: boolean, _id: string, username: string | null}> {
-    return this.http.post<{status: boolean, _id: string, username: string | null}>(`${environment.apiRoute}/user/isAuth`,{}, {withCredentials: true});
+  checkAuth() : Observable<{status: boolean, _id: string, username: string | null, profileImage: string | null | undefined}> {
+    return this.http.post<{status: boolean, _id: string, username: string | null, profileImage: string | null | undefined}>(`${environment.apiRoute}/user/isAuth`,{}, {withCredentials: true});
   }
 
   // login for github

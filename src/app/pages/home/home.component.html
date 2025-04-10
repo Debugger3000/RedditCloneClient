@@ -24,7 +24,7 @@
                 <!-- posts -->
                 
                 <div *ngFor="let item of postData.posts; let i = index">
-                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" (click)="postClicked(i)"/>
+                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [parentThreadImage]="item?.parentThreadImage" [type]="'home'" (click)="postClicked(i)"/>
                 </div>
                 }
                 @else {

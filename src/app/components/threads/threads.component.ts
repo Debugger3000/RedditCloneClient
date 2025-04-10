@@ -22,7 +22,7 @@ export class ThreadsComponent implements OnInit{
   generalService = inject(GeneralService);
 
   // thread data
-  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: '', tags: [''], createdAt: '', updatedAt: '', __v: 0};
   // posts data for this thread
   postData: {posts: PostData[]} | null = null;
   // check if user is joined
@@ -39,7 +39,7 @@ export class ThreadsComponent implements OnInit{
     // Access the 'id' route parameter
     this.activatedRoute.paramMap.subscribe(params => {
       this.itemId = params.get('id');
-      console.log('Item ID:', this.itemId);
+      // console.log('Item ID:', this.itemId);
     });
 
     
@@ -61,7 +61,7 @@ export class ThreadsComponent implements OnInit{
     // grab post data for this thread by using thread ID
     this.postService.getPostsForThread(this.itemId).subscribe({
       next: (data: any) => {
-        console.log("Current Post data for this thread: ", data);
+        // console.log("Current Post data for this thread: ", data);
         this.postData = data;
         this.isLoading = false;
       },
@@ -93,14 +93,15 @@ export class ThreadsComponent implements OnInit{
 
   // check if user is joined to thread
   isUserJoined() {
-    
-    if(this.threadData?.followers?.includes(this.generalService.getCurrentUserData()!._id)){
-      this.isJoined = true;
-      console.log("User is joined, state is: ",this.isJoined);
-    }
-    else{
-      this.isJoined = false;
-      console.log("User is NOT joined, state is: ",this.isJoined);
+    if(this.generalService.currentUserData) {
+      if(this.threadData?.followers?.includes(this.generalService.getCurrentUserData()!._id)){
+        this.isJoined = true;
+        console.log("User is joined, state is: ",this.isJoined);
+      }
+      else{
+        this.isJoined = false;
+        console.log("User is NOT joined, state is: ",this.isJoined);
+      }
     }
   }
 
@@ -136,7 +137,7 @@ export class ThreadsComponent implements OnInit{
   editThread() {
     // thread/edit/:id
     // route to edit page, pass id, and grab data on load for that page with data in the form...
-    console.log("edit thread was pressed....");
+    // console.log("edit thread was pressed....");
     this.router.navigate(['edit','thread',this.threadData?._id]);
     // this.router.navigate(['thread', 'edit', this.threadData?._id]);
 

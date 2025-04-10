@@ -15,6 +15,7 @@ export class ThreadDisplayComponent {
   @Input() image: string | null = '';
   @Input() threadId: string = '';
   @Input() type: string = '';
+  @Input() threadImage: string | null | undefined = '';
 
   // post stuff
   @Input() postObject: {post: PostData} | null = null;

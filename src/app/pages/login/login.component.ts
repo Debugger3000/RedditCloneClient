@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit{
       next: (data) => {
         console.log("Data received back from login: ", data);
         // set user data
-        this.generalService.setUserData({username: data.username, _id: data._id});
+        this.generalService.setUserData({username: data.username, _id: data._id, profileImage: data.profileImage});
         this.generalService.showHeader = true;
         this.router.navigate(['home']);
 

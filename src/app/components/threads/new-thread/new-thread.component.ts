@@ -22,6 +22,9 @@ export class NewThreadComponent {
     // current image selected 
     currentImage: string | ArrayBuffer | null = null;
 
+    // image binary string data, store to load into object...
+    imageStore : string | ArrayBuffer | null = null;
+
 // create form items
 threadForm = new FormGroup({
   title: new FormControl(''),
@@ -125,6 +128,7 @@ deleteLink(link: number) {
 onFileChange(event: any) {
   const file = event.target.files;
   const fileRead = new FileReader();
+  const fileReadStore = new FileReader();
 
   console.log("event given: ",event);
   console.log("event given files: ",event.target.files);
@@ -143,8 +147,17 @@ onFileChange(event: any) {
     console.log("Result: ",fileRead.result);
   }
 
+  fileReadStore.onloadend = () => {
+    this.imageStore = fileReadStore.result;
+    console.log("image store: ", this.imageStore);
+
+  }
+
+
+
   // Read the file as binary (ArrayBuffer) for processing binary data
   // fileRead.readAsArrayBuffer(file[0]);
+  fileReadStore.readAsText(file[0]);
   fileRead.readAsDataURL(file[0]);
 
   console.log("file: ",this.fileReady);
@@ -161,7 +174,7 @@ threadFormSubmit() {
   const object = this.threadForm.value;
   console.log("array: ",this.linkArray);
 
-  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray, username: this.generalService.currentUserData?.username };
+  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray, username: this.generalService.currentUserData?.username, threadImage: this.imagePreview };
   console.log("new object: ", newObject);
 
 

@@ -5,6 +5,7 @@ export type Thread = Partial<{
     bio: string | null;
     links: string[] | null;
     tags: string[] | null;
+    threadImage: string | ArrayBuffer | null;
 }>
 
 
@@ -13,7 +14,7 @@ export type ThreadData = {
     title: string | null;
     bio: string | null;
     links: string[] | null;
-    threadImage: number | null;
+    threadImage: string | undefined | null;
     followers: string[] | null;
     posts: string[] | null;
     followersCount: number | null;

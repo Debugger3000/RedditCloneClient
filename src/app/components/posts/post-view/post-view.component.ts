@@ -19,9 +19,9 @@ export class PostViewComponent implements OnInit{
     constructor(private activatedRoute: ActivatedRoute, private location: Location, private threadService: ThreadsService, private postService: PostService, private generalService:GeneralService) {}
 
    // thread data
-    @Input() threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], owner: '', links: [''], threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+    @Input() threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], owner: '', links: [''], threadImage: '', tags: [''], createdAt: '', updatedAt: '', __v: 0};
     // posts data for this thread
-    postData: {post: PostData} | null = {post: {_id: '',title: '', textContent: '', user: '', parentThread: '', tag: '', createdAt: '', updatedAt: '', __v: 0}};
+    postData: {post: PostData} | null = {post: {_id: '',title: '', textContent: '', user: '', parentThread: '', parentThreadImage: '', tag: '', createdAt: '', updatedAt: '', __v: 0}};
 
     // postData$: Observable<{posts: PostData}>;
 

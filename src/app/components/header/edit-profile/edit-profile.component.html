@@ -1,0 +1,31 @@
+
+<section>
+    <h4 class="text-3xl font-semibold mt-5 mb-2">Edit Profile</h4>
+
+    <form [formGroup]="userForm" (ngSubmit)="postFormSubmit()">
+        <div class="mb-4 flex flex-col gap-1">
+            <label class="font-bold text-gray-700 mr-4">Username</label>
+            <input type="text" name="username" id="username" formControlName="username" required class=" rounded border border-gray-300 p-2" value={{username}}/>
+        </div>
+        <div class="mb-4 flex items-center flex gap-5 p-2">
+            <div class="flex flex-col w-[40%]">
+                <label class="font-bold text-gray-700 mr-4">Picture</label>
+                <input type="file" name="image" id="image" required class=" rounded border border-gray-300 p-2" (change)="onFileChange($event)"/>
+            </div>
+        <!-- Display image preview -->
+            <div>
+            <h3 class="mb-1">Image Preview:</h3>
+                <div class="border border-gray-200 rounded w-[100px] h-[100px]">
+                    @if(imagePreview){
+                    <img [src]="imagePreview" alt="Image Preview" class="w-full h-full"/>
+                    }
+                </div>
+            </div>
+        
+        </div>
+        <div class="flex items-center justify-center mb-4 mt-4">
+            <button type="submit" class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center">Submit</button>
+        </div>
+    </form>
+
+</section>
