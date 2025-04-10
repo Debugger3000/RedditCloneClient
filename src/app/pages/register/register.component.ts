@@ -29,7 +29,7 @@ export class RegisterComponent {
     this.registerService.registerUser(this.userRegisterForm.value).subscribe({
       next: (data) => {
         console.log("Data received back from Register: ", data);
-        this.generalService.setUserData({username: data.username, _id: data._id});
+        this.generalService.setUserData({username: data.username, _id: data._id, profileImage: data.profileImage});
         this.router.navigate(['/home']);
       },
       error: (error) => {

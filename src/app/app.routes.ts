@@ -7,6 +7,7 @@ import { ThreadsComponent } from './components/threads/threads.component';
 import { NewPostComponent } from './components/posts/new-post/new-post.component';
 import { PostViewComponent } from './components/posts/post-view/post-view.component';
 import { EditThreadComponent } from './components/threads/edit-thread/edit-thread.component';
+import { EditProfileComponent } from './components/header/edit-profile/edit-profile.component';
 
 // include route names in 'path' and their respective component in 'component'
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'thread-new', component: NewThreadComponent },
     { path: 'post-new/:id', component: NewPostComponent },
+    { path: 'edit-profile', component: EditProfileComponent },
 
     // { path: 'thread', children: [
     //     { path: ':id', component: EditThreadComponent },
@@ -32,7 +34,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        component: LoginComponent,
+        component: HomeComponent,
         pathMatch: 'full'
     },
     // { path: '**', component: NotFoundComponent }

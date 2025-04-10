@@ -19,7 +19,7 @@ export class NewPostComponent implements OnInit{
   // id we use to query for thread data
   itemId: string | null = null;
   // thread data
-  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: '', tags: [''], createdAt: '', updatedAt: '', __v: 0};
 
   selectedTags: string = '';
 
@@ -73,7 +73,6 @@ export class NewPostComponent implements OnInit{
     title: new FormControl(''),
     textContent: new FormControl(''),
     parentThread: new FormControl(),
-    // image: new FormControl()
   })
 
   // POST a post
@@ -83,7 +82,7 @@ export class NewPostComponent implements OnInit{
     console.log("post form: ", this.postForm.value);
     const object = this.postForm.value;
 
-    const newObject = {title: object.title, textContent: object.textContent, parentThread: this.threadData?._id, tag: this.selectedTags};
+    const newObject = {title: object.title, textContent: object.textContent, parentThread: this.threadData?._id, tag: this.selectedTags, parentThreadImage: this.threadData?.threadImage};
     console.log("new object: ", newObject);
  
 

@@ -4,7 +4,9 @@
 
     <div class="flex items-center gap-5 rounded pl-2 py-2">
         <!-- thead image -->
-        <div class="circle-div bg-blue-300 h-[65px] w-[65px]"></div>
+        <div class="circle-div bg-blue-300 h-[65px] w-[65px]">
+            @if(threadImage!.length > 0) {<img [src]="threadImage" class="w-full h-full circle-div">}
+        </div>
         <h4 class="font-bold text-3xl">r/ {{this.title}}</h4>
     </div>
 
@@ -13,7 +15,9 @@
     <div class="flex items-center gap-2 rounded py-2">
         <div>
             <!-- thead image -->
-            <div class="circle-div bg-blue-300 h-[40px] w-[40px]"></div>
+            <div class="circle-div bg-blue-300 h-[40px] w-[40px]">
+                @if(threadImage!.length > 0) {<img [src]="threadImage" class="w-full h-full circle-div">}
+            </div>
         </div>
         <div class="flex flex-col">
             <div class="flex">
@@ -32,7 +36,9 @@
 @else {
     <div class="flex items-center gap-3 border-b border-gray-200 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2" (click)="linkRoute()">
         <!-- thead image -->
-        <div class="circle-div bg-blue-300 h-[20px] w-[20px]"></div>
+        <div class="circle-div bg-blue-300 h-[40px] w-[40px]">
+            @if(threadImage!.length > 0) {<img [src]="threadImage" class="w-full h-full circle-div">}
+        </div>
         <h4 class="font-semibold text-xl">r/{{this.title}}</h4>
     </div>
 

@@ -13,7 +13,7 @@
             @if(this.focusState) {
             <div class="absolute top-11 left-0 border border border-gray-200 rounded flex flex-col bg-white z-99 w-[550px]">
                 @for (item of currentSearchData; track $index) {
-                    <app-thread-display [title]="item!.title" [threadId]="item!._id"/>
+                    <app-thread-display [title]="item!.title" [threadId]="item!._id" [threadImage]="currentSearchData![$index]?.threadImage"/>
                 }
             </div>
             }
@@ -26,17 +26,26 @@
                 <i class="bi bi-chat-dots text-2xl"></i>
             </div>
             <!-- + Create thread -->
-            <div (click)="linkTo('thread-new')" class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
+            @if(generalService.currentUserData) {
+            <div (click)="linkTo('thread-new', true)" class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
                 <i class="bi bi-plus-lg text-2xl"></i>
                 <h1 class="">Create</h1>
             </div>
+            }
             <!-- Notifications -->
             <div class="flex justify-center items-center hover:cursor-pointer main-hover-bg-color rounded-full w-[40px] h-[40px]">
                 <i class="bi bi-bell text-2xl"></i>
             </div>
             <!-- profile  -->
             <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover" (click)="openProfile()">
-                <i class="bi bi-person text-3xl text-gray-700"></i>
+
+                <!-- default user image -->
+                @if(generalService.currentUserData?.profileImage?.length === 0 || generalService.currentUserData == null){<i class="bi bi-person text-2xl text-gray-700"></i>}
+                @else{
+                    <div class="absolute inset-0">
+                        <img [src]="generalService.currentUserData?.profileImage" class="w-full h-full circle-div"/>
+                    </div>
+                }
                 <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div>
                 @if(profileClicked) {
                     <div class="absolute top-14 -left-50 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]">
@@ -44,9 +53,10 @@
                         <!-- NOT logged in -->
                         @if(generalService.currentUserData){
                         <div class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer">
-                            <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover">
+                            <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover" (click)="linkTo('edit-profile',false)">
                                 <i class="bi bi-person text-3xl text-gray-700"></i>
-                                <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div>
+                                <!-- <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div> -->
+                                
                             </div>
                             <div class="flex flex-col">
                                 <h4 class="text-md text-gray-700">View Profile</h4>
@@ -55,7 +65,7 @@
                         </div>
                         }
                         @if(!generalService.currentUserData) {
-                        <div class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer" (click)="linkTo('login')">
+                        <div class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer" (click)="linkTo('login',false)">
                             <i class="bi bi-person text-xl"></i>
                             <h4 class="text-base text-gray-700">Login</h4>
                         </div>

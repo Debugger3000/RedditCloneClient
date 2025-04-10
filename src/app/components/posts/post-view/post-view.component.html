@@ -16,7 +16,7 @@
         
         <div class="w-[75%] mt-2 pl-2">
             @if(postData && username) {
-            <app-thread-display [title]="threadData!.title" [type]="'post-view'" [postObject]="postData" [username]="username"/>
+            <app-thread-display [title]="threadData!.title" [type]="'post-view'" [postObject]="postData" [username]="username" [threadImage]="threadData?.threadImage"/>
             }
 
             <!-- title -->
@@ -28,6 +28,17 @@
              <div class="my-5">
                 <p class="text-gray-600">{{postData?.post?.textContent}}</p>
              </div>
+            
+            @if(postData?.post?.tag) {
+            <div class="">
+                <!-- Tag -->
+                    <div class="mb-3 w-fit">
+                        <div class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1">
+                            <h4 class="text-sm text-white">{{postData?.post?.tag}}</h4>
+                        </div>
+                    </div>
+            </div>
+        }
 
             <!-- post buttons -->
             <div class="flex gap-3 mb-4">

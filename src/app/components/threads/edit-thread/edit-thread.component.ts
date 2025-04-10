@@ -15,12 +15,13 @@ export class EditThreadComponent implements OnInit{
 
 
   // thread data
-  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: 0, tags: [''], createdAt: '', updatedAt: '', __v: 0};
+  threadData: ThreadData = {_id: '', title: 'loading', bio: 'loading bio', followersCount: 0, followers: [''], posts: [''], links: [''], owner: '', threadImage: '', tags: [''], createdAt: '', updatedAt: '', __v: 0};
 
   linkArray: string[] = [];
   tagArray: string[] = [];
 
   itemId: string | null = '';
+  imagePreview: string | ArrayBuffer | null = null;
 
 
   ngOnInit(): void {
@@ -35,10 +36,6 @@ export class EditThreadComponent implements OnInit{
     });
 
     this.getThreadCall();
-
-    
-
-    
   }
 
 
@@ -50,6 +47,24 @@ threadForm = new FormGroup({
   image: new FormControl()
 })
 
+
+
+  // deal with image 
+  onFileChange(event: any) {
+    const file = event.target.files;
+    const fileRead = new FileReader();
+  
+    console.log("event given: ",event);
+    console.log("event given files: ",event.target.files);
+  
+    fileRead.onloadend = () => {
+      this.imagePreview = fileRead.result; // Set image preview (Base64 for display)
+      console.log("file read and loaded....");
+      console.log("Result: ",fileRead.result);
+    }
+  
+    fileRead.readAsDataURL(file[0]);
+  }
 
   //add tag
   addDiv(inputId: string, divId: string) {
@@ -177,6 +192,7 @@ getThreadCall() {
       // populate divs for the arrays Tags and Links
       this.popArrays();
       this.populateDivsOnLoad();
+      this.imagePreview = data.threadImage;
 
     },
     error: (error) => {
@@ -195,7 +211,7 @@ threadFormSubmit() {
   const object = this.threadForm.value;
   console.log("array: ",this.linkArray);
 
-  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray};
+  const newObject = {title: object.title, bio: object.bio, links: this.linkArray, tags:this.tagArray, threadImage: this.imagePreview};
   console.log("new object: ", newObject);
  
 

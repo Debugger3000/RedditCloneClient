@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { LogoutbuttonComponent } from './logoutbutton/logoutbutton.component';
 import { GeneralService } from '../../services/general.service';
 import { Router } from '@angular/router';
@@ -6,14 +6,15 @@ import { ThreadsService } from '../../services/threads.service';
 import { ThreadData } from '../../types/thread';
 import { ThreadDisplayComponent } from '../threads/thread-display/thread-display/thread-display.component';
 import { LoginService } from '../../services/login.service';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [LogoutbuttonComponent, ThreadDisplayComponent],
+  imports: [LogoutbuttonComponent, ThreadDisplayComponent, ReactiveFormsModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   constructor(private router: Router, private threadsService: ThreadsService) {}
   generalService = inject(GeneralService);
   loginService = inject(LoginService);
@@ -22,6 +23,31 @@ export class HeaderComponent {
   focusState = false;
   profileClicked = false;
 
+
+  ngOnInit(): void {
+    
+  //check if user is logged in...
+  this.loginService.checkAuth().subscribe({
+    next: (data) => {
+      console.log("Data from is user Authenticated ", data);
+
+      this.generalService.setUserData({_id: data._id, username: data.username, profileImage: data.profileImage});
+      this.loginService.isAuthenticated = true;
+      
+      
+      console.log(this.router.url);
+      console.log("cookie: ",document.cookie);
+    },
+    error: (error) => {
+      console.log("Error with checking if user is Authenticated:", error);
+    }
+  })
+
+
+  }
+  
+
+
   // actionClick(type: string){
   //   this.generalService.changeMainView('new-thread');
   // }
@@ -29,9 +55,9 @@ export class HeaderComponent {
 
   
   // connecting function to call link from service
-  linkTo(route: string) {
-    this.generalService.LinkToPage(route);
-    this.generalService.showHeader = false;
+  linkTo(route: string, header: boolean) {
+      this.generalService.LinkToPage(route);
+      this.generalService.showHeader = header;
   }
 
 
@@ -90,5 +116,8 @@ export class HeaderComponent {
       }
     })
   }
+
+
+
 
 }

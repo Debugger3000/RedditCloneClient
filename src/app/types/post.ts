@@ -6,6 +6,8 @@ export type Post = Partial<{
     title: string | null;
     textContent: string | null;
     parentThread: string | null;
+    parentThreadImage: string | null | undefined;
+    tag: string | null
 }>
 
 export type PostData = {
@@ -13,6 +15,7 @@ export type PostData = {
     title: string | null;
     textContent: string | null;
     parentThread: string | null;
+    parentThreadImage: string | null | undefined;
     user: string | null;
     createdAt: string | null;
     updatedAt: string | null;

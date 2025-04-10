@@ -8,19 +8,22 @@
         <div class="flex justify-between">
             <!-- thread circle image -->
             <!-- <div class="bg-orange-700 circle-div border"></div> -->
-            <app-thread-display [title]="threadData!.title" [type]="'thread-page'"/>
+            <app-thread-display [title]="threadData!.title" [type]="'thread-page'" [threadImage]="threadData?.threadImage"/>
             <!-- New post, bell, options... -->
             <div class="flex items-center gap-3 pr-4">
-                <!-- + Create thread -->
+                <!-- + Create Post -->
+                @if(generalService.currentUserData) {
                 <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 h-[40px] p-2 gap-1 rounded-full" (click)="createPost()">
                     <i class="bi bi-plus-lg text-2xl"></i>
                     <h1 class="font-semibold">Create Post</h1>
                 </div>
+                }
                 <!-- Notifications -->
                 <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full w-[40px] h-[40px]">
                     <i class="bi bi-bell text-2xl"></i>
                 </div>
                 <!-- join / joined thread -->
+                @if(generalService.currentUserData) {
                 <div class='flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 rounded-full p-2' [ngClass]="{'bg-blue-600': !isJoined,'text-white': !isJoined}" (click)="joinThread()">
                     @if(isJoined){
                         <h1 class="font-semibold">Joined</h1>
@@ -29,6 +32,7 @@
                         <h1 class="font-semibold">Join</h1>
                     }
                 </div>
+                }
                 <div class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 hover:cursor-pointer rounded-full w-[40px] h-[40px] relative" (click)="openEditMenu()">
                     <i class="bi bi-three-dots"></i>
                     @if(isEditMenuUp){
@@ -39,7 +43,7 @@
                                 <h4 class="text-sm text-gray-800">Info</h4>
                                 <i class="bi bi-info-circle text-base text-gray-800"></i>
                             </div>
-                            @if(this.threadData?.owner === generalService.currentUserData?._id) {
+                            @if(this.threadData?.owner === generalService.currentUserData?.username) {
                                 <!-- edit -->
                                 <div class="flex gap-3 items-center justify-between border-b border-gray-200 p-2 hover:cursor-pointer hover:bg-gray-200" (click)="editThread()">
                                     <h4 class="text-sm text-gray-800">Edit</h4>
@@ -83,7 +87,7 @@
                 <!-- posts -->
                 
                 <div *ngFor="let item of postData.posts; let i = index">
-                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" (click)="postClicked(i)"/>
+                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [type]="'thread'" (click)="postClicked(i)"/>
                 </div>
                 }
                 @else {

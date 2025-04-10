@@ -17,6 +17,7 @@ export type UserLoginData = Partial<{
 
 export type UserData = {
     _id: string;
-    username: String | null;
+    username: string | null;
     // image eventually....
+    profileImage: string | null | undefined;
 } | null;

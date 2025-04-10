@@ -51,7 +51,7 @@ export class AppComponent implements OnInit{
       next: (data) => {
         console.log("Data from is user Authenticated ", data);
 
-        this.generalService.setUserData({_id: data._id, username: data.username});
+        this.generalService.setUserData({_id: data._id, username: data.username, profileImage: data.profileImage});
         this.loginService.isAuthenticated = true;
         
         
