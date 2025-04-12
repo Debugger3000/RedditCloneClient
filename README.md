@@ -1,5 +1,45 @@
 # Myredditclone
 
+### Links
+Live Site Link: https://redditcloneclient.onrender.com
+Link to Server Repo: https://github.com/Debugger3000/RedditCloneServer
+
+## Description
+This a reddit clone application. It utilizes the look and feel of Reddit site with similar functionality. You can create threads, you can join these threads, and make posts on these threads, for users to see. Please enjoy. 
+
+## Notes
+Unfortunately, I did not get this project as polished as I would of liked. I only started it last week, and therefore did not hit a few goals, like implementing a comment system, and overall reducing bugs, and improving UI/UX.
+### Full CRUD functionality exists for 'Threads'. Note: That you can only edit or delete a thread that you created / or are the owner of. So keep that in mind when testing CRUD...
+
+### Accounts
+You can use my login or create your own account.
+Email: carter@gmail.com
+Password: carter
+
+## Features
+- Images for threads and profiles. *Click profile image in top right, and click the profile circle below in the drop down to update profile image*
+- Search bar to search for threads. (blur functionality for it is a bit buggy, u can focus / unfocus the bar to make it appear/disappear.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.0.
 
 ## Development server
