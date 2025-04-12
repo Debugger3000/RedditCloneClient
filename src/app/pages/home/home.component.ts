@@ -42,8 +42,8 @@ export class HomeComponent implements OnInit, OnDestroy{
     //   this.currentViewVariable = value; // Update the component variable when the service variable changes
     // });
 
-    console.log("check user data without GET: ",this.generalService.currentUserData);
-    console.log("check user data with GET: ",this.generalService.getCurrentUserData());
+    // console.log("check user data without GET: ",this.generalService.currentUserData);
+    // console.log("check user data with GET: ",this.generalService.getCurrentUserData());
     // check user auth to get header and stuff
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy{
     // Get posts
     this.postService.getPosts().subscribe({
       next: (data: any) => {
-        console.log("Current Post data for this thread: ", data);
+        // console.log("Current Post data for this thread: ", data);
         this.postData = data;
         this.isLoading = false;
       },

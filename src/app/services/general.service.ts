@@ -57,7 +57,7 @@ export class GeneralService {
   // }
 
   // editprofie
-  editProfileApi(object: {username: string | null | undefined; profileImage: string | ArrayBuffer | null | undefined;}, userId: string | null | undefined) {
+  editProfileApi(object: {profileImage: string | ArrayBuffer | null | undefined;}, userId: string | null | undefined) {
     return this.http.post(`${environment.apiRoute}/user/edit-profile/${userId}`,object,{withCredentials: true});
   }
 

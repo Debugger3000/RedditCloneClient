@@ -33,7 +33,7 @@ export class PostViewOutsideComponent implements OnInit{
     //get users
     this.generalService.getUserById(this.user).subscribe({
       next: (data: any) => {
-        console.log("Current User data on post...  ", data);
+        // console.log("Current User data on post...  ", data);
         this.username = data.username;
         this.postUsersProfileImage = data.profileImage;
       },

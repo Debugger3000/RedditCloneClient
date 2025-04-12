@@ -32,6 +32,8 @@ export class ThreadsComponent implements OnInit{
   // edit / delete menu variables
   isEditMenuUp: boolean = false;
 
+  // threadId: string = '';
+
 
   
 
@@ -42,21 +44,12 @@ export class ThreadsComponent implements OnInit{
       // console.log('Item ID:', this.itemId);
     });
 
-    
-
-    this.getThreadCall();
-
-    // should grab its own threads data from id in the url route
-    // this.threadService.getThread(this.itemId).subscribe({
-    //   next: (data: any) => {
-    //     console.log("Current THREAD PAGE DATA...  ", data);
-    //     this.threadData = data;
-    //   },
-    //   error: (error) => {
-    //     console.log("Error for getting current thread page data:", error);
-    //   }
+    // this.activatedRoute.params.subscribe(params => {
+    //   this.threadId = params['id'];
+    //   this.loadThread(this.threadId);
     // });
 
+    this.getThreadCall();
 
     // grab post data for this thread by using thread ID
     this.postService.getPostsForThread(this.itemId).subscribe({
@@ -71,6 +64,14 @@ export class ThreadsComponent implements OnInit{
     });
   }
 
+  // loadThread(id: string) {
+  //   this.router.navigate([id], {relativeTo: this.activatedRoute});
+  //   console.log("Loading thread with ID:", id);
+    
+  // }
+
+
+
   // create a post for this thread, so reroute to new-post with thread id to display title and picture
   createPost() {
     this.router.navigate(['post-new',this.threadData?._id]);
@@ -81,7 +82,7 @@ export class ThreadsComponent implements OnInit{
     if(this.threadData?._id){
       this.threadService.joinThread(this.threadData?._id).subscribe({
         next: (data: any) => {
-          console.log("Current join thread return: ", data);
+          // console.log("Current join thread return: ", data);
           this.getThreadCall();
         },
         error: (error) => {
@@ -110,7 +111,7 @@ export class ThreadsComponent implements OnInit{
     // should grab its own threads data from id in the url route
     this.threadService.getThread(this.itemId).subscribe({
       next: (data: any) => {
-        console.log("Current THREAD PAGE DATA...  ", data);
+        // console.log("Current THREAD PAGE DATA...  ", data);
         this.threadData = data;
         this.isUserJoined();
       },

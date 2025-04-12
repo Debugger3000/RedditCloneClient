@@ -52,7 +52,6 @@ export class EditProfileComponent implements OnInit{
 
   // create form items
   userForm = new FormGroup({
-    username: new FormControl(''),
     profileImage: new FormControl()
   })
 
@@ -64,7 +63,7 @@ export class EditProfileComponent implements OnInit{
     const object = this.userForm.value;
     // console.log("array: ",this.linkArray);
 
-    const newObject = {username: object.username, profileImage: this.imagePreview };
+    const newObject = {profileImage: this.imagePreview };
     console.log("new object: ", newObject);
 
 
