@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Thread } from '../types/thread';
+import { Thread, ThreadData } from '../types/thread';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -24,6 +24,10 @@ export class ThreadsService {
   // search bar for a thread by title
   getThreadByTitle(title: string) {
     return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true});
+  }
+
+  getThreadByUser() {
+    return this.http.get<ThreadData[]>(`${environment.apiRoute}/thread/user/ya`, {withCredentials: true});
   }
 
   // join Thread / Un join 

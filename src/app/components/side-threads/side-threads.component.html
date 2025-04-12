@@ -17,11 +17,24 @@
             }
             
         </div>
+        <!-- display the threads that the user is joined too... -->
+        @if (currentJoinedThreads && clickState) {
+            <div *ngFor="let thread of currentJoinedThreads; let i = index" class="">
+                <div class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee]" (click)="threadLink(thread?._id)">
+                    <div class="w-[30px] h-[30px]">
+                        <img [src]="thread?.threadImage" class="h-full w-full circle-div">
+                    </div>
+                    
+                    <h4 class="text-sm text-gray-800">r/{{thread?.title}}</h4>
+                </div>
+
+            </div>
+        }
         
         <!--  -->
-        <app-side-panel-block [name]="'Thread 1'" [icon]="'bi bi-house'"/>
+        <!-- <app-side-panel-block [name]="'Thread 1'" [icon]="'bi bi-house'"/>
         <app-side-panel-block [name]="'Thread 2'" [icon]="'bi bi-arrow-up-right-circle'"/>
         <app-side-panel-block [name]="'Thread 3'" [icon]="'bi bi-people'"/>
-        <app-side-panel-block [name]="'Thread 3'" [icon]="'bi bi-graph-up'"/>
+        <app-side-panel-block [name]="'Thread 3'" [icon]="'bi bi-graph-up'"/> -->
     </div>
 </section>

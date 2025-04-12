@@ -22,6 +22,8 @@ export class HeaderComponent implements OnInit{
   currentSearchData: ThreadData[] | null = null;
   focusState = false;
   profileClicked = false;
+  profilePicture: string | null | undefined = '';
+  username: string | null = '';
 
 
   ngOnInit(): void {
@@ -29,9 +31,11 @@ export class HeaderComponent implements OnInit{
   //check if user is logged in...
   this.loginService.checkAuth().subscribe({
     next: (data) => {
-      console.log("Data from is user Authenticated ", data);
+      // console.log("Data from is user Authenticated ", data);
 
       this.generalService.setUserData({_id: data._id, username: data.username, profileImage: data.profileImage});
+      this.profilePicture = data.profileImage;
+      this.username = data.username;
       this.loginService.isAuthenticated = true;
       
       
@@ -87,7 +91,7 @@ export class HeaderComponent implements OnInit{
   }
 
   onBlur() {
-    this.focusState = !this.focusState;
+    this.focusState = false;
     console.log("focus blur state: ", this.focusState);
   }
 

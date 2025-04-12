@@ -49,7 +49,7 @@ export class AppComponent implements OnInit{
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
       next: (data) => {
-        console.log("Data from is user Authenticated ", data);
+        // console.log("Data from is user Authenticated ", data);
 
         this.generalService.setUserData({_id: data._id, username: data.username, profileImage: data.profileImage});
         this.loginService.isAuthenticated = true;
