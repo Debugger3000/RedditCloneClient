@@ -10,6 +10,7 @@ This a reddit clone application. It utilizes the look and feel of Reddit site wi
 ## Notes
 Unfortunately, I did not get this project as polished as I would of liked. I only started it last week, and therefore did not hit a few goals, like implementing a comment system, and overall reducing bugs, and improving UI/UX.
 ### Full CRUD functionality exists for 'Threads'. Note: That you can only edit or delete a thread that you created / or are the owner of. So keep that in mind when testing CRUD...
+### Github Oauth broke somehow, I had it working on production 2 days before submission but now it doesn't work. So yeah, just FYI.
 
 ### Accounts
 You can use my login or create your own account.
