@@ -17,7 +17,7 @@ Email: carter@gmail.com
 Password: carter
 
 ## Features
-- Images for threads and profiles. *Click profile image in top right, and click the profile circle below in the drop down to update profile image*
+- Images for threads and profiles. *Click profile image in top right, and click the profile circle below in the drop down to update profile image* ### Also changing username is buggy with cookies, so u will have to log out and log back in to see username changes take effect
 - Search bar to search for threads. (blur functionality for it is a bit buggy, u can focus / unfocus the bar to make it appear/disappear.
 
 
