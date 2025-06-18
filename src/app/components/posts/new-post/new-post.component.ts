@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ThreadsService } from '../../../services/threads.service';
 import { ThreadDisplayComponent } from '../../threads/thread-display/thread-display/thread-display.component';
 import { NgFor } from '@angular/common';
+import { GeneralService } from '../../../services/general.service';
 
 @Component({
   selector: 'app-new-post',
@@ -14,7 +15,7 @@ import { NgFor } from '@angular/common';
   styleUrl: './new-post.component.scss'
 })
 export class NewPostComponent implements OnInit{
-  constructor(private postService: PostService, private threadService: ThreadsService, private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private postService: PostService, private threadService: ThreadsService, private generalService: GeneralService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   // id we use to query for thread data
   itemId: string | null = null;
@@ -47,14 +48,12 @@ export class NewPostComponent implements OnInit{
 
   addTag(tag: string) {
     const parent = document.getElementById('tag-selected-div');
-    console.log("add tag clicked.....")
 
     const newDiv = document.createElement('div');
     newDiv.classList.add('flex', 'justify-between', 'rounded-xl', 'p-1', 'bg-orange-400', 'w-fit', 'gap-1', 'items-center');
     newDiv.innerHTML = `<h4 class="font-semibold text-white">${tag}</h4><i class="bi bi-dash text-2xl text-white"></i>`;
     parent?.appendChild(newDiv);
     this.selectedTags = tag;
-    console.log("tag added: ", this.selectedTags);
   }
 
 
@@ -82,7 +81,7 @@ export class NewPostComponent implements OnInit{
     console.log("post form: ", this.postForm.value);
     const object = this.postForm.value;
 
-    const newObject = {title: object.title, textContent: object.textContent, parentThread: this.threadData?._id, tag: this.selectedTags, parentThreadImage: this.threadData?.threadImage};
+    const newObject = {title: object.title, textContent: object.textContent, owner: this.generalService.currentUserData?._id, ownerUserName: this.generalService.currentUserData?.username, parentThread: this.threadData?._id, parentThreadTitle: this.threadData?.title, tag: this.selectedTags, parentThreadImage: this.threadData?.threadImage};
     console.log("new object: ", newObject);
  
 

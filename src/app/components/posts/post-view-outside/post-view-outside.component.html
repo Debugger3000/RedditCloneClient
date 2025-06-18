@@ -23,7 +23,7 @@
                     }
                     
                 </div>
-                <h4 class="font-semibold text-sm">u/{{username}}</h4>
+                <h4 class="font-semibold text-sm">r/{{parentThreadTitle}}</h4>
                 <i class="bi bi-dot text-gray-600"></i>
                 <h4 class="text-sm text-gray-500">{{createdAt}}</h4>
              </div>
@@ -64,17 +64,20 @@
                 <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold"></i>
             </div>
 
+            <!-- comments -->
             <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
                 <i class="bi bi-chat text-md font-semibold"></i>
                 <!-- current votes -->
-                <h4 class="font-semibold text-xs">11</h4>
+                <h4 class="font-semibold text-xs">{{commentCount}}</h4>
             </div>
-
+            
+            <!-- award icon  -->
             <div class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5">
                 <i class="bi bi-award"></i>
 
             </div>
 
+            <!-- share icon thing -->
             <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
                 <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
                 <!-- current votes -->

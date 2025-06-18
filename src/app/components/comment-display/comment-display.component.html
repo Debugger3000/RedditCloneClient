@@ -1,0 +1,80 @@
+
+
+<div class="grid grid-cols-[40px_minmax(0,1fr)] gap-2 rounded py-4">
+        
+            <!-- thead image -->
+        <div class="col-start-1 col-span-1 circle-div bg-blue-300 h-[40px] w-[40px]">
+                @if(userImage) {<img [src]="userImage" class="w-full h-full circle-div">}
+        </div>
+        <div class="col-start-2 flex items-center">
+                <h4 class="font-semibold text-sm">{{this.username}}</h4>
+                <i class="bi bi-dot text-gray-600 text-sm"></i>
+                <h4 class="text-sm text-gray-500">{{this.createdAt}}</h4>
+        </div>
+        
+        @if(this.comment) {
+            <div class="col-start-2 flex flex-col">
+                <div class="">
+                    <p>{{this.comment}}</p>
+                </div>
+            </div>
+        }
+       
+        <!-- up-vote bar, comment on comment, share, award... -->
+        <div class="col-start-2 flex flex-col pt-2">
+            <div class="flex gap-3 mb-4">
+                <div class="flex items-center gap-2 rounded-3xl">
+                    <i class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"></i>
+                    <!-- current votes -->
+                    <h4 class=" font-semibold text-xs">0</h4>
+                    <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"></i>
+                </div>
+
+                <!-- comment -->
+                
+                <div class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer" (click)="replyToComment()">
+                    <i class="bi bi-chat text-md font-semibold"></i>
+                    <!-- current votes -->
+                    <h4 class="font-semibold text-xs">Reply</h4>
+                </div>
+                
+                <!-- award icon -->
+                <div class="flex rounded-3xl px-5 p-1 hover:bg-gray-300 hover:cursor-pointer">
+                    <i class="bi bi-award"></i>
+
+                </div>
+                <!-- share icon -->
+                <div class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer">
+                    <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
+                    <!-- current votes -->
+                    <h4 class="font-semibold text-xs">Share</h4>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+
+
+<!-- 
+    <div class="flex flex-col rounded py-2">
+        <div class="flex gap-3">
+            
+            <div class="circle-div bg-blue-300 h-[40px] w-[40px]">
+                @if(userImage!.length > 0) {<img [src]="userImage" class="w-full h-full circle-div">}
+            </div>
+            <div class="flex items-center">
+                <h4 class="font-semibold text-sm">{{this.username}}</h4>
+                <i class="bi bi-dot text-gray-600 text-sm"></i>
+                <h4 class="text-sm text-gray-500">{{this.createdAt}}</h4>
+            </div>
+        </div>
+        <div class="flex flex-col ml-8">
+           
+            <div>
+                <p>{{this.comment}}</p>
+            </div>
+           
+        </div>
+    </div> -->
+

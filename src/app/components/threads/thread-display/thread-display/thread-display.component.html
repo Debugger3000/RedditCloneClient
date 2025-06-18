@@ -11,6 +11,7 @@
     </div>
 
 }
+<!-- when you are inside a thread post viewing it and its comments -->
 @else if (type == 'post-view') {
     <div class="flex items-center gap-2 rounded py-2">
         <div>
@@ -33,6 +34,23 @@
     </div>
 
 }
+
+@else if (type == 'comment') {
+    <div class="flex items-center gap-2 rounded py-2">
+        <div>
+            <!-- thead image -->
+            <div class="circle-div bg-blue-300 h-[40px] w-[40px]">
+                @if(threadImage!.length > 0) {<img [src]="threadImage" class="w-full h-full circle-div">}
+            </div>
+        </div>
+        <div class="flex">
+            <h4 class="font-semibold text-sm">{{this.username}}</h4>
+            <i class="bi bi-dot text-gray-600 text-sm"></i>
+            <h4 class="text-sm text-gray-500">{{this.postObject?.post?.createdAt}}</h4>
+        </div>
+    </div>
+}
+
 @else {
     <div class="flex items-center gap-3 border-b border-gray-200 rounded pl-2 hover:cursor-pointer hover:bg-gray-100 py-2" (click)="linkRoute()">
         <!-- thead image -->
