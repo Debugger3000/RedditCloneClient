@@ -1,4 +1,4 @@
-<main>
+<main class="h-screen">
 
 
   <!-- @if(!this.loginService.isAuthenticated) {
@@ -10,38 +10,20 @@
   }
   @else{
  
-    <section>
+    <section class="">
       <!-- Header... -->
       <app-header/>
-
       <!-- under header part of page -->
       <section class="flex">
         <!-- sidepanel -->
         <app-side-panel/>
-
          <!-- main section of page... -->
-        <section class="ml-[600px] mt-2 w-[45%]">
+          <!-- for large screen  w-[45%] ml-[600px]-->
+        <section class="max-[1600px]:ml-[150px] ml-[250px] mt-2 w-full h-full">
           <router-outlet class=""/>
-
         </section>
-        
-
-
       </section>
-
-      
-
-
     </section>
-    
-
-  
-
-  
-
-  <section>
-    
-  </section>
 }
 </main>
 

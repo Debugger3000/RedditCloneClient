@@ -2,7 +2,7 @@
 
 
 <section>
-    <div class="flex flex-col w-full">
+    <div class="flex flex-col w-[80%]">
         <!-- banner for page -->
         <div class="rounded-xl bg-gray-200 h-32"></div>
         <div class="flex justify-between">
@@ -87,7 +87,7 @@
                 <!-- posts -->
                 
                 <div *ngFor="let item of postData.posts; let i = index">
-                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [type]="'thread'" (click)="postClicked(i)"/>
+                    <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [commentCount]="item?.commentCount" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [type]="'thread'" (click)="postClicked(i)"/>
                 </div>
                 }
                 @else {
@@ -99,7 +99,7 @@
 
             <!-- right side bar -->
             <!-- Thread information  -->
-            <div class="rounded-xl bg-[#f9fafa] w-[25%]">
+            <div class="rounded-xl bg-[#f9fafa] w-[30%]">
                 <!-- Bio / thread details -->
                 <div class="p-4 border-b border-gray-300">
                     <h4 class="font-semibold mb-1">{{threadData?.bio}}</h4>

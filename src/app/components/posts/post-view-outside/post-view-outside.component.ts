@@ -19,6 +19,8 @@ export class PostViewOutsideComponent implements OnInit{
   @Input() postId: string | null = '';
   @Input() tag: string | null = '';
   @Input() parentThreadImage: string | null | undefined = '';
+  @Input() parentThreadTitle: string | null | undefined = '';
+  @Input() commentCount: number | null | undefined = null;
 
   // post outside in home or macro, shows thread image
   // post outside in the thread itself, should show user profileImage
@@ -42,6 +44,7 @@ export class PostViewOutsideComponent implements OnInit{
       }
 
     });
+    console.log("Comment count value: ",this.commentCount);
 
   }
 

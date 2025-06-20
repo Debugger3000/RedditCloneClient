@@ -31,4 +31,10 @@ export class PostService {
   getPost(postId: string | null){
     return this.http.get(`${environment.apiRoute}/post/single/${postId}`,{withCredentials: true})
   }
+
+  // delete post by user who created it
+  deletePost(postId: string | null | undefined){
+    console.log("calling api to delete this post");
+    return this.http.delete(`${environment.apiRoute}/post/${postId}`,{withCredentials: true})
+  }
 }
