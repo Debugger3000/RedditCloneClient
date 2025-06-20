@@ -10,6 +10,15 @@ export class CommentsService {
 
   constructor(private http: HttpClient) { }
 
+  // comment level data denotion
+  
+  commentLevels = {
+    0: "ml-12",
+    1: "ml-24",
+    2: "ml-36",
+    3: "ml-48"
+  }
+
 
 
   // Create a new thread

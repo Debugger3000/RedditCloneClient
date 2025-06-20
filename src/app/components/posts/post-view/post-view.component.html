@@ -1,10 +1,10 @@
 
 
 
-<section>
+<section class="">
     <div class="flex">
 
-        <div>
+        <div class="h-full">
             <!-- Notifications -->
             <div class="flex justify-center items-center mt-5 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-full w-[40px] h-[40px]" (click)="goBack()">
                 <i class="bi bi-arrow-left text-md font-semibold"></i>
@@ -14,7 +14,7 @@
         
 
         
-        <div class="w-[75%] mt-2 pl-2">
+        <div class="h-full w-[65%] mt-2 pl-2 h-screen overflow-y-scroll">
             <div class="flex justify-between">
 
                 @if(postData && username) {
@@ -128,14 +128,15 @@
                     set comments 'commentOnComment(commentId)'
                 -->
                 @if(commentData) {
-                    <div *ngFor="let comment of commentData.comments; let i = index">
-                        <!-- pass data to comment display component -->
+                    <app-comment-display [comments]="commentData" [replyHandleFunction]="handleCommentReply" [level]="0"/>
+                    <!-- <div *ngFor="let comment of commentData; let i = index">
                         <app-comment-display [userImage]="comment.ownerPicture" [username]="comment.ownerUserName" [createdAt]="comment.createdAt" [comment]="comment.commentText" [commentId]="comment._id" [replyHandleFunction]="handleCommentReply"/>
-                        
-                        <!-- check if this comment has replies -->
-                        <!--   -->
-
-                    </div>
+                        @if(comment.childComments.length){
+                            <div *ngFor="let childComment of comment.childComments; let j = index" class="ml-12">
+                                <app-comment-display [userImage]="childComment.ownerPicture" [username]="childComment.ownerUserName" [createdAt]="childComment.createdAt" [comment]="childComment.commentText" [commentId]="childComment._id" [replyHandleFunction]="handleCommentReply"/>
+                            </div>
+                        }
+                    </div> -->
                 }
                 @else{
                 <h4 class="text-xl">...No comments yet...</h4>
