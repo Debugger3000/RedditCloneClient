@@ -1,92 +1,127 @@
-
-
-
 <!-- home -->
- <!-- thread -->
+<!-- thread -->
 
 <section class="py-1 border-b border-gray-200">
-    <div class="flex flex-col hover:bg-gray-100 hover:cursor-pointer px-4 py-1 rounded-xl">
-        <div class="flex justify-between mb-1">
-            <!-- user display generic pic with username -->
-             <div class="flex items-center gap-1 ml-1">
-                <div class="circle-div w-[30px] h-[30px] bg-blue-500">
-                    <!-- display user profile pic thing -->
-                    @if(parentThreadImage!.length > 0 && type === 'home') {<img [src]="parentThreadImage" class="w-full h-full circle-div">
-                    }
-                    @else if(type === 'thread'){
-                        @if(postUsersProfileImage.length > 0){
-                            <img [src]="postUsersProfileImage" class="w-full h-full circle-div">
-                        }
-                        @else{
-                            <app-default-user-image/>
-                        }
-                    }
-                    
-                </div>
-                <h4 class="font-semibold text-sm">r/{{parentThreadTitle}}</h4>
-                <i class="bi bi-dot text-gray-600"></i>
-                <h4 class="text-sm text-gray-500">{{createdAt}}</h4>
-             </div>
-             <div>
-                <i class="bi bi-three-dots"></i>
-             </div>
-
-        
-        </div>  
-           
-        <!-- title -->
-        <div class="mb-2">
-            <h4 class="font-semibold text-xl">{{title}}</h4>
-
+  <div
+    class="flex flex-col hover:bg-gray-100 hover:cursor-pointer px-4 py-1 rounded-xl"
+    (click)="postClicked()"
+  >
+    <div class="flex justify-between mb-1">
+      <!-- user display generic pic with username -->
+      <div class="flex items-center gap-1 ml-1">
+        <div class="circle-div w-[30px] h-[30px] bg-blue-500">
+          <!-- display user profile pic thing -->
+          @if(postData?.parentThreadImage) {<img
+            [src]="postData?.parentThreadImage"
+            class="w-full h-full circle-div"
+          />
+          } @else if(type === 'thread'){ @if(postUsersProfileImage.length > 0){
+          <img
+            [src]="postData?.parentThreadImage"
+            class="w-full h-full circle-div"
+          />
+          } @else{
+          <app-default-user-image />
+          } }
         </div>
+        <h4
+          class="font-semibold text-sm hover:text-blue-500"
+          (click)="threadClicked()"
+        >
+          r/{{ postData?.parentThreadTitle }}
+        </h4>
+        <i class="bi bi-dot text-gray-600"></i>
+        <h4 class="text-sm text-gray-500">{{ postData?.createdAt }}</h4>
+      </div>
+      <div>
+        <i class="bi bi-three-dots"></i>
+      </div>
+    </div>
 
-        <!-- text content... -->
-        <div class="mb-2">
-            <h4 class="text-gray-700 text-base">{{textContent}}</h4>
+    <!-- title -->
+    <div class="mb-2">
+      <h4 class="font-semibold text-xl">{{ postData?.title }}</h4>
+    </div>
 
-        </div>
+    <!-- text content... -->
+    <div class="mb-2">
+      <h4 class="text-gray-700 text-base">{{ postData?.textContent }}</h4>
+    </div>
 
-        <!-- Tag -->
-        @if(tag!.length > 0) {
-        <div class="mb-3 w-fit">
-            <div class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1">
-                <h4 class="text-sm text-white">{{tag}}</h4>
-            </div>
-        </div>
+    <!-- Tag -->
+    @if(tag!.length > 0) {
+    <div class="mb-3 w-fit">
+      <div
+        class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1"
+      >
+        <h4 class="text-sm text-white">{{ postData?.tag }}</h4>
+      </div>
+    </div>
+    }
+
+    <!-- post buttons -->
+    <div class="flex gap-3">
+      <!-- votes -->
+      <app-votes
+        [usersVote]="userVote"
+        [voteCount]="postData?.voteCount"
+        [postId]="postData?._id"
+      />
+
+      <!-- <div
+        class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2"
+      >
+        @if(!isUpVote){
+        <i
+          class="bi bi-caret-up text-md font-semibold"
+          (mouseenter)="hoverUpVote()"
+          (mouseleave)="hoverUpVote()"
+        ></i>
+        } @else{
+        <i
+          class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold"
+          (mouseleave)="hoverUpVote()"
+        ></i>
         }
 
-        <!-- post buttons -->
-        <div class="flex gap-3">
-            <div class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2">
-                <i class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold"></i>
-                <!-- current votes -->
-                <h4 class=" font-semibold text-xs">0</h4>
-                <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold"></i>
-            </div>
+        <h4 class="font-semibold text-xs">0</h4>
+        @if(!isDownVote){
+        <i
+          class="bi bi-caret-down text-md hover:text-blue-600 font-semibold"
+          (mouseenter)="hoverDownVote()"
+          (mouseleave)="hoverDownVote()"
+        ></i>
+        } @else{<i
+          class="bi bi-caret-down-fill text-md hover:text-blue-600 font-semibold"
+          (mouseleave)="hoverDownVote()"
+        ></i>
+        }
+      </div> -->
 
-            <!-- comments -->
-            <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
-                <i class="bi bi-chat text-md font-semibold"></i>
-                <!-- current votes -->
-                <h4 class="font-semibold text-xs">{{commentCount}}</h4>
-            </div>
-            
-            <!-- award icon  -->
-            <div class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5">
-                <i class="bi bi-award"></i>
+      <!-- comments -->
+      <div
+        class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3"
+      >
+        <i class="bi bi-chat text-md font-semibold"></i>
+        <!-- current votes -->
+        <h4 class="font-semibold text-xs">{{ postData?.commentCount }}</h4>
+      </div>
 
-            </div>
+      <!-- award icon  -->
+      <div
+        class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5"
+      >
+        <i class="bi bi-award"></i>
+      </div>
 
-            <!-- share icon thing -->
-            <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
-                <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
-                <!-- current votes -->
-                <h4 class="font-semibold text-xs">Share</h4>
-            </div>
-        </div>
+      <!-- share icon thing -->
+      <div
+        class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3"
+      >
+        <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
+        <!-- current votes -->
+        <h4 class="font-semibold text-xs">Share</h4>
+      </div>
     </div>
+  </div>
 </section>
-
-
-
-

@@ -8,58 +8,54 @@ import { GeneralService } from '../../services/general.service';
   selector: 'app-login',
   imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit{
-  constructor(private router: Router){}
+export class LoginComponent implements OnInit {
+  constructor(private router: Router) {}
 
   loginService = inject(LoginService);
   generalService = inject(GeneralService);
-
 
   // create form items
   userLoginForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
-  })
+  });
 
   onSubmitLogin() {
     this.loginService.loginUser(this.userLoginForm.value).subscribe({
       next: (data) => {
-        console.log("Data received back from login: ", data);
+        console.log('Data received back from login: ', data);
         // set user data
-        this.generalService.setUserData({username: data.username, _id: data._id, profileImage: data.profileImage});
+        this.generalService.setUserData(data);
         this.generalService.showHeader = true;
         this.router.navigate(['home']);
-
       },
       error: (error) => {
-        console.log("Error on login: ", error);
-      }
+        console.log('Error on login: ', error);
+      },
     });
   }
-
 
   ngOnInit(): void {
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
       next: (data) => {
-        console.log("Data from is user Authenticated ", data);
+        console.log('Data from is user Authenticated ', data);
         this.loginService.isAuthenticated = true;
       },
       error: (error) => {
         this.loginService.isAuthenticated = false;
-        console.log("Error with checking if user is Authenticated:", error);
-      }
-    })
+        console.log('Error with checking if user is Authenticated:', error);
+      },
+    });
   }
-
 
   // login github
   loginGithub() {
-    console.log("github button pressed.....");
+    console.log('github button pressed.....');
     this.loginService.githubLogin();
-    
+
     // .subscribe({
     //   next: (data) => {
     //     console.log("Data from GITHUB LOGIN ", data);
@@ -77,5 +73,4 @@ export class LoginComponent implements OnInit{
     this.generalService.LinkToPage(route);
     this.generalService.showHeader = true;
   }
-
 }

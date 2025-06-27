@@ -9,11 +9,11 @@ import { GeneralService } from '../../services/general.service';
   selector: 'app-register',
   imports: [ReactiveFormsModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
 })
 export class RegisterComponent {
   constructor(private router: Router) {}
-  
+
   registerService = inject(RegisterService);
   generalService = inject(GeneralService);
 
@@ -22,19 +22,18 @@ export class RegisterComponent {
     username: new FormControl(''),
     email: new FormControl(''),
     password: new FormControl(''),
-  })
-
+  });
 
   onSubmitRegister() {
     this.registerService.registerUser(this.userRegisterForm.value).subscribe({
       next: (data) => {
-        console.log("Data received back from Register: ", data);
-        this.generalService.setUserData({username: data.username, _id: data._id, profileImage: data.profileImage});
+        console.log('Data received back from Register: ', data);
+        this.generalService.setUserData(data);
         this.router.navigate(['/home']);
       },
       error: (error) => {
-        console.log("Error on login: ", error);
-      }
+        console.log('Error on login: ', error);
+      },
     });
   }
 
@@ -43,5 +42,4 @@ export class RegisterComponent {
     this.generalService.LinkToPage(route);
     this.generalService.showHeader = true;
   }
-
 }
