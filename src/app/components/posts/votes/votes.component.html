@@ -1,0 +1,32 @@
+<div
+  class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2"
+>
+  @if(!isUpVote){
+  <i
+    class="bi bi-caret-up text-md font-semibold"
+    (mouseenter)="hoverUpVote()"
+    (mouseleave)="hoverUpVote()"
+  ></i>
+  } @else{
+  <i
+    class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold"
+    (mouseleave)="hoverUpVote()"
+    (click)="voteClicked(true)"
+  ></i>
+  }
+
+  <!-- current votes -->
+  <h4 class="font-semibold text-xs">{{ voteCount }}</h4>
+  @if(!isDownVote){
+  <i
+    class="bi bi-caret-down text-md font-semibold"
+    (mouseenter)="hoverDownVote()"
+    (mouseleave)="hoverDownVote()"
+  ></i>
+  } @else{<i
+    class="bi bi-caret-down-fill text-md text-blue-600 font-semibold"
+    (mouseleave)="hoverDownVote()"
+    (click)="voteClicked(false)"
+  ></i>
+  }
+</div>

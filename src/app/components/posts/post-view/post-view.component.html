@@ -1,135 +1,186 @@
-
-
-
 <section class="">
-    <div class="flex">
+  <div class="flex">
+    <div class="h-full">
+      <!-- Notifications -->
+      <div
+        class="flex justify-center items-center mt-5 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-full w-[40px] h-[40px]"
+        (click)="goBack()"
+      >
+        <i class="bi bi-arrow-left text-md font-semibold"></i>
+      </div>
+    </div>
 
-        <div class="h-full">
-            <!-- Notifications -->
-            <div class="flex justify-center items-center mt-5 hover:cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-full w-[40px] h-[40px]" (click)="goBack()">
-                <i class="bi bi-arrow-left text-md font-semibold"></i>
-            </div>
-            
-        </div>
-        
-
-        
-        <div class="h-full w-[65%] mt-2 pl-2 h-screen overflow-y-scroll">
-            <div class="flex justify-between">
-
-                @if(postData && username) {
-                <app-thread-display [title]="threadData!.title" [type]="'post-view'" [postObject]="postData" [username]="username" [threadImage]="threadData?.threadImage"/>
-                }
-                <!-- only let users who own the post to delete it... -->
-                
-                <div>
-                    <button class="p-2 rounded bg-red-500 hover:cursor-pointer text-white" (click)="deletePost()">X</button>
-                </div>
-                
-            </div>
-            <!-- title -->
-            <div class="mb-2">
-                <h2 class="font-bold text-2xl">{{postData?.post?.title}}</h2>
-            </div>
-
-            <!-- text content -->
-             <div class="my-5">
-                <p class="text-gray-600">{{postData?.post?.textContent}}</p>
-             </div>
-            
-            @if(postData?.post?.tag) {
-            <div class="">
-                <!-- Tag -->
-                    <div class="mb-3 w-fit">
-                        <div class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1">
-                            <h4 class="text-sm text-white">{{postData?.post?.tag}}</h4>
-                        </div>
-                    </div>
-            </div>
+    <div class="h-full w-[65%] mt-2 pl-2 h-screen overflow-y-scroll">
+      <div class="flex justify-between">
+        @if(postData && username) {
+        <app-thread-display
+          [title]="threadData!.title"
+          [type]="'post-view'"
+          [postObject]="postData"
+          [username]="username"
+          [threadImage]="threadData?.threadImage"
+        />
         }
+        <!-- only let users who own the post to delete it... -->
 
-            <!-- post buttons -->
-            <div class="flex gap-3 mb-4">
-                <div class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2">
-                    <i class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold"></i>
-                    <!-- current votes -->
+        <div>
+          <button
+            class="p-2 rounded bg-red-500 hover:cursor-pointer text-white"
+            (click)="deletePost()"
+          >
+            X
+          </button>
+        </div>
+      </div>
+      <!-- title -->
+      <div class="mb-2">
+        <h2 class="font-bold text-2xl">{{ postData?.post?.title }}</h2>
+      </div>
+
+      <!-- text content -->
+      <div class="my-5">
+        <p class="text-gray-600">{{ postData?.post?.textContent }}</p>
+      </div>
+
+      @if(postData?.post?.tag) {
+      <div class="">
+        <!-- Tag -->
+        <div class="mb-3 w-fit">
+          <div
+            class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1"
+          >
+            <h4 class="text-sm text-white">{{ postData?.post?.tag }}</h4>
+          </div>
+        </div>
+      </div>
+      }
+
+      <!-- post buttons -->
+      <div class="flex gap-3 mb-4">
+        <!-- votes -->
+        <app-votes />
+
+        <!-- <div class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2">
+                    @if(!isUpVote){
+                        <i class="bi bi-caret-up text-md font-semibold" (mouseenter)="hoverUpVote()" (mouseleave)="hoverUpVote()"></i>
+                    }
+                    @else{
+                        <i class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold" (mouseleave)="hoverUpVote()"></i>          
+                    }
                     <h4 class=" font-semibold text-xs">0</h4>
-                    <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold"></i>
-                </div>
+                    @if(!isDownVote){
+                        <i class="bi bi-caret-down text-md font-semibold" (mouseenter)="hoverDownVote()" (mouseleave)="hoverDownVote()"></i>
+                    }
+                    @else {
+                        <i class="bi bi-caret-down-fill text-md text-blue-600 font-semibold" (mouseleave)="hoverDownVote()"></i>
+                    }
+                </div> -->
 
-                <!-- comment -->
-                <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
-                    <i class="bi bi-chat text-md font-semibold"></i>
-                    <!-- current votes -->
-                    <h4 class="font-semibold text-xs">{{postData?.post?.commentCount}}</h4>
-                </div>
-                <!-- award icon -->
-                <div class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5">
-                    <i class="bi bi-award"></i>
+        <!-- comment -->
+        <div
+          class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3"
+        >
+          <i class="bi bi-chat text-md font-semibold"></i>
+          <!-- current votes -->
+          <h4 class="font-semibold text-xs">
+            {{ postData?.post?.commentCount }}
+          </h4>
+        </div>
+        <!-- award icon -->
+        <div
+          class="flex rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-5"
+        >
+          <i class="bi bi-award"></i>
+        </div>
+        <!-- share icon -->
+        <div
+          class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3"
+        >
+          <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
+          <!-- current votes -->
+          <h4 class="font-semibold text-xs">Share</h4>
+        </div>
+      </div>
 
-                </div>
-                <!-- share icon -->
-                <div class="flex gap-2 items-center rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2 px-3">
-                    <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
-                    <!-- current votes -->
-                    <h4 class="font-semibold text-xs">Share</h4>
-                </div>
-            </div>
+      <!-- comment input -->
+      @if(this.generalService.currentUserData){
+      <div
+        class="w-full border py-2 px-4"
+        [ngClass]="{'rounded-xl': isFocusComment, 'border-gray-700': isFocusComment, 'rounded-full': !isFocusComment, 'border-gray-400': !isFocusComment,}"
+        (focus)="focusComment()"
+      >
+        @if(isFocusComment) {
+        <form [formGroup]="postComment" (ngSubmit)="postCommentForm()">
+          <textarea
+            formControlName="commentText"
+            class="w-full h-full p-1 focus:outline-none"
+            placeholder="Comment"
+          ></textarea>
+          <div class="flex gap-3 justify-end mt-6">
+            <button
+              type="button"
+              class="rounded-full p-2 bg-[#eaedef] text-base text-gray-800 hover:cursor-pointer hover:bg-gray-200"
+              (click)="deFocusComment()"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="bg-blue-600 rounded-full text-white text-base p-2 hover:cursor-pointer hover:bg-blue-700"
+            >
+              Comment
+            </button>
+          </div>
+        </form>
+        } @else {
+        <input
+          class="text-base text-gray-500 w-full h-full"
+          (focus)="focusComment()"
+          placeholder="Add a Comment"
+        />
+        }
+      </div>
+      }
 
-            <!-- comment input -->
-            @if(this.generalService.currentUserData){
-            <div class="w-full border py-2 px-4" [ngClass]="{'rounded-xl': isFocusComment, 'border-gray-700': isFocusComment, 'rounded-full': !isFocusComment, 'border-gray-400': !isFocusComment,}" (focus)="focusComment()">
-                
-                
-                @if(isFocusComment) {
-                    <form [formGroup]="postComment" (ngSubmit)="postCommentForm()">
-                   
-                        <textarea formControlName="commentText" class="w-full h-full p-1 focus:outline-none" placeholder="Comment"></textarea>
-                        <div class="flex gap-3 justify-end mt-6">
-                            <button type="button" class="rounded-full p-2 bg-[#eaedef] text-base text-gray-800 hover:cursor-pointer hover:bg-gray-200" (click)="deFocusComment()">Cancel</button>
-                            <button type="submit" class="bg-blue-600 rounded-full text-white text-base p-2 hover:cursor-pointer hover:bg-blue-700">Comment</button>
-                        </div>
-                    </form>
-                }
-                @else {
-                    <input class="text-base text-gray-500 w-full h-full" (focus)="focusComment()" placeholder="Add a Comment"/>
-                }
-            </div>
-            }
+      <!-- some sorting things -->
+      <div class="flex items-center mt-4">
+        <div class="flex gap-3">
+          <h4 class="text-sm text-gray-600">Sort by:</h4>
+          <div class="flex gap-1 items-center">
+            <h4 class="text-sm text-gray-600 font-semibold">Best</h4>
+            <i class="bi bi-chevron-down text-sm"></i>
+          </div>
+        </div>
 
-            <!-- some sorting things -->
-            <div class="flex items-center mt-4">
-                <div class="flex gap-3">
-                    <h4 class="text-sm text-gray-600">Sort by:</h4>
-                    <div class="flex gap-1 items-center">
-                        <h4 class="text-sm text-gray-600 font-semibold">Best</h4>
-                        <i class="bi bi-chevron-down text-sm"></i>
-                    </div>
-                </div>
+        <div
+          class="flex gap-3 ml-5 rounded-full border border-gray-300 py-2 px-4"
+        >
+          <i class="bi bi-search text-gray-500"></i>
+          <h4 class="text-gray-500">Search Comments</h4>
+        </div>
+      </div>
 
-                <div class="flex gap-3 ml-5 rounded-full border border-gray-300 py-2 px-4">
-                    <i class="bi bi-search text-gray-500"></i>
-                    <h4 class="text-gray-500">Search Comments</h4>
-                </div>
-            </div>
-
-            <!-- comments -->
-            <div class="mt-4">
-                <!-- <div *ngFor="">
+      <!-- comments -->
+      <div class="mt-4">
+        <!-- <div *ngFor="">
                     <div></div>
 
 
                 </div> -->
 
-                <!-- Note 
+        <!-- Note 
                     Button on each comment, that will open up comment form like above, but will 
                     set parentComment to id of comment that you clicked 'comment' on 
 
                     set comments 'commentOnComment(commentId)'
                 -->
-                @if(commentData) {
-                    <app-comment-display [comments]="commentData" [replyHandleFunction]="handleCommentReply" [level]="0"/>
-                    <!-- <div *ngFor="let comment of commentData; let i = index">
+        @if(commentData) {
+        <app-comment-display
+          [comments]="commentData"
+          [replyHandleFunction]="handleCommentReply"
+          [level]="0"
+        />
+        <!-- <div *ngFor="let comment of commentData; let i = index">
                         <app-comment-display [userImage]="comment.ownerPicture" [username]="comment.ownerUserName" [createdAt]="comment.createdAt" [comment]="comment.commentText" [commentId]="comment._id" [replyHandleFunction]="handleCommentReply"/>
                         @if(comment.childComments.length){
                             <div *ngFor="let childComment of comment.childComments; let j = index" class="ml-12">
@@ -137,84 +188,79 @@
                             </div>
                         }
                     </div> -->
-                }
-                @else{
-                <h4 class="text-xl">...No comments yet...</h4>
-                }
-            </div>
-
-        </div>
-<!-- 
+        } @else{
+        <h4 class="text-xl">...No comments yet...</h4>
+        }
+      </div>
+    </div>
+    <!-- 
         <div *ngFor="let item of postData.posts; let i = index">
             <app-post-view-outside [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [type]="'thread'" (click)="postClicked(i)"/>
         </div> -->
 
+    <!-- right side bar -->
+    <!-- Thread information  -->
+    <div class="rounded-xl bg-[#f9fafa] w-[25%] ml-6">
+      <!-- Bio / thread details -->
+      <div class="p-4 border-b border-gray-300">
+        <h4 class="font-semibold mb-1 text-xl">r/{{ threadData?.title }}</h4>
+        <h4 class="font-semibold mb-1">{{ threadData?.bio }}</h4>
+        <div class="flex items-center gap-2">
+          <i class="bi bi-credit-card-2-front text-gray-600"></i>
+          <h4 class="text-sm text-gray-600">
+            Created {{ threadData?.createdAt }}
+          </h4>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="bi bi-globe text-gray-600"></i>
+          <h4 class="text-sm text-gray-600">Public</h4>
+        </div>
+        <!-- Status - Members, active, top 1% -->
+        <div class="flex justify-between mt-1">
+          <!-- members -->
+          <div>
+            <h4 class="font-semibold">{{ threadData?.followersCount }}</h4>
+            <h4 class="text-sm text-gray-600">Members</h4>
+          </div>
+          <!-- active -->
+          <div>
+            <h4 class="font-semibold">33</h4>
+            <div class="flex gap-1 items-center">
+              <div class="circle-div h-[10px] w-[10px] bg-green-500"></div>
+              <h4 class="text-sm text-gray-600">Active</h4>
+            </div>
+          </div>
+          <!-- Top 1 -->
+          <div>
+            <h4 class="font-semibold">Top 1%</h4>
+            <div class="">
+              <h4 class="text-sm text-gray-600">Rank By Size</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- community links -->
+      <div class="px-4 py-3">
+        <h4 class="text-gray-500 font-semibold mb-2">Community Bookmarks</h4>
+        <div *ngFor="let item of threadData?.links; let i = index">
+          <a
+            class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1"
+            [href]="item"
+          >
+            <h4>{{ item }}</h4>
+          </a>
+        </div>
+      </div>
+      <!-- moderators -->
+      <div class="px-4 py-3">
+        <h4 class="text-gray-500 font-semibold mb-2">Moderators</h4>
 
-
-       
-
-
-
-        <!-- right side bar -->
-            <!-- Thread information  -->
-            <div class="rounded-xl bg-[#f9fafa] w-[25%] ml-6">
-                <!-- Bio / thread details -->
-                <div class="p-4 border-b border-gray-300">
-                    <h4 class="font-semibold mb-1 text-xl">r/{{threadData?.title}}</h4>
-                    <h4 class="font-semibold mb-1">{{threadData?.bio}}</h4>
-                    <div class="flex items-center gap-2">
-                        <i class="bi bi-credit-card-2-front text-gray-600"></i>
-                        <h4 class="text-sm text-gray-600">Created {{threadData?.createdAt}}</h4>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="bi bi-globe text-gray-600"></i>
-                        <h4 class="text-sm text-gray-600">Public</h4>
-                    </div>
-                    <!-- Status - Members, active, top 1% -->
-                     <div class="flex justify-between mt-1">
-                        <!-- members -->
-                        <div>
-                            <h4 class="font-semibold">{{threadData?.followersCount}}</h4>
-                            <h4 class="text-sm text-gray-600">Members</h4>
-                        </div>
-                        <!-- active -->
-                        <div>
-                            <h4 class="font-semibold">33</h4>
-                            <div class="flex gap-1 items-center">
-                                <div class="circle-div h-[10px] w-[10px] bg-green-500"></div>
-                                <h4 class="text-sm text-gray-600">Active</h4>
-                            </div>
-                        </div>
-                        <!-- Top 1 -->
-                        <div>
-                            <h4 class="font-semibold">Top 1%</h4>
-                            <div class="">
-                                <h4 class="text-sm text-gray-600">Rank By Size</h4>
-                            </div>
-                        </div>
-                     </div>
-                </div>
-                <!-- community links -->
-                <div class="px-4 py-3">
-                    <h4 class="text-gray-500 font-semibold mb-2">Community Bookmarks</h4>
-                    <div *ngFor="let item of threadData?.links; let i = index">
-                        <a class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1" [href]="item">
-                            <h4>{{item}}</h4>
-                        </a>
-                    </div>
-                </div>
-                <!-- moderators -->
-                <div class="px-4 py-3">
-                    <h4 class="text-gray-500 font-semibold mb-2">Moderators</h4>
-
-                    <!-- <div *ngFor="let item of threadData?.links; let i = index">
+        <!-- <div *ngFor="let item of threadData?.links; let i = index">
                         <a class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1" [href]="item">
                             <h4>{{item}}</h4>
                         </a>
                     </div> -->
-
-
-                </div>
-            </div>
+      </div>
     </div>
+  </div>
 </section>
