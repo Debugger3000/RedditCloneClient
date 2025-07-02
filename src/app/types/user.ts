@@ -15,7 +15,7 @@ export type UserLoginData = Partial<{
 
 export type Votes = {
   postId: string | null | undefined;
-  typeOfVote: boolean | null | undefined;
+  voteType: boolean | null | undefined;
 }[];
 
 export type UserData = {

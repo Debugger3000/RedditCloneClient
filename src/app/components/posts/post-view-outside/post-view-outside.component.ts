@@ -4,10 +4,11 @@ import { DefaultUserImageComponent } from '../../micro/default-user-image/defaul
 import { Router } from '@angular/router';
 import { PostData } from '../../../types/post';
 import { VotesComponent } from '../votes/votes.component';
+import { TimestampComponent } from '../../micro/timestamp/timestamp.component';
 
 @Component({
   selector: 'app-post-view-outside',
-  imports: [DefaultUserImageComponent, VotesComponent],
+  imports: [DefaultUserImageComponent, VotesComponent, TimestampComponent],
   templateUrl: './post-view-outside.component.html',
   styleUrl: './post-view-outside.component.scss',
 })
@@ -20,7 +21,7 @@ export class PostViewOutsideComponent implements OnInit {
 
   @Input() title: string | null = '';
   @Input() textContent: string | null = '';
-  @Input() createdAt: string | null = '';
+  // @Input() createdAt: string | null = '';
   @Input() user: string | null = '';
   @Input() postId: string | null = '';
   @Input() tag: string | null = '';
@@ -42,7 +43,7 @@ export class PostViewOutsideComponent implements OnInit {
   // true - UP
   // false - DOWN
   // null - no vote
-  userVote: boolean | null = null;
+  userVote: boolean | null | undefined = null;
 
   ngOnInit(): void {
     //get users
@@ -60,6 +61,7 @@ export class PostViewOutsideComponent implements OnInit {
     // check to see if user has voted on this post or not
     this.checkUserVote();
 
+    console.log('post data ID: ', this.postData?._id);
     console.log('Comment count value: ', this.commentCount);
   }
 
@@ -92,16 +94,43 @@ export class PostViewOutsideComponent implements OnInit {
   // outsourced to votes service since it will share this function with some other components
   // check is user has voted on this post
   checkUserVote() {
-    this.generalService.currentUserData?.votes.forEach((item) => {
-      // if item.postId is equal to postData._id then check for vote status, either up or down...
-      if (item.postId === this.postData?._id) {
-        if (item.typeOfVote) {
-          this.userVote = true;
-        } else {
-          this.userVote = false;
+    // console.log(
+    //   'users data from VOTE POST: ',
+    //   this.generalService.currentUserData
+    // );
+    let votes = this.generalService.currentUserData?.votes;
+    for (let i = 0; i < votes!.length; i++) {
+      let id = votes![i].postId;
+      let type = votes![i].voteType;
+      // console.log('current vote ID:', votes![i]);
+      // console.log('post id: ', this.postData?._id);
+      // console.log('TYPE OF FCKN: ', type);
+      if (id == this.postData?._id) {
+        if (type !== null) {
+          this.userVote = type;
+          console.log('assigning a value i think now; ', type);
         }
+        // console.log('users vote for this post is: ', item.typeOfVote);
       }
-    });
+      // console.log('votes on index', i, votes![i]);
+    }
+    console.log('value of user vote now: ', this.userVote);
+  }
+
+  // refresh component after vote has been clicked
+  refreshVote(state: boolean) {
+    // refresh user data / GET
+
+    // refresh this posts data / GET
+
+    // check users vote again so it updates...
+
+    // this.checkUserVote();
+
+    //
+    this.userVote = state;
+
+    console.log('teheheheheheheheheheheheehehehe:', state);
   }
 
   // This will take post data for a single post

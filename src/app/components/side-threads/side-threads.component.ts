@@ -9,11 +9,10 @@ import { NgFor } from '@angular/common';
   selector: 'app-side-threads',
   imports: [SidePanelBlockComponent, NgFor],
   templateUrl: './side-threads.component.html',
-  styleUrl: './side-threads.component.scss'
+  styleUrl: './side-threads.component.scss',
 })
 export class SideThreadsComponent implements OnInit {
-
-  constructor(private generalService : GeneralService) {}
+  constructor(private generalService: GeneralService) {}
   threadService = inject(ThreadsService);
 
   currentJoinedThreads: ThreadData[] | null = null;
@@ -21,39 +20,35 @@ export class SideThreadsComponent implements OnInit {
   clickState: boolean = true;
 
   ngOnInit(): void {
-    
-
     // grab threads that the user is joined too...
-    this.threadService.getThreadByUser().subscribe({
-      next: (data) => {
-        // console.log("Data from is user Authenticated ", data);
-        console.log("side panel threads: ",data);
-  
-        this.currentJoinedThreads = data;
-        
-      },
-      error: (error) => {
-        console.log("Error for getting threads for user on left side panel...", error);
-      }
-    })
+    // make sure
+    if (this.generalService.currentUserData) {
+      this.threadService.getThreadByUser().subscribe({
+        next: (data) => {
+          // console.log("Data from is user Authenticated ", data);
+          // console.log("side panel threads: ",data);
 
-
-  }
-  
-
-  // link 
-  threadLink(id: string | undefined) {
-    if(id){
-      this.generalService.linkWithParams('thread',id);
+          this.currentJoinedThreads = data;
+        },
+        error: (error) => {
+          console.log(
+            'Error for getting threads for user on left side panel...',
+            error
+          );
+        },
+      });
     }
-    
   }
 
-  
+  // link
+  threadLink(id: string | undefined) {
+    if (id) {
+      this.generalService.linkWithParams('thread', id);
+    }
+  }
 
   // title clicked, show no items or show items...
   titleClick() {
     this.clickState = !this.clickState;
   }
-
 }
