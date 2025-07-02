@@ -31,7 +31,9 @@
           r/{{ postData?.parentThreadTitle }}
         </h4>
         <i class="bi bi-dot text-gray-600"></i>
-        <h4 class="text-sm text-gray-500">{{ postData?.createdAt }}</h4>
+        <h4 class="text-sm text-gray-500">
+          <app-timestamp [timeStamp]="postData?.createdAt" [type]="'post'" />
+        </h4>
       </div>
       <div>
         <i class="bi bi-three-dots"></i>
@@ -66,37 +68,8 @@
         [usersVote]="userVote"
         [voteCount]="postData?.voteCount"
         [postId]="postData?._id"
+        [refreshVote]="refreshVote"
       />
-
-      <!-- <div
-        class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2"
-      >
-        @if(!isUpVote){
-        <i
-          class="bi bi-caret-up text-md font-semibold"
-          (mouseenter)="hoverUpVote()"
-          (mouseleave)="hoverUpVote()"
-        ></i>
-        } @else{
-        <i
-          class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold"
-          (mouseleave)="hoverUpVote()"
-        ></i>
-        }
-
-        <h4 class="font-semibold text-xs">0</h4>
-        @if(!isDownVote){
-        <i
-          class="bi bi-caret-down text-md hover:text-blue-600 font-semibold"
-          (mouseenter)="hoverDownVote()"
-          (mouseleave)="hoverDownVote()"
-        ></i>
-        } @else{<i
-          class="bi bi-caret-down-fill text-md hover:text-blue-600 font-semibold"
-          (mouseleave)="hoverDownVote()"
-        ></i>
-        }
-      </div> -->
 
       <!-- comments -->
       <div

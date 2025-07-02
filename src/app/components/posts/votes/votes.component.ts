@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { VotesService } from '../../../services/votes.service';
 import { GeneralService } from '../../../services/general.service';
 
@@ -8,7 +14,7 @@ import { GeneralService } from '../../../services/general.service';
   templateUrl: './votes.component.html',
   styleUrl: './votes.component.scss',
 })
-export class VotesComponent {
+export class VotesComponent implements OnInit, OnChanges {
   constructor(
     private voteService: VotesService,
     private generalService: GeneralService
@@ -20,10 +26,27 @@ export class VotesComponent {
 
   // vote user state
   // either true (UP VOTE) or false (DOWN VOTE)
-  @Input() usersVote: boolean | null = false;
+  @Input() usersVote: boolean | null | undefined = false;
   @Input() voteCount: number | null | undefined = 0;
   // post id so vote knows what post is being clicked
   @Input() postId: string | null | undefined = null;
+
+  // refresh component
+  @Input() refreshVote!: (state: boolean) => void;
+
+  ngOnInit(): void {
+    console.log('user vote value on VOTE COMP: ', this.usersVote);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['usersVote']) {
+      this.usersVote = changes['usersVote'].currentValue;
+      console.log(
+        'ng on changes we changed it to value....',
+        changes['usersVote'].currentValue
+      );
+    }
+  }
 
   // vote clicked
   voteClicked(type: boolean) {
@@ -36,6 +59,13 @@ export class VotesComponent {
         .subscribe({
           next: (data: any) => {
             console.log('Data from new VOTE VOTE VOTE... ', data);
+            // this.refreshVote(type);
+            if (type == true) {
+              this.voteCount = this.voteCount! + 1;
+            } else if (type == false) {
+              this.voteCount = this.voteCount! - 1;
+            }
+            this.usersVote = type;
           },
           error: (error) => {
             console.log('Error for creating vote:', error);
