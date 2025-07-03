@@ -14,12 +14,6 @@ export class TimestampComponent implements OnInit {
   // Thread, post, comment...
   @Input() type: string | null = null;
 
-  // comments / posts
-  // Same day - hours ago
-  // same month - days ago
-  // same year - months ago
-  // different year - years ago
-
   // set this variable once we receive timeStamp and alter it to the proper...
   altTimeStamp: string | number | null = null;
 
@@ -38,13 +32,33 @@ export class TimestampComponent implements OnInit {
   compD(): string | number {
     let today = new Date();
     let stamp = new Date();
+    console.log('type: ', this.type);
+    console.log('Raw DAte String: ', this.timeStamp);
     // set stamp to actual timestamp of inputted createdAt string...
     if (this.timeStamp != null) {
       stamp.setTime(Date.parse(this.timeStamp));
     }
+    //
+    console.log('DATE GIVEN: ', stamp);
+    console.log('get month: ', stamp.getMonth());
+    console.log('get date: ', stamp.getDate());
+
+    // if type is full date
+    if (this.type == 'full-date') {
+      // return stamp.toISOString();
+      console.log('getting full date here........................');
+      return `${stamp.getMonth() + 1}-${
+        stamp.getDate() + 1
+      }-${stamp.getFullYear()}`;
+    }
 
     // check same year, month, day, to hour
     // whatever one fails, we use the next one down the chain...
+    // comments / posts
+    // Same day - hours ago
+    // same month - days ago
+    // same year - months ago
+    // different year - years ago
     if (today.getFullYear() != stamp.getFullYear()) {
       return `${today.getFullYear() - stamp.getFullYear()}yrs ago`;
     } else if (today.getMonth() != stamp.getMonth()) {
