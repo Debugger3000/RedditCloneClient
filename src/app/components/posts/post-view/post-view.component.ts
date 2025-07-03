@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ThreadData } from '../../../types/thread';
-import { PostData } from '../../../types/post';
+import { Post, PostData } from '../../../types/post';
 import { ThreadDisplayComponent } from '../../threads/thread-display/thread-display/thread-display.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location, NgFor, NgClass } from '@angular/common';
@@ -13,6 +13,8 @@ import { CommentsService } from '../../../services/comments.service';
 import { Comment, LiveComment } from '../../../types/comment';
 import { CommentDisplayComponent } from '../../comment-display/comment-display.component';
 import { VotesComponent } from '../votes/votes.component';
+import { VotesService } from '../../../services/votes.service';
+import { TimestampComponent } from '../../micro/timestamp/timestamp.component';
 
 @Component({
   selector: 'app-post-view',
@@ -23,6 +25,7 @@ import { VotesComponent } from '../votes/votes.component';
     ReactiveFormsModule,
     CommentDisplayComponent,
     VotesComponent,
+    TimestampComponent,
   ],
   templateUrl: './post-view.component.html',
   styleUrl: './post-view.component.scss',
@@ -35,7 +38,8 @@ export class PostViewComponent implements OnInit {
     private threadService: ThreadsService,
     private postService: PostService,
     public generalService: GeneralService,
-    private commentService: CommentsService
+    private commentService: CommentsService,
+    private voteService: VotesService
   ) {}
 
   // thread data
@@ -55,22 +59,20 @@ export class PostViewComponent implements OnInit {
     __v: 0,
   };
   // posts data for this thread
-  postData: { post: PostData } | null = {
-    post: {
-      _id: '',
-      title: '',
-      textContent: '',
-      commentCount: null,
-      voteCount: null,
-      user: '',
-      parentThread: '',
-      parentThreadImage: '',
-      parentThreadTitle: '',
-      tag: '',
-      createdAt: '',
-      updatedAt: '',
-      __v: 0,
-    },
+  postData: PostData | null = {
+    _id: '',
+    title: '',
+    textContent: '',
+    commentCount: null,
+    voteCount: null,
+    user: '',
+    parentThread: '',
+    parentThreadImage: '',
+    parentThreadTitle: '',
+    tag: '',
+    createdAt: '',
+    updatedAt: '',
+    __v: 0,
   };
 
   // postData$: Observable<{posts: PostData}>;
@@ -95,12 +97,20 @@ export class PostViewComponent implements OnInit {
   // upvote boolean
   isUpVote = false;
   isDownVote = false;
+  userVote: boolean | null | undefined = null;
 
   // form group
   // create form items
   postComment = new FormGroup({
     commentText: new FormControl(''),
   });
+
+  // ---------------- VOTE
+  // refresh component after vote has been clicked
+  refreshVote(state: boolean) {
+    this.userVote = state;
+    console.log('teheheheheheheheheheheheehehehe:', state);
+  }
 
   // set comment id for a reply onto another comment...
   // callback function to child component
@@ -117,7 +127,7 @@ export class PostViewComponent implements OnInit {
   postCommentForm() {
     // post through api...
     const newObject: Comment = {
-      parentThread: this.postData?.post?._id,
+      parentThread: this.postData?._id,
       parentComment: this.commentParent,
       commentText: this.postComment.value.commentText,
       owner: this.generalService.currentUserData?._id,
@@ -159,16 +169,19 @@ export class PostViewComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.threadId = params.get('id');
       this.postId = params.get('idPost');
-      console.log('thread ID:', this.threadId);
-      console.log('post  ID:', this.postId);
+      // console.log('thread ID:', this.threadId);
+      // console.log('post  ID:', this.postId);
     });
 
-    // get thread data
-    this.getThreadCall();
     //get post data
     this.getPost();
 
-    console.log('postData before userGETBYID: ', this.postData);
+    // get users vote
+    this.userVote = this.voteService.checkUserVote(this.postId);
+    // get thread data
+    this.getThreadCall();
+
+    // console.log('postData before userGETBYID: ', this.postData);
 
     // get comments for this post
     this.getComments();
@@ -196,7 +209,7 @@ export class PostViewComponent implements OnInit {
     // should grab its own threads data from id in the url route
     this.threadService.getThread(this.threadId).subscribe({
       next: (data: any) => {
-        console.log('Current THREAD PAGE DATA...  ', data);
+        // console.log('Current THREAD PAGE DATA...  ', data);
         this.threadData = data;
       },
       error: (error) => {
@@ -209,16 +222,16 @@ export class PostViewComponent implements OnInit {
   getPost() {
     this.postService.getPost(this.postId).subscribe({
       next: (data: any) => {
-        console.log('Current post data...  ', data);
+        // console.log('Current post data...  ', data);
         this.postData = data;
 
-        console.log('log for data.post._id: ', data.post.user);
+        console.log('log for data.post._id: ', data!.user);
         //get user
-        this.generalService.getUserById(data.post.user).subscribe({
+        this.generalService.getUserById(data!.user).subscribe({
           next: (data: any) => {
-            console.log('Current User data on post...  ', data);
+            // console.log('Current User data on post...  ', data);
             this.username = data.username;
-            console.log('Current username: ', this.username);
+            // console.log('Current username: ', this.username);
           },
           error: (error) => {
             console.log('Error for getting user by id for post data:', error);
@@ -233,7 +246,7 @@ export class PostViewComponent implements OnInit {
 
   // delete this post
   deletePost() {
-    this.postService.deletePost(this.postData?.post?._id).subscribe({
+    this.postService.deletePost(this.postData?._id).subscribe({
       next: (data: any) => {
         console.log('deleted post data...  ', data);
         this.router.navigate(['/home']);

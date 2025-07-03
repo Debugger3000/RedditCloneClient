@@ -34,22 +34,22 @@
       </div>
       <!-- title -->
       <div class="mb-2">
-        <h2 class="font-bold text-2xl">{{ postData?.post?.title }}</h2>
+        <h2 class="font-bold text-2xl">{{ postData?.title }}</h2>
       </div>
 
       <!-- text content -->
       <div class="my-5">
-        <p class="text-gray-600">{{ postData?.post?.textContent }}</p>
+        <p class="text-gray-600">{{ postData?.textContent }}</p>
       </div>
 
-      @if(postData?.post?.tag) {
+      @if(postData?.tag) {
       <div class="">
         <!-- Tag -->
         <div class="mb-3 w-fit">
           <div
             class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1"
           >
-            <h4 class="text-sm text-white">{{ postData?.post?.tag }}</h4>
+            <h4 class="text-sm text-white">{{ postData?.tag }}</h4>
           </div>
         </div>
       </div>
@@ -58,7 +58,13 @@
       <!-- post buttons -->
       <div class="flex gap-3 mb-4">
         <!-- votes -->
-        <app-votes />
+        <!-- votes -->
+        <app-votes
+          [usersVote]="userVote"
+          [voteCount]="postData?.voteCount"
+          [postId]="postData?._id"
+          [refreshVote]="refreshVote"
+        />
 
         <!-- <div class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2">
                     @if(!isUpVote){
@@ -83,7 +89,7 @@
           <i class="bi bi-chat text-md font-semibold"></i>
           <!-- current votes -->
           <h4 class="font-semibold text-xs">
-            {{ postData?.post?.commentCount }}
+            {{ postData?.commentCount }}
           </h4>
         </div>
         <!-- award icon -->

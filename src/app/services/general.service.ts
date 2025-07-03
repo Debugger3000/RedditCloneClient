@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserData } from '../types/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -31,12 +31,11 @@ export class GeneralService {
         votes: data.votes,
       };
     }
-
     console.log('Current user data variable: ', this.currentUserData);
   }
 
   // Get a user by ID
-  getUserById(userId: string | null | undefined) {
+  getUserById(userId: string | null | undefined): Observable<any> {
     return this.http.get(`${environment.apiRoute}/user/${userId}`, {
       withCredentials: true,
     });
