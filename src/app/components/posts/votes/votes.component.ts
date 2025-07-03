@@ -58,7 +58,19 @@ export class VotesComponent implements OnInit, OnChanges {
         .voteApi({ postId: this.postId, voteType: type })
         .subscribe({
           next: (data: any) => {
-            console.log('Data from new VOTE VOTE VOTE... ', data);
+            // console.log('Data from new VOTE VOTE VOTE... ', data);
+            this.generalService
+              .getUserById(this.generalService.currentUserData?._id)
+              .subscribe({
+                next: (data) => {
+                  console.log('get new user data and set it to: ', data);
+                  // set user data
+                  this.generalService.setUserData(data);
+                },
+                error: (error) => {
+                  console.log('Error on login: ', error);
+                },
+              });
             // this.refreshVote(type);
             if (type == true) {
               this.voteCount = this.voteCount! + 1;
