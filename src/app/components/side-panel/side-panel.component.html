@@ -1,37 +1,37 @@
+<!-- w-[10%] max-[1250px]:w-[20%]  -->
 
+<section class="h-full">
+  @if(!this.sidePanelState) {
+  <section class="border-r border-gray-400 p-4 pr-6 relative h-full">
+    <!-- group-threads (home-popular-explore-all) -->
+    <app-group-threads />
 
-    <!-- w-[10%] max-[1250px]:w-[20%]  -->
-    
-    <section class="">
-    @if(!this.sidePanelState) {
-        <section class="border-r border-gray-400 p-4 pr-6 relative h-screen">
-            <!-- group-threads (home-popular-explore-all) -->
-            <app-group-threads/>
-
-            <!-- Side Panel collapse -->
-            <div (click)="sidePanelClick()" class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md">
-                @if (!this.sidePanelState) {
-                    <i class="bi bi-chevron-left"></i>
-                }
-                @else {
-                    <i class="bi bi-list"></i>
-                }
-            </div>
-            <!-- sub reddit section (show threads user is subscribed too) -->
-            <app-side-threads/>
-        </section>
-        }
-        @else {
-            <section class="border-r border-gray-300 p-4 relative h-screen">
-                <div (click)="sidePanelClick()" class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md">
-                    @if (!this.sidePanelState) {
-                        <i class="bi bi-chevron-left"></i>
-                    }
-                    @else {
-                        <i class="bi bi-list"></i>
-                    }
-                </div>
-            </section>
-        }
-    </section>
-
+    <!-- Side Panel collapse -->
+    <div
+      (click)="sidePanelClick()"
+      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
+    >
+      @if (!this.sidePanelState) {
+      <i class="bi bi-chevron-left"></i>
+      } @else {
+      <i class="bi bi-list"></i>
+      }
+    </div>
+    <!-- sub reddit section (show threads user is subscribed too) -->
+    <app-side-threads />
+  </section>
+  } @else {
+  <section class="border-r border-gray-300 p-4 relative h-full">
+    <div
+      (click)="sidePanelClick()"
+      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
+    >
+      @if (!this.sidePanelState) {
+      <i class="bi bi-chevron-left"></i>
+      } @else {
+      <i class="bi bi-list"></i>
+      }
+    </div>
+  </section>
+  }
+</section>
