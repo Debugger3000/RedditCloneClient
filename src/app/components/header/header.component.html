@@ -1,93 +1,125 @@
-
-<section>
-    <div class="border-b border-gray-400 p-2 flex justify-between items-center px-6">
-        <div class="flex gap-3">
-            <!-- <img src="/Reddit-Logomark-Color-Logo.wine.svg"/> -->
-            <img src="/Reddit-Logo.png" height="100" width="125"/>
-            <!-- <link rel="icon" type="image/" href="Reddit-Logomark-Logo.wine.svg"> -->
-            <!-- <h1 class="text-orange-600 font-bold text-3xl">Reddit</h1> -->
-        </div>
-        <div class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none focus:border-blue-500 shadow relative" (blur)="onBlur()">
-            <i class="bi bi-search text-gray-800"></i>
-            <input type="text" class="text-gray-800 focus:outline-none w-[500px]" id="search" placeholder="Search Reddit" (change)="searchThreads('search')" (focus)="onFocus()"/>
-            @if(this.focusState) {
-            <div class="absolute top-11 left-0 rounded flex flex-col bg-white z-99 w-[550px]">
-                @for (item of currentSearchData; track $index) {
-                    <app-thread-display [title]="item!.title" [threadId]="item!._id" [threadImage]="currentSearchData![$index]?.threadImage"/>
-                }
-            </div>
-            }
-        </div>
-
-        <div class="flex items-center justify-center gap-3">
-            <!-- <app-logoutbutton/> -->
-            <!-- Chat -->
-            <div class="flex justify-center items-center p-2 main-hover-bg-color rounded-full w-[40px] h-[40px] hover:cursor-pointer">
-                <i class="bi bi-chat-dots text-2xl"></i>
-            </div>
-            <!-- + Create thread -->
-            @if(generalService.currentUserData) {
-            <div (click)="linkTo('thread-new', true)" class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full">
-                <i class="bi bi-plus-lg text-2xl"></i>
-                <h1 class="">Create</h1>
-            </div>
-            }
-            <!-- Notifications -->
-            <div class="flex justify-center items-center hover:cursor-pointer main-hover-bg-color rounded-full w-[40px] h-[40px]">
-                <i class="bi bi-bell text-2xl"></i>
-            </div>
-            <!-- profile  -->
-            <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover" (click)="openProfile()">
-
-                <!-- default user image -->
-                @if(generalService.currentUserData?.profileImage?.length === 0 || generalService.currentUserData == null){<i class="bi bi-person text-2xl text-gray-700"></i>}
-                @else{
-                    <div class="absolute inset-0">
-                        <img [src]="profilePicture" class="w-full h-full circle-div"/>
-                    </div>
-                }
-                <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div>
-                @if(profileClicked) {
-                    <div class="absolute top-14 -left-50 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]">
-
-                        <!-- NOT logged in -->
-                        @if(generalService.currentUserData){
-                        <div class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer" (click)="linkTo('edit-profile',true)">
-                            <div class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover">
-                                <i class="bi bi-person text-3xl text-gray-700"></i>
-                                <!-- <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div> -->
-                                
-                            </div>
-                            <div class="flex flex-col">
-                                <h4 class="text-md text-gray-700">View Profile</h4>
-                                <h4 class="text-sm text-gray-400">u/{{username}}</h4>
-                            </div>
-                        </div>
-                        }
-                        @if(!generalService.currentUserData) {
-                        <div class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer" (click)="linkTo('login',false)">
-                            <i class="bi bi-person text-xl"></i>
-                            <h4 class="text-base text-gray-700">Login</h4>
-                        </div>
-                        }
-                        @else {
-                            <div class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer" (click)="logout()">
-                                <i class="bi bi-box-arrow-left text-red-700 text-xl"></i>
-                                <h4 class="text-base text-red-700">Logout</h4>
-                            </div>
-                        }
-
-                    </div>
-
-                }
-            </div>
-            
-            
-        </div>
-
-
-
+<section class="">
+  <div
+    class="border-b border-gray-400 p-2 flex justify-between items-center px-6"
+  >
+    <div class="flex gap-3">
+      <!-- <img src="/Reddit-Logomark-Color-Logo.wine.svg"/> -->
+      <img src="/Reddit-Logo.png" height="100" width="125" />
+      <!-- <link rel="icon" type="image/" href="Reddit-Logomark-Logo.wine.svg"> -->
+      <!-- <h1 class="text-orange-600 font-bold text-3xl">Reddit</h1> -->
+    </div>
+    <div
+      class="flex gap-3 p-2 px-4 border rounded-3xl bg-[#e5ebee] border-none focus:border-blue-500 shadow relative"
+      (blur)="onBlur()"
+    >
+      <i class="bi bi-search text-gray-800"></i>
+      <input
+        type="text"
+        class="text-gray-800 focus:outline-none w-[500px]"
+        id="search"
+        placeholder="Search Reddit"
+        (change)="searchThreads('search')"
+        (focus)="onFocus()"
+      />
+      @if(this.focusState) {
+      <div
+        class="absolute top-11 left-0 rounded flex flex-col bg-white z-99 w-[550px]"
+      >
+        @for (item of currentSearchData; track $index) {
+        <app-thread-display
+          [title]="item!.title"
+          [threadId]="item!._id"
+          [threadImage]="currentSearchData![$index]?.threadImage"
+        />
+        }
+      </div>
+      }
     </div>
 
+    <div class="flex items-center justify-center gap-3">
+      <!-- <app-logoutbutton/> -->
+      <!-- Chat -->
+      <div
+        class="flex justify-center items-center p-2 main-hover-bg-color rounded-full w-[40px] h-[40px] hover:cursor-pointer"
+      >
+        <i class="bi bi-chat-dots text-2xl"></i>
+      </div>
+      <!-- + Create thread -->
+      @if(generalService.currentUserData) {
+      <div
+        (click)="linkTo('thread-new', true)"
+        class="flex justify-center items-center hover:cursor-pointer h-[40px] p-2 gap-1 main-hover-bg-color rounded-full"
+      >
+        <i class="bi bi-plus-lg text-2xl"></i>
+        <h1 class="">Create</h1>
+      </div>
+      }
+      <!-- Notifications -->
+      <div
+        class="flex justify-center items-center hover:cursor-pointer main-hover-bg-color rounded-full w-[40px] h-[40px]"
+      >
+        <i class="bi bi-bell text-2xl"></i>
+      </div>
+      <!-- profile  -->
+      <div
+        class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover"
+        (click)="openProfile()"
+      >
+        <!-- default user image -->
+        @if(generalService.currentUserData?.profileImage?.length === 0 ||
+        generalService.currentUserData == null){<i
+          class="bi bi-person text-2xl text-gray-700"
+        ></i
+        >} @else{
+        <div class="absolute inset-0">
+          <img [src]="profilePicture" class="w-full h-full circle-div" />
+        </div>
+        }
+        <div
+          class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"
+        ></div>
+        @if(profileClicked) {
+        <div
+          class="absolute top-14 -left-50 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]"
+        >
+          <!-- NOT logged in -->
+          @if(generalService.currentUserData){
+          <div
+            class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+            (click)="linkTo('edit-profile', true)"
+          >
+            <div
+              class="flex justify-center items-center hover:cursor-pointer p-1 w-[32px] h-[32px] circle-div bg-[#ff99aa] relative profile-hover"
+            >
+              <i class="bi bi-person text-3xl text-gray-700"></i>
+              <!-- <div class="absolute w-[8px] h-[8px] bg-[#01a816] border border-white circle-div bottom-0 right-0"></div> -->
+            </div>
+            <div class="flex flex-col">
+              <h4 class="text-md text-gray-700">View Profile</h4>
+              <h4 class="text-sm text-gray-400">u/{{ username }}</h4>
+            </div>
+          </div>
+          } @if(!generalService.currentUserData) {
+          <div
+            class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer"
+            (click)="linkTo('login', false)"
+          >
+            <i class="bi bi-person text-xl"></i>
+            <h4 class="text-base text-gray-700">Login</h4>
+          </div>
+          } @else {
+          <div
+            class="flex items-center gap-3 px-6 py-2 hover:bg-gray-200 hover:cursor-pointer"
+            (click)="logout()"
+          >
+            <i class="bi bi-box-arrow-left text-red-700 text-xl"></i>
+            <h4 class="text-base text-red-700">Logout</h4>
+          </div>
+          }
+        </div>
 
+        }
+      </div>
+    </div>
+  </div>
 </section>

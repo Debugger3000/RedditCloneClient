@@ -58,15 +58,22 @@ export class ThreadsComponent implements OnInit {
   // edit / delete menu variables
   isEditMenuUp: boolean = false;
 
-  // threadId: string = '';
+  threadId: string = '';
 
   ngOnInit(): void {
-    // Access the 'id' route parameter
+    // Access the 'id' route parameter, load thread and posts based on thread id...
     this.activatedRoute.paramMap.subscribe((params) => {
       this.itemId = params.get('id');
-      // console.log('Item ID:', this.itemId);
+      this.getThread();
+      this.getPosts();
     });
 
+    this.getThread();
+    this.getPosts();
+  }
+
+  // get therad function
+  getThread() {
     this.threadService.getThread(this.itemId).subscribe({
       next: (data: any) => {
         console.log('Current THREAD PAGE DATA...  ', data);
@@ -77,10 +84,9 @@ export class ThreadsComponent implements OnInit {
         console.log('Error for getting current thread page data:', error);
       },
     });
+  }
 
-    // this.getThreadCall();
-
-    // grab post data for this thread by using thread ID
+  getPosts() {
     this.postService.getPostsForThread(this.itemId).subscribe({
       next: (data: any) => {
         // console.log("Current Post data for this thread: ", data);

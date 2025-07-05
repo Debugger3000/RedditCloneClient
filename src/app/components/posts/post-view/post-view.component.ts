@@ -177,11 +177,12 @@ export class PostViewComponent implements OnInit {
     this.getPost();
 
     // get users vote
-    this.userVote = this.voteService.checkUserVote(this.postId);
+    if (this.generalService.currentUserData) {
+      this.userVote = this.voteService.checkUserVote(this.postId);
+    }
+
     // get thread data
     this.getThreadCall();
-
-    // console.log('postData before userGETBYID: ', this.postData);
 
     // get comments for this post
     this.getComments();
@@ -199,10 +200,6 @@ export class PostViewComponent implements OnInit {
       },
     });
   }
-
-  // sort comments
-  // organize data before displaying
-  cleanComments() {}
 
   // get Thread call function
   getThreadCall() {
