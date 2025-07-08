@@ -41,7 +41,7 @@ export class SideThreadsComponent implements OnInit {
   }
 
   // link
-  threadLink(id: string | undefined) {
+  threadLink(id: string | null) {
     if (id) {
       this.generalService.linkWithParams('thread', id);
     }

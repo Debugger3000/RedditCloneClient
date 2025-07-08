@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserLoginData, Votes } from '../types/user';
+import { UserLoginData, Votes, VotesComments } from '../types/user';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
@@ -37,6 +37,7 @@ export class LoginService {
     username: string | null;
     profileImage: string | null | undefined;
     votes: Votes;
+    voteOnComments: VotesComments;
   }> {
     return this.http.post<{
       status: boolean;
@@ -44,6 +45,7 @@ export class LoginService {
       username: string | null;
       profileImage: string | null | undefined;
       votes: Votes;
+      voteOnComments: VotesComments;
     }>(`${environment.apiRoute}/user/isAuth`, {}, { withCredentials: true });
   }
 

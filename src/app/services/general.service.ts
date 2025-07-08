@@ -29,6 +29,7 @@ export class GeneralService {
         _id: data._id,
         profileImage: data.profileImage,
         votes: data.votes,
+        voteOnComments: data.voteOnComments,
       };
     }
     console.log('Current user data variable: ', this.currentUserData);

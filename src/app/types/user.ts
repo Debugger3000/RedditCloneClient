@@ -18,10 +18,16 @@ export type Votes = {
   voteType: boolean | null | undefined;
 }[];
 
+export type VotesComments = {
+  commentId: string | null | undefined;
+  voteType: boolean | null | undefined;
+}[];
+
 export type UserData = {
   _id: string;
   username: string | null;
   // image eventually....
   profileImage: string | null | undefined;
   votes: Votes;
+  voteOnComments: VotesComments;
 } | null;

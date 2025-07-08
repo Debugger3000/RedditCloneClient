@@ -24,6 +24,7 @@ export class VotesComponent implements OnInit, OnChanges {
   isUpVote = false;
   isDownVote = false;
 
+  // VOTES for posts
   // vote user state
   // either true (UP VOTE) or false (DOWN VOTE)
   @Input() usersVote: boolean | null | undefined = false;
@@ -33,6 +34,11 @@ export class VotesComponent implements OnInit, OnChanges {
 
   // refresh component
   @Input() refreshVote!: (state: boolean) => void;
+  // ------------------------------------------------------
+
+  // VOTES for comments
+  commentVoteType: boolean | null | undefined = false;
+  commentVoteCount: number | null | undefined = 0;
 
   ngOnInit(): void {
     console.log('user vote value on VOTE COMP: ', this.usersVote);
@@ -46,6 +52,12 @@ export class VotesComponent implements OnInit, OnChanges {
         changes['usersVote'].currentValue
       );
     }
+  }
+
+  // trigger when user votes on a comment
+  // need to localize the vote here, so it is modular per comment
+  commentVoteClicked(type: boolean) {
+    // if user logged in, then send request to add a vote to whatever comment...
   }
 
   // vote clicked

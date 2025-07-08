@@ -55,6 +55,7 @@ export class AppComponent implements OnInit {
           username: data.username,
           profileImage: data.profileImage,
           votes: data.votes,
+          voteOnComments: data.voteOnComments,
         });
         this.loginService.isAuthenticated = true;
 
