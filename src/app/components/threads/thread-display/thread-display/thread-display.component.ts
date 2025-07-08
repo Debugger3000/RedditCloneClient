@@ -14,7 +14,7 @@ export class ThreadDisplayComponent {
 
   @Input() title: string | null = '';
   @Input() image: string | null = '';
-  @Input() threadId: string = '';
+  @Input() threadId: string | undefined | null = '';
   @Input() type: string = '';
   @Input() threadImage: string | null | undefined = '';
 
@@ -24,7 +24,7 @@ export class ThreadDisplayComponent {
 
   // use general service route
   linkRoute() {
-    this.generalService.linkWithParams('/thread', this.threadId);
+    this.generalService.linkWithParams('/thread', this.threadId!);
     console.log('thread display clicked and route called.');
   }
 }

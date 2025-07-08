@@ -3,20 +3,23 @@ import { GeneralService } from '../../services/general.service';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { LiveComment, SortComments } from '../../types/comment';
 import { CommentsService } from '../../services/comments.service';
+import { TimestampComponent } from '../micro/timestamp/timestamp.component';
 
 @Component({
   selector: 'app-comment-display',
-  imports: [NgFor, NgIf, NgClass],
+  imports: [NgFor, NgIf, NgClass, TimestampComponent],
   templateUrl: './comment-display.component.html',
-  styleUrl: './comment-display.component.scss'
+  styleUrl: './comment-display.component.scss',
 })
 export class CommentDisplayComponent {
-  constructor(public generalService : GeneralService, public commentService: CommentsService) {}
+  constructor(
+    public generalService: GeneralService,
+    public commentService: CommentsService
+  ) {}
 
   @Input() comments: LiveComment | null = null;
   @Input() level: number = 0;
   @Input() isCollapsed: boolean = true;
-
 
   // @Input() image: string | null | undefined = '';
   // @Input() type: string = '';
@@ -31,7 +34,6 @@ export class CommentDisplayComponent {
   @Input() replyHandleFunction!: (id: string | null | undefined) => void;
   @Input() childReplyHandle!: (id: string | null | undefined) => void;
 
-
   // somewhat hardcoded comment indent nesting... for now...
   get dynamicClasses(): { [key: string]: boolean } {
     // const level = this.levelService.currentLevel;
@@ -45,17 +47,14 @@ export class CommentDisplayComponent {
     };
   }
 
-
   // collapse comments
   collapseComments() {
     this.isCollapsed = !this.isCollapsed;
   }
 
-
   // somehow call back to parent component and update parent comment id to this comment id
   replyToComment(commentId: string) {
-    console.log("you cliedk reply to comment in child !!!!");
+    console.log('you cliedk reply to comment in child !!!!');
     this.replyHandleFunction(commentId);
   }
-
 }

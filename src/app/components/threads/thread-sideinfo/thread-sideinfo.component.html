@@ -1,0 +1,76 @@
+<!-- <p>thread-sideinfo works! POOOPYYYYYYYYY</p> -->
+
+<div class="rounded-xl bg-[#f9fafa]">
+  <!-- Bio / thread details -->
+  <div class="p-4 border-b border-gray-300">
+    @if (type == 'post') {
+    <h4 class="font-semibold mb-1 text-xl">r/{{ threadData?.title }}</h4>
+    }
+    <h4 class="font-semibold mb-1">{{ threadData?.bio }}</h4>
+    <div class="flex items-center gap-2">
+      <i class="bi bi-credit-card-2-front text-gray-600"></i>
+      <h4 class="text-sm text-gray-600">Created</h4>
+      @if(threadData?.createdAt!.length > 0) {
+      <app-timestamp
+        class="text-sm text-gray-600"
+        type="full-date"
+        [timeStamp]="threadData?.createdAt"
+      />
+      }
+    </div>
+    <div class="flex items-center gap-2">
+      <i class="bi bi-globe text-gray-600"></i>
+      <h4 class="text-sm text-gray-600">Public</h4>
+    </div>
+    <!-- Status - Members, active, top 1% -->
+    <div class="flex justify-between mt-1">
+      <!-- members -->
+      <div>
+        <h4 class="font-semibold">{{ threadData?.followersCount }}</h4>
+        <h4 class="text-sm text-gray-600">Members</h4>
+      </div>
+      <!-- active -->
+      <div>
+        <h4 class="font-semibold">33</h4>
+        <div class="flex gap-1 items-center">
+          <div class="circle-div h-[10px] w-[10px] bg-green-500"></div>
+          <h4 class="text-sm text-gray-600">Active</h4>
+        </div>
+      </div>
+      <!-- Top 1 -->
+      <div>
+        <h4 class="font-semibold">Top 1%</h4>
+        <div class="">
+          <h4 class="text-sm text-gray-600">Rank By Size</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- community links -->
+  <div class="px-4 py-3">
+    <h4 class="text-gray-500 font-semibold mb-2">Community Bookmarks</h4>
+    <div *ngFor="let item of threadData?.links; let i = index">
+      <a
+        class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1"
+        [href]="item"
+      >
+        <h4>{{ item }}</h4>
+      </a>
+    </div>
+  </div>
+  <!-- moderators -->
+  <div class="px-4 pb-3">
+    <h4 class="text-gray-500 font-semibold mb-2">Moderators</h4>
+    <div
+      class="flex justify-center rounded-xl bg-[#eaedef] my-2 mx-1 font-semibold py-1"
+    >
+      <h4 class="">{{ threadData?.owner }}</h4>
+    </div>
+
+    <!-- <div *ngFor="let item of threadData?.links; let i = index">
+                        <a class="flex justify-center rounded-xl bg-[#eaedef] hover:bg-gray-200 hover:underline hover:cursor-pointer my-2 mx-1 font-semibold py-1" [href]="item">
+                            <h4>{{item}}</h4>
+                        </a>
+                    </div> -->
+  </div>
+</div>

@@ -15,6 +15,7 @@ import { CommentDisplayComponent } from '../../comment-display/comment-display.c
 import { VotesComponent } from '../votes/votes.component';
 import { VotesService } from '../../../services/votes.service';
 import { TimestampComponent } from '../../micro/timestamp/timestamp.component';
+import { ThreadSideinfoComponent } from '../../threads/thread-sideinfo/thread-sideinfo.component';
 
 @Component({
   selector: 'app-post-view',
@@ -26,6 +27,7 @@ import { TimestampComponent } from '../../micro/timestamp/timestamp.component';
     CommentDisplayComponent,
     VotesComponent,
     TimestampComponent,
+    ThreadSideinfoComponent,
   ],
   templateUrl: './post-view.component.html',
   styleUrl: './post-view.component.scss',
@@ -65,7 +67,7 @@ export class PostViewComponent implements OnInit {
     textContent: '',
     commentCount: null,
     voteCount: null,
-    user: '',
+    owner: '',
     parentThread: '',
     parentThreadImage: '',
     parentThreadTitle: '',
@@ -257,6 +259,12 @@ export class PostViewComponent implements OnInit {
   // go back button
   goBack() {
     this.location.back();
+  }
+
+  // go to thread page
+  // thread Clicked
+  threadClicked() {
+    this.router.navigate(['thread', this.postData?.parentThread]);
   }
 
   // hover up vote
