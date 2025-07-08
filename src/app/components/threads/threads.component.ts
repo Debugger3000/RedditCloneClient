@@ -9,6 +9,7 @@ import { PostData } from '../../types/post';
 import { PostService } from '../../services/post.service';
 import { GeneralService } from '../../services/general.service';
 import { TimestampComponent } from '../micro/timestamp/timestamp.component';
+import { ThreadSideinfoComponent } from './thread-sideinfo/thread-sideinfo.component';
 
 @Component({
   selector: 'app-threads',
@@ -18,6 +19,7 @@ import { TimestampComponent } from '../micro/timestamp/timestamp.component';
     PostViewOutsideComponent,
     NgClass,
     TimestampComponent,
+    ThreadSideinfoComponent,
   ],
   templateUrl: './threads.component.html',
   styleUrl: './threads.component.scss',
@@ -171,7 +173,7 @@ export class ThreadsComponent implements OnInit {
 
   // delete thread
   deleteThread() {
-    this.threadService.deleteThread(this.threadData?._id).subscribe({
+    this.threadService.deleteThread(this.threadData!._id).subscribe({
       next: (data: any) => {
         // re route to home after delete...
         this.router.navigate(['/home']);

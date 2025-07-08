@@ -4,46 +4,59 @@ import { Thread, ThreadData } from '../types/thread';
 import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ThreadsService {
   constructor(private http: HttpClient) {}
 
-
-
   // Create a new thread
-  createThread(threadData: Thread){
-    return this.http.post(`${environment.apiRoute}/thread`, threadData, {withCredentials: true});
+  createThread(threadData: Thread) {
+    return this.http.post(`${environment.apiRoute}/thread`, threadData, {
+      withCredentials: true,
+    });
   }
 
   // get single thread by id
   getThread(id: string | null) {
-    return this.http.get(`${environment.apiRoute}/thread/${id}`, {withCredentials: true});
+    return this.http.get(`${environment.apiRoute}/thread/${id}`, {
+      withCredentials: true,
+    });
   }
 
   // search bar for a thread by title
   getThreadByTitle(title: string) {
-    return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {withCredentials: true});
+    return this.http.get(`${environment.apiRoute}/thread/search/${title}`, {
+      withCredentials: true,
+    });
   }
 
   getThreadByUser() {
-    return this.http.get<ThreadData[]>(`${environment.apiRoute}/thread/user/ya`, {withCredentials: true});
+    return this.http.get<ThreadData[]>(
+      `${environment.apiRoute}/thread/user/ya`,
+      { withCredentials: true }
+    );
   }
 
-  // join Thread / Un join 
+  // join Thread / Un join
   joinThread(threadId: string) {
-    return this.http.post(`${environment.apiRoute}/thread/join/${threadId}`, {withCredentials: true});
+    return this.http.post(`${environment.apiRoute}/thread/join/${threadId}`, {
+      withCredentials: true,
+    });
   }
 
   // delete thread
-  deleteThread(threadId: string | undefined) {
-    return this.http.delete(`${environment.apiRoute}/thread/${threadId}`, {withCredentials: true});
+  deleteThread(threadId: string | null) {
+    return this.http.delete(`${environment.apiRoute}/thread/${threadId}`, {
+      withCredentials: true,
+    });
   }
 
   // edit thread
-  editThread(threadId: string | undefined, content: Thread) {
-    return this.http.patch(`${environment.apiRoute}/thread/${threadId}`, content, {withCredentials: true});
+  editThread(threadId: string | null, content: Thread) {
+    return this.http.patch(
+      `${environment.apiRoute}/thread/${threadId}`,
+      content,
+      { withCredentials: true }
+    );
   }
-
-
 }
