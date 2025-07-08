@@ -4,10 +4,11 @@ import { NgFor, NgIf, NgClass } from '@angular/common';
 import { LiveComment, SortComments } from '../../types/comment';
 import { CommentsService } from '../../services/comments.service';
 import { TimestampComponent } from '../micro/timestamp/timestamp.component';
+import { CommentVotesComponent } from './comment-votes/comment-votes.component';
 
 @Component({
   selector: 'app-comment-display',
-  imports: [NgFor, NgIf, NgClass, TimestampComponent],
+  imports: [NgFor, NgIf, NgClass, TimestampComponent, CommentVotesComponent],
   templateUrl: './comment-display.component.html',
   styleUrl: './comment-display.component.scss',
 })
@@ -32,6 +33,7 @@ export class CommentDisplayComponent {
   @Input() commentId: string | null | undefined = '';
 
   @Input() replyHandleFunction!: (id: string | null | undefined) => void;
+  // given the initial replyHandle function from parent post component, to children further down the line...
   @Input() childReplyHandle!: (id: string | null | undefined) => void;
 
   // somewhat hardcoded comment indent nesting... for now...
@@ -46,6 +48,12 @@ export class CommentDisplayComponent {
       'ml-72': this.level === 6,
     };
   }
+
+  // refresh component after vote has been clicked
+  // refreshVote(state: boolean) {
+  //   this.userVote = state;
+  //   console.log('teheheheheheheheheheheheehehehe:', state);
+  // }
 
   // collapse comments
   collapseComments() {

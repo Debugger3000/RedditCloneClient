@@ -18,7 +18,7 @@ export class TimestampComponent implements OnInit {
   altTimeStamp: string | number | null = null;
 
   ngOnInit(): void {
-    console.log('we are in timestamper !!!!!');
+    // console.log('we are in timestamper !!!!!');
     console.log('date from input: ', this.timeStamp);
 
     // set altTimeStamp to be used in actual display...
@@ -32,21 +32,21 @@ export class TimestampComponent implements OnInit {
   compD(): string | number {
     let today = new Date();
     let stamp = new Date();
-    console.log('type: ', this.type);
-    console.log('Raw DAte String: ', this.timeStamp);
+    // console.log('type: ', this.type);
+    // console.log('Raw DAte String: ', this.timeStamp);
     // set stamp to actual timestamp of inputted createdAt string...
     if (this.timeStamp != null) {
       stamp.setTime(Date.parse(this.timeStamp));
     }
     //
-    console.log('DATE GIVEN: ', stamp);
-    console.log('get month: ', stamp.getMonth());
-    console.log('get date: ', stamp.getDate());
+    // console.log('DATE GIVEN: ', stamp);
+    // console.log('get month: ', stamp.getMonth());
+    // console.log('get date: ', stamp.getDate());
 
     // if type is full date
     if (this.type == 'full-date') {
       // return stamp.toISOString();
-      console.log('getting full date here........................');
+      // console.log('getting full date here........................');
       return `${stamp.getMonth() + 1}-${
         stamp.getDate() + 1
       }-${stamp.getFullYear()}`;
