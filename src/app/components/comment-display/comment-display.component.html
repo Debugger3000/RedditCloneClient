@@ -52,11 +52,12 @@
 <div [ngClass]=""></div>
 
 <div *ngFor="let comment of comments; let i = index">
-  <div class="flex flex-col">
-    <div
-      class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-2 rounded py-4"
-      [ngClass]="dynamicClasses"
-    >
+  <div
+    class="flex flex-col"
+    [class]="comment.childComments.length > 0 ? 'border-l border-gray-300' : ''"
+    [ngClass]="dynamicClasses"
+  >
+    <div class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-2 rounded py-4">
       <!-- collapse -->
       @if(isCollapsed && comment.childComments.length > 0){
       <!-- collapse everything under this comments -->
@@ -111,15 +112,6 @@
             [commentId]="comment._id"
             [voteCount]="comment.voteCount"
           />
-          <!-- <div class="flex items-center gap-2 rounded-3xl">
-            <i
-              class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"
-            ></i>
-            <h4 class="font-semibold text-xs">0</h4>
-            <i
-              class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"
-            ></i>
-          </div> -->
 
           <!-- ----------------------------- -->
 
@@ -135,7 +127,7 @@
 
           <!-- award icon -->
           <div
-            class="flex rounded-3xl px-5 p-1 hover:bg-gray-300 hover:cursor-pointer"
+            class="flex rounded-3xl items-center px-5 p-1 hover:bg-gray-300 hover:cursor-pointer"
           >
             <i class="bi bi-award"></i>
           </div>
@@ -144,8 +136,36 @@
             class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer"
           >
             <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
-            <!-- current votes -->
             <h4 class="font-semibold text-xs">Share</h4>
+          </div>
+          <!-- ... menu Delete, edit stuff... -->
+          <div
+            class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer relative"
+            (click)="openCommentMenu(comment._id)"
+          >
+            <i class="bi bi-three-dots text-md font-semibold"></i>
+            <!-- menu that can be toggled... -->
+            @if(menuToggle.commentId == comment._id && menuToggle.state) {
+            <div
+              id="comment-menu"
+              #myDiv
+              class="absolute top-14 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]"
+            >
+              <div
+                class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+              >
+                <i class="bi bi-pencil"></i>
+                <h4 class="font-semibold text-sm">Edit</h4>
+              </div>
+              <div
+                class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+                (click)="deleteComment()"
+              >
+                <i class="bi bi-trash3 text-red-500"></i>
+                <h4 class="font-semibold text-sm text-red-500">Delete</h4>
+              </div>
+            </div>
+            }
           </div>
         </div>
       </div>
@@ -159,6 +179,7 @@
       [level]="level + 1"
       [replyHandleFunction]="replyHandleFunction"
       [isCollapsed]="false"
+      [children]="true"
     />
     }
   </div>

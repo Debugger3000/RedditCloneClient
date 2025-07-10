@@ -1,41 +1,47 @@
-<div
-  class="flex items-center gap-2 rounded-3xl bg-[#eaedef] hover:bg-gray-300 hover:cursor-pointer p-2"
->
-  @if(usersVoteType === true){
-  <i class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold"></i>
-  } @else if(!isUpVote){
-  <i
-    class="bi bi-caret-up text-md font-semibold"
-    (mouseenter)="hoverUpVote()"
-    (mouseleave)="hoverUpVote()"
-  ></i>
-  } @else {
-  <button>
+<div class="flex items-center gap-1 rounded-3xl p-2">
+  <div class="hover:bg-[#eaedef] hover:cursor-pointer rounded-full p-1">
+    @if(usersVoteType === true){
     <i
-      class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold"
-      (mouseleave)="hoverUpVote()"
-      (click)="voteClicked(true); $event.stopPropagation()"
+      class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold hover:cursor-pointer"
     ></i>
-  </button>
-  }
+    } @else if(!isUpVote){
+    <i
+      class="bi bi-caret-up text-md font-semibold hover:cursor-pointer"
+      (mouseenter)="hoverUpVote()"
+      (mouseleave)="hoverUpVote()"
+    ></i>
+    } @else {
+    <button>
+      <i
+        class="bi bi-caret-up-fill text-md text-yellow-500 font-semibold hover:cursor-pointer"
+        (mouseleave)="hoverUpVote()"
+        (click)="voteClicked(true); $event.stopPropagation()"
+      ></i>
+    </button>
+    }
+  </div>
 
   <!-- current votes -->
   <h4 class="font-semibold text-xs">{{ voteCount }}</h4>
-  @if(usersVoteType === false){
-  <i class="bi bi-caret-down-fill text-md text-blue-600 font-semibold"></i>
-  } @else if(!isDownVote){
-  <i
-    class="bi bi-caret-down text-md font-semibold"
-    (mouseenter)="hoverDownVote()"
-    (mouseleave)="hoverDownVote()"
-  ></i>
-  } @else{
-  <button>
+  <div class="hover:bg-[#eaedef] hover:cursor-pointer rounded-full p-1">
+    @if(usersVoteType === false){
     <i
-      class="bi bi-caret-down-fill text-md text-blue-600 font-semibold"
-      (mouseleave)="hoverDownVote()"
-      (click)="voteClicked(false); $event.stopPropagation()"
+      class="bi bi-caret-down-fill text-md text-blue-600 font-semibold hover:cursor-pointer"
     ></i>
-  </button>
-  }
+    } @else if(!isDownVote){
+    <i
+      class="bi bi-caret-down text-md font-semibold hover:cursor-pointer"
+      (mouseenter)="hoverDownVote()"
+      (mouseleave)="hoverDownVote()"
+    ></i>
+    } @else{
+    <button>
+      <i
+        class="bi bi-caret-down-fill text-md text-blue-600 font-semibold hover:cursor-pointer"
+        (mouseleave)="hoverDownVote()"
+        (click)="voteClicked(false); $event.stopPropagation()"
+      ></i>
+    </button>
+    }
+  </div>
 </div>
