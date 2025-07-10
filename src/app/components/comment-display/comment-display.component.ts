@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { GeneralService } from '../../services/general.service';
 import { NgFor, NgIf, NgClass } from '@angular/common';
 import { LiveComment, SortComments } from '../../types/comment';
@@ -21,6 +27,7 @@ export class CommentDisplayComponent {
   @Input() comments: LiveComment | null = null;
   @Input() level: number = 0;
   @Input() isCollapsed: boolean = true;
+  @Input() children: boolean = false;
 
   // @Input() image: string | null | undefined = '';
   // @Input() type: string = '';
@@ -36,6 +43,12 @@ export class CommentDisplayComponent {
   // given the initial replyHandle function from parent post component, to children further down the line...
   @Input() childReplyHandle!: (id: string | null | undefined) => void;
 
+  // comment menu toggle variable
+  menuToggle: { commentId: string; state: boolean } = {
+    commentId: '',
+    state: false,
+  };
+
   // somewhat hardcoded comment indent nesting... for now...
   get dynamicClasses(): { [key: string]: boolean } {
     // const level = this.levelService.currentLevel;
@@ -47,6 +60,17 @@ export class CommentDisplayComponent {
       'ml-60': this.level === 5,
       'ml-72': this.level === 6,
     };
+  }
+
+  @ViewChild('myDiv') myDiv!: ElementRef;
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.myDiv || !this.myDiv.nativeElement) return;
+    const clickedInside = this.myDiv.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.closeCommentMenu();
+    }
   }
 
   // refresh component after vote has been clicked
@@ -64,5 +88,19 @@ export class CommentDisplayComponent {
   replyToComment(commentId: string) {
     console.log('you cliedk reply to comment in child !!!!');
     this.replyHandleFunction(commentId);
+  }
+
+  openCommentMenu(commentId: string) {
+    this.menuToggle = { commentId: commentId, state: !this.menuToggle.state };
+    // this.menuToggle = !this.menuToggle;
+    console.log('clicked comment: ', commentId);
+  }
+
+  closeCommentMenu() {
+    this.menuToggle = { commentId: '', state: false };
+  }
+
+  deleteComment() {
+    console.log('comment clicked: ');
   }
 }

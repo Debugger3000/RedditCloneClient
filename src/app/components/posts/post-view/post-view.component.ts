@@ -141,6 +141,10 @@ export class PostViewComponent implements OnInit {
     this.commentService.createComment(newObject).subscribe({
       next: (data: any) => {
         console.log('posting comment worked well haha !', data);
+        this.postComment.reset(); // empty text area comment field
+        this.deFocusComment(); // close text area
+        // successful comment so now refresh comments !!!
+        this.getComments();
       },
       error: (error) => {
         console.log('Error for posting comment:', error);

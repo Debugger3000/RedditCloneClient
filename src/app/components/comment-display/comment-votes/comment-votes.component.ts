@@ -77,7 +77,9 @@ export class CommentVotesComponent implements OnInit, OnChanges {
             if (type == true) {
               this.voteCount = this.voteCount! + 1;
             } else if (type == false) {
-              this.voteCount = this.voteCount! - 1;
+              if (this.voteCount! > 0) {
+                this.voteCount = this.voteCount! - 1;
+              }
             }
             this.usersVoteType = type;
           },
