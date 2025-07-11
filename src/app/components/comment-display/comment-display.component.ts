@@ -11,10 +11,26 @@ import { LiveComment, SortComments } from '../../types/comment';
 import { CommentsService } from '../../services/comments.service';
 import { TimestampComponent } from '../micro/timestamp/timestamp.component';
 import { CommentVotesComponent } from './comment-votes/comment-votes.component';
+import { DefaultProfilePictureComponent } from '../micro/default-profile-picture/default-profile-picture.component';
+import { AwardsComponent } from '../micro/awards/awards.component';
+import { ShareComponent } from '../micro/share/share.component';
+import { MenuComponent } from '../micro/menu/menu.component';
+import { ReplyComponent } from './reply/reply.component';
 
 @Component({
   selector: 'app-comment-display',
-  imports: [NgFor, NgIf, NgClass, TimestampComponent, CommentVotesComponent],
+  imports: [
+    NgFor,
+    NgIf,
+    NgClass,
+    TimestampComponent,
+    CommentVotesComponent,
+    DefaultProfilePictureComponent,
+    AwardsComponent,
+    ShareComponent,
+    MenuComponent,
+    ReplyComponent,
+  ],
   templateUrl: './comment-display.component.html',
   styleUrl: './comment-display.component.scss',
 })
@@ -42,6 +58,7 @@ export class CommentDisplayComponent {
   @Input() replyHandleFunction!: (id: string | null | undefined) => void;
   // given the initial replyHandle function from parent post component, to children further down the line...
   @Input() childReplyHandle!: (id: string | null | undefined) => void;
+  @Input() commentRefresh!: (id: string | null | undefined) => void;
 
   // comment menu toggle variable
   menuToggle: { commentId: string; state: boolean } = {
@@ -62,16 +79,16 @@ export class CommentDisplayComponent {
     };
   }
 
-  @ViewChild('myDiv') myDiv!: ElementRef;
+  // @ViewChild('myDiv') myDiv!: ElementRef;
 
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    if (!this.myDiv || !this.myDiv.nativeElement) return;
-    const clickedInside = this.myDiv.nativeElement.contains(event.target);
-    if (!clickedInside) {
-      this.closeCommentMenu();
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onDocumentClick(event: MouseEvent): void {
+  //   if (!this.myDiv || !this.myDiv.nativeElement) return;
+  //   const clickedInside = this.myDiv.nativeElement.contains(event.target);
+  //   if (!clickedInside) {
+  //     this.closeCommentMenu();
+  //   }
+  // }
 
   // refresh component after vote has been clicked
   // refreshVote(state: boolean) {
@@ -85,10 +102,10 @@ export class CommentDisplayComponent {
   }
 
   // somehow call back to parent component and update parent comment id to this comment id
-  replyToComment(commentId: string) {
+  replyToComment = (commentId: string) => {
     console.log('you cliedk reply to comment in child !!!!');
     this.replyHandleFunction(commentId);
-  }
+  };
 
   openCommentMenu(commentId: string) {
     this.menuToggle = { commentId: commentId, state: !this.menuToggle.state };
@@ -100,7 +117,25 @@ export class CommentDisplayComponent {
     this.menuToggle = { commentId: '', state: false };
   }
 
-  deleteComment() {
-    console.log('comment clicked: ');
-  }
+  deleteCommentCallBack = (commentId: string | null | undefined) => {
+    console.log(
+      'comment delete callback in comment display has been called !!!!!!'
+    );
+    console.log('comment to be deleted id: ', commentId);
+    console.log('comment refresh function', this.commentRefresh);
+    this.commentService.deleteComment(commentId).subscribe({
+      next: (data: any) => {
+        console.log('Current comment data for this post  ', data);
+        this.commentRefresh(commentId);
+      },
+      error: (error) => {
+        console.log('Error for getting current comment data:', error);
+      },
+    });
+  };
+
+  // callParent(commentId: string) {
+  //   // this.commentRefresh(commentId);
+  //   console.log('poop brainer');
+  // }
 }

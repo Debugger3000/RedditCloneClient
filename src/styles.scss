@@ -1,42 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
 
-
-.main-hover-bg-color:hover{
-   background-color: #e5ebee;
+.bar-color {
+  color: rgb(92, 108, 116);
 }
 
-.circle-div{
-    border-radius: 50%;
+.bar-color-deleted {
+  color: rgb(153, 165, 172);
 }
 
-.profile-hover:hover{
-    // border: 1px #e5ebee solid;
-    // box-shadow: 0 4px 5px #e5ebee;
-    // padding: 64px;
+.main-hover-bg-color:hover {
+  background-color: #e5ebee;
 }
 
-
-
-#isLoading-arrow{
-
-
-
-    animation-duration: 10s;
-    animation-name: spin;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+.circle-div {
+  border-radius: 50%;
 }
 
+.profile-hover:hover {
+  // border: 1px #e5ebee solid;
+  // box-shadow: 0 4px 5px #e5ebee;
+  // padding: 64px;
+}
+
+#isLoading-arrow {
+  animation-duration: 10s;
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
 
 @keyframes spin {
-    0% {
-        transform: rotate(45deg);
-        // scale: 100%;
-    }
-  
-    100% {
-        transform: rotate(1485deg);
-        // scale: 200%;
-    }
+  0% {
+    transform: rotate(45deg);
+    // scale: 100%;
+  }
+
+  100% {
+    transform: rotate(1485deg);
+    // scale: 200%;
+  }
 }

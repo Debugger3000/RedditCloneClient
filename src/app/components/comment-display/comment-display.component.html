@@ -1,54 +1,3 @@
-<!-- <ul>
-  <li *ngFor="let node of nodes">
-    {{ node.name }}
-    <app-tree-node *ngIf="node.children && node.children.length" [nodes]="node.children"></app-tree-node>
-  </li>
-</ul> -->
-
-<!-- <div class="grid grid-cols-[40px_minmax(0,1fr)] gap-2 rounded py-4">
-        
-        <div class="col-start-1 col-span-1 circle-div bg-blue-300 h-[40px] w-[40px]">
-                @if(userImage) {<img [src]="userImage" class="w-full h-full circle-div">}
-        </div>
-        <div class="col-start-2 flex items-center">
-                <h4 class="font-semibold text-sm">{{this.username}}</h4>
-                <i class="bi bi-dot text-gray-600 text-sm"></i>
-                <h4 class="text-sm text-gray-500">{{this.createdAt}}</h4>
-        </div>
-        
-        @if(this.comment) {
-            <div class="col-start-2 flex flex-col">
-                <div class="">
-                    <p>{{this.comment}}</p>
-                </div>
-            </div>
-        }
-       
-        <div class="col-start-2 flex flex-col pt-2">
-            <div class="flex gap-3 mb-4">
-                <div class="flex items-center gap-2 rounded-3xl">
-                    <i class="bi bi-arrow-up text-md hover:text-yellow-700 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"></i>
-                    <h4 class=" font-semibold text-xs">0</h4>
-                    <i class="bi bi-arrow-down text-md hover:text-blue-800 font-semibold p-1 rounded-3xl hover:bg-gray-300 hover:cursor-pointer"></i>
-                </div>
-
-                <div class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer" (click)="replyToComment()">
-                    <i class="bi bi-chat text-md font-semibold"></i>
-                    <h4 class="font-semibold text-xs">Reply</h4>
-                </div>
-                
-                <div class="flex rounded-3xl px-5 p-1 hover:bg-gray-300 hover:cursor-pointer">
-                    <i class="bi bi-award"></i>
-
-                </div>
-                <div class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer">
-                    <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
-                    <h4 class="font-semibold text-xs">Share</h4>
-                </div>
-            </div>
-        </div>
-</div> -->
-
 <div [ngClass]=""></div>
 
 <div *ngFor="let comment of comments; let i = index">
@@ -57,7 +6,7 @@
     [class]="comment.childComments.length > 0 ? 'border-l border-gray-300' : ''"
     [ngClass]="dynamicClasses"
   >
-    <div class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-2 rounded py-4">
+    <div class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-1 rounded py-4">
       <!-- collapse -->
       @if(isCollapsed && comment.childComments.length > 0){
       <!-- collapse everything under this comments -->
@@ -84,10 +33,12 @@
         @if(comment.ownerPicture) {<img
           [src]="comment.ownerPicture"
           class="w-full h-full circle-div"
-        />}
+        />} @else {
+        <app-default-profile-picture />
+        }
       </div>
-      <div class="col-start-3 flex items-center">
-        <h4 class="font-semibold text-sm">{{ comment.ownerUserName }}</h4>
+      <div class="col-start-3 flex items-center ml-1">
+        <h4 class="font-bold text-sm">{{ comment.ownerUserName }}</h4>
         <i class="bi bi-dot text-gray-600 text-sm"></i>
         <!-- <h4 class="text-sm text-gray-500">{{ comment.createdAt }}</h4> -->
         @if(comment.createdAt){
@@ -96,7 +47,7 @@
       </div>
 
       @if(comment.commentText) {
-      <div class="col-start-3 flex flex-col">
+      <div class="col-start-3 flex flex-col ml-1">
         <div class="">
           <p>{{ comment.commentText }}</p>
         </div>
@@ -104,47 +55,53 @@
       }
 
       <!-- up-vote bar, comment on comment, share, award... -->
-      <div class="col-start-3 flex flex-col pt-2">
+      <div class="col-start-3 flex flex-col">
         <div class="flex gap-3 mb-4">
           <!-- votes -->
           <!-- ---------------------------- -->
           <app-comment-votes
             [commentId]="comment._id"
             [voteCount]="comment.voteCount"
+            [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
           />
 
           <!-- ----------------------------- -->
 
           <!-- comment -->
-          <div
-            class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer"
+          <app-reply
+            [commentId]="comment._id"
+            [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
+            [replyCall]="replyToComment"
+          />
+          <!-- <div
+            class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer bar-color"
             (click)="replyToComment(comment._id)"
           >
             <i class="bi bi-chat text-md font-semibold"></i>
-            <!-- current votes -->
             <h4 class="font-semibold text-xs">Reply</h4>
-          </div>
-
+          </div> -->
           <!-- award icon -->
-          <div
-            class="flex rounded-3xl items-center px-5 p-1 hover:bg-gray-300 hover:cursor-pointer"
-          >
-            <i class="bi bi-award"></i>
-          </div>
+          <app-awards
+            [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
+          />
+
           <!-- share icon -->
-          <div
-            class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer"
-          >
-            <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
-            <h4 class="font-semibold text-xs">Share</h4>
-          </div>
+          <app-share
+            [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
+          />
+
           <!-- ... menu Delete, edit stuff... -->
-          <div
+          <app-menu
+            [menuToggle]="menuToggle"
+            [commentId]="comment._id"
+            [replyDeleteComment]="deleteCommentCallBack"
+            [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
+          />
+          <!-- <div
             class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer relative"
             (click)="openCommentMenu(comment._id)"
           >
             <i class="bi bi-three-dots text-md font-semibold"></i>
-            <!-- menu that can be toggled... -->
             @if(menuToggle.commentId == comment._id && menuToggle.state) {
             <div
               id="comment-menu"
@@ -166,7 +123,7 @@
               </div>
             </div>
             }
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -180,6 +137,7 @@
       [replyHandleFunction]="replyHandleFunction"
       [isCollapsed]="false"
       [children]="true"
+      [commentRefresh]="commentRefresh"
     />
     }
   </div>

@@ -7,10 +7,16 @@ import { ThreadData } from '../../types/thread';
 import { ThreadDisplayComponent } from '../threads/thread-display/thread-display/thread-display.component';
 import { LoginService } from '../../services/login.service';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { DefaultProfilePictureComponent } from '../micro/default-profile-picture/default-profile-picture.component';
 
 @Component({
   selector: 'app-header',
-  imports: [LogoutbuttonComponent, ThreadDisplayComponent, ReactiveFormsModule],
+  imports: [
+    LogoutbuttonComponent,
+    ThreadDisplayComponent,
+    ReactiveFormsModule,
+    DefaultProfilePictureComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
