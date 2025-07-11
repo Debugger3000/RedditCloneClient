@@ -107,6 +107,7 @@
             formControlName="commentText"
             class="w-full h-full p-1 focus:outline-none"
             placeholder="Comment"
+            #commentInput
           ></textarea>
           <div class="flex gap-3 justify-end mt-6">
             <button
@@ -163,8 +164,9 @@
         @if(commentData) {
         <app-comment-display
           [comments]="commentData"
-          [replyHandleFunction]="handleCommentReply"
+          [replyHandleFunction]="handleCommentReply.bind(this)"
           [level]="0"
+          [commentRefresh]="commentRefreshCallBack.bind(this)"
         />
         } @else{
         <h4 class="text-xl">...No comments yet...</h4>

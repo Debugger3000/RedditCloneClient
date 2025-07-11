@@ -34,7 +34,8 @@ export class CommentsService {
   }
 
   // delete a comment
-  deleteComment(commentId: string | null) {
+  deleteComment(commentId: string | null | undefined) {
+    console.log('calling api for deleting comment...');
     return this.http.delete(`${environment.apiRoute}/comment/${commentId}`, {
       withCredentials: true,
     });

@@ -1,0 +1,16 @@
+<!-- share icon -->
+@if(!isDeleted){
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer bar-color"
+>
+  <i class="bi bi-arrow-90deg-right text-md font-semibold"></i>
+  <h4 class="font-semibold text-xs">Share</h4>
+</div>
+} @else {
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 bg-[#eaedef] bar-color-deleted"
+>
+  <i class="bi bi-arrow-90deg-right text-md"></i>
+  <h4 class="text-xs">Share</h4>
+</div>
+}

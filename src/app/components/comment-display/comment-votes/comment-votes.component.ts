@@ -31,6 +31,7 @@ export class CommentVotesComponent implements OnInit, OnChanges {
   // this has to be grabbed on comment load from generalService...
   @Input() usersVoteType: boolean | null | undefined = null;
   @Input() voteCount: number | null | undefined = 0;
+  @Input() isDeleted: boolean = false;
 
   ngOnInit(): void {
     // console.log('user vote value on VOTE COMP: ', this.usersVote);

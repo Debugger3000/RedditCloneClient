@@ -1,0 +1,37 @@
+<!-- ... menu Delete, edit stuff... -->
+@if(!isDeleted){
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer relative bar-color"
+  (click)="openCommentMenu(commentId)"
+>
+  <i class="bi bi-three-dots text-md font-semibold"></i>
+  <!-- menu that can be toggled... -->
+  @if(menuToggle.commentId == commentId && menuToggle.state) {
+  <div
+    id="comment-menu"
+    #myDiv
+    class="absolute top-14 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]"
+  >
+    <div
+      class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+    >
+      <i class="bi bi-pencil"></i>
+      <h4 class="font-semibold text-sm">Edit</h4>
+    </div>
+    <div
+      class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+      (click)="deleteComment()"
+    >
+      <i class="bi bi-trash3 text-red-500"></i>
+      <h4 class="font-semibold text-sm text-red-500">Delete</h4>
+    </div>
+  </div>
+  }
+</div>
+} @else {
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 bg-[#eaedef] bar-color-deleted"
+>
+  <i class="bi bi-three-dots text-md font-semibold"></i>
+</div>
+}

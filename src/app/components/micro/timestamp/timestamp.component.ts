@@ -19,12 +19,12 @@ export class TimestampComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log('we are in timestamper !!!!!');
-    console.log('date from input: ', this.timeStamp);
+    // console.log('date from input: ', this.timeStamp);
 
     // set altTimeStamp to be used in actual display...
     // for thread, just display month day and year of creation !
     let stamper = this.compD();
-    console.log('DATE STAMP: ', stamper);
+    // console.log('DATE STAMP: ', stamper);
     this.altTimeStamp = stamper;
   }
 

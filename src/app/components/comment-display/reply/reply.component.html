@@ -1,0 +1,20 @@
+<!-- comment -->
+@if(!isDeleted){
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer bar-color"
+  (click)="replyCall(commentId)"
+>
+  <i class="bi bi-chat text-md font-semibold"></i>
+  <!-- current votes -->
+  <h4 class="font-semibold text-xs">Reply</h4>
+</div>
+} @else {
+<div
+  class="flex gap-2 items-center rounded-3xl px-3 p-1 bg-[#eaedef] bar-color-deleted"
+  (click)="replyCall(commentId)"
+>
+  <i class="bi bi-chat text-md font-semibold"></i>
+  <!-- current votes -->
+  <h4 class="font-semibold text-xs">Reply</h4>
+</div>
+}

@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ThreadData } from '../../../types/thread';
 import { Post, PostData } from '../../../types/post';
 import { ThreadDisplayComponent } from '../../threads/thread-display/thread-display/thread-display.component';
@@ -32,7 +39,7 @@ import { ThreadSideinfoComponent } from '../../threads/thread-sideinfo/thread-si
   templateUrl: './post-view.component.html',
   styleUrl: './post-view.component.scss',
 })
-export class PostViewComponent implements OnInit {
+export class PostViewComponent implements OnInit, AfterViewInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -101,6 +108,10 @@ export class PostViewComponent implements OnInit {
   isDownVote = false;
   userVote: boolean | null | undefined = null;
 
+  ngAfterViewInit(): void {}
+
+  @ViewChild('commentInput') commentInput!: ElementRef;
+
   // form group
   // create form items
   postComment = new FormGroup({
@@ -121,10 +132,30 @@ export class PostViewComponent implements OnInit {
       'You just pressed reply to a comment on the child component! ',
       commentId
     );
-    this.isFocusComment = !this.isFocusComment;
+
+    // we use if / else b/c reply should know to keep it
+    if (!this.isFocusComment) {
+      this.isFocusComment = true;
+    }
+
     // change parent comment to commentId parameter
     this.commentParent = commentId;
+    // add little delay so after view loads, we know that textarea field is now available to focus
+    setTimeout(() => {
+      this.focusCommentFieldReply();
+    }, 100);
   };
+
+  focusCommentFieldReply() {
+    console.log('field focus inside first//', this.commentInput);
+    if (this.commentInput) {
+      const input = this.commentInput.nativeElement as HTMLTextAreaElement;
+      input.focus({ preventScroll: false });
+      console.log('we have focuysed the text area inside !!!');
+    } else {
+      // input.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   postCommentForm() {
     // post through api...
@@ -152,6 +183,13 @@ export class PostViewComponent implements OnInit {
     });
     console.log('Posting the comment form calling client api point...');
   }
+
+  // comment modification (EDIT or DELETE)
+  // will need to prompt post to refresh comments to update
+  commentRefreshCallBack = (commentId: string | null | undefined) => {
+    console.log('comments has been refreshed from post view !!!!', commentId);
+    this.getComments();
+  };
 
   // user clicks on general 'add a comment' field, so they are commenting on the thread, therefore commentParent is ''
   focusComment() {

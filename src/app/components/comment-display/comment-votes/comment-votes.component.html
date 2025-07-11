@@ -1,4 +1,5 @@
-<div class="flex items-center gap-1 rounded-3xl p-2">
+@if(!isDeleted){
+<div class="flex items-center gap-1 rounded-3xl bar-color">
   <div class="hover:bg-[#eaedef] hover:cursor-pointer rounded-full p-1">
     @if(usersVoteType === true){
     <i
@@ -45,3 +46,16 @@
     }
   </div>
 </div>
+} @else {
+<div class="flex items-center gap-1 rounded-3xl bg-[#eaedef] bar-color-deleted">
+  <div class="rounded-full p-1">
+    <i class="bi bi-caret-up text-md font-semibold"></i>
+  </div>
+
+  <!-- current votes -->
+  <h4 class="font-semibold text-xs">{{ voteCount }}</h4>
+  <div class="rounded-full p-1">
+    <i class="bi bi-caret-down text-md font-semibold"></i>
+  </div>
+</div>
+}
