@@ -40,4 +40,15 @@ export class CommentsService {
       withCredentials: true,
     });
   }
+
+  // edit a comment
+  editComment(commentData: {
+    commentId: string | null | undefined;
+    commentText: string | null | undefined;
+  }) {
+    console.log('calling api for editing comment...');
+    return this.http.put(`${environment.apiRoute}/comment`, commentData, {
+      withCredentials: true,
+    });
+  }
 }

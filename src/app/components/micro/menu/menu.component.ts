@@ -1,13 +1,16 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
+  Output,
   ViewChild,
   viewChild,
 } from '@angular/core';
 
 import { NgIf } from '@angular/common';
+import { GeneralService } from '../../../services/general.service';
 
 @Component({
   selector: 'app-menu',
@@ -16,6 +19,7 @@ import { NgIf } from '@angular/common';
   styleUrl: './menu.component.scss',
 })
 export class MenuComponent {
+  constructor(public generalService: GeneralService) {}
   @Input() menuToggle: { commentId: string; state: boolean } = {
     commentId: '',
     state: false,
@@ -25,6 +29,8 @@ export class MenuComponent {
 
   @Input() replyDeleteComment!: (id: string | null | undefined) => void;
   @Input() editCommentCall!: (id: string | null | undefined) => void;
+
+  @Output() OpenEditEvent = new EventEmitter<void>();
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -54,6 +60,7 @@ export class MenuComponent {
 
   editComment() {
     console.log('editing comment ehheheehehehhe');
-    this.editCommentCall(this.commentId);
+    // this.editCommentCall(this.commentId);
+    this.OpenEditEvent.emit();
   }
 }

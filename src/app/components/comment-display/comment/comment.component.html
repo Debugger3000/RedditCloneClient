@@ -46,7 +46,15 @@
     </div>
 
     <div *ngIf="comment?.commentText" class="col-start-3 flex flex-col ml-1">
-      <div class="">
+      <app-comment-text
+        [commentText]="comment?.commentText"
+        [isEditing]="isEditing"
+        [cancelEditCall]="editComment"
+        [submitEdit]="editCommentSubmit"
+        (cancelEditEvent)="editComment()"
+      />
+    </div>
+    <!-- <div class="">
         <p *ngIf="!isEditing">{{ comment?.commentText }}</p>
         <div *ngIf="isEditing">
           <textarea
@@ -54,12 +62,12 @@
             class="w-full h-full p-1 focus:outline-none"
             #commentInputEdit
           ></textarea>
-          <div class="rounded border p-1" (click)="cancelEdit()">
-            Cancel Edit
+          <div class="rounded border p-1">
+            <div (click)="cancelEdit()"><h4>Cancel Edit</h4></div>
+            <div><h4>Submit</h4></div>
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
 
     <!-- up-vote bar, comment on comment, share, award... -->
     <div class="col-start-3 flex flex-col">
@@ -93,10 +101,11 @@
         <!-- ... menu Delete, edit stuff... -->
         <app-menu
           [menuToggle]="menuToggle"
-          [commentId]="comment!._id"
+          [commentId]="comment!.owner!"
           [replyDeleteComment]="deleteCommentCallBack"
           [editCommentCall]="editComment"
           [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+          (OpenEditEvent)="editComment()"
         />
       </div>
     </div>

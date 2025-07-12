@@ -12,6 +12,7 @@ import { DefaultProfilePictureComponent } from '../../micro/default-profile-pict
 import { LiveComment } from '../../../types/comment';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CommentTextComponent } from '../comment-text/comment-text.component';
 
 @Component({
   selector: 'app-comment',
@@ -24,6 +25,7 @@ import { FormControl, FormGroup } from '@angular/forms';
     TimestampComponent,
     DefaultProfilePictureComponent,
     CommonModule,
+    CommentTextComponent,
   ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.scss',
@@ -103,39 +105,26 @@ export class CommentComponent {
     });
   };
 
-  // comment form
-  commentEdit = new FormGroup({
-    commentText: new FormControl(''),
-  });
-
-  @ViewChild('commentInputEdit') commentInput!: ElementRef;
-
-  editComment(commentId: string | null | undefined) {
-    console.log('edit comment callback in comment component');
-    this.isEditing = true;
-
-    // make textArea element available within comments field, and have it focus right off the bat
-    setTimeout(() => {
-      console.log('field focus inside first//', this.commentInput);
-      console.log('isEditing: ', this.isEditing);
-      if (this.commentInput) {
-        const input = this.commentInput.nativeElement as HTMLTextAreaElement;
-        input.focus({ preventScroll: false });
-        console.log('we have focuysed the text area inside !!!');
-      }
-      // add text that was already there, and maybe add "Edited:" infront...
-      const newComment = 'Edited' + this.comment?.commentText;
-      this.commentEdit.get('commentText')?.setValue(newComment);
-    }, 100);
-
-    console.log('set new comment for edit !!');
-
-    // make api call with new string in place...
+  // flips isEditing mode on and off for comment text editing...
+  editComment() {
+    this.isEditing = !this.isEditing;
+    this.menuToggle = { commentId: '', state: false };
   }
 
-  editCommentSubmit() {
+  editCommentSubmit = (commentText: string | null | undefined) => {
     // call api to
-  }
+    this.commentService
+      .editComment({ commentId: this.comment?._id, commentText: commentText })
+      .subscribe({
+        next: (data: any) => {
+          console.log('Current data reutnr for edit comment  ', data);
+          this.commentRefreshForPost(this.comment?._id);
+        },
+        error: (error) => {
+          console.log('Error in editing comment data:', error);
+        },
+      });
+  };
 
   cancelEdit() {
     this.isEditing = !this.isEditing;
