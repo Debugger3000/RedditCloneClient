@@ -1,0 +1,123 @@
+<!-- [class]="comment!.childComments!.length > 0 ? 'border-l border-gray-300' : ''" -->
+
+<div
+  class="flex flex-col"
+  [class]="comment!.childComments!.length > 0 ? 'border-l border-gray-300' : ''"
+  [ngClass]="dynamicClasses"
+>
+  <div class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-1 rounded py-4">
+    <!-- collapse -->
+    @if(isCollapsed && comment!.childComments.length > 0){
+    <!-- collapse everything under this comments -->
+    <div
+      class="col-start-1 col-span-1 flex items-center justify-center bg-gray-100 text-gray-700 rounded-full hover:cursor-pointer hover:bg-gray-300"
+      (click)="collapseComments()"
+    >
+      -
+    </div>
+    } @else if(!isCollapsed && comment!.childComments.length > 0) {
+    <!-- expand to see next level of comments  -->
+    <div
+      class="col-start-1 col-span-1 flex items-center justify-center bg-gray-100 text-gray-700 rounded-full hover:cursor-pointer hover:bg-gray-300"
+      (click)="collapseComments()"
+    >
+      +
+    </div>
+    }
+
+    <!-- thead image -->
+    <div
+      class="col-start-2 col-span-1 circle-div bg-blue-300 h-[40px] w-[40px]"
+    >
+      @if(comment!.ownerPicture) {<img
+        [src]="comment?.ownerPicture"
+        class="w-full h-full circle-div"
+      />} @else {
+      <app-default-profile-picture />
+      }
+    </div>
+    <div class="col-start-3 flex items-center ml-1">
+      <h4 class="font-bold text-sm">{{ comment?.ownerUserName }}</h4>
+      <i class="bi bi-dot text-gray-600 text-sm"></i>
+      <!-- <h4 class="text-sm text-gray-500">{{ comment.createdAt }}</h4> -->
+      @if(comment!.createdAt){
+      <app-timestamp [timeStamp]="comment!.createdAt" />
+      }
+    </div>
+
+    <div *ngIf="comment?.commentText" class="col-start-3 flex flex-col ml-1">
+      <div class="">
+        <p *ngIf="!isEditing">{{ comment?.commentText }}</p>
+        <div *ngIf="isEditing">
+          <textarea
+            formControlName="commentTextEditing"
+            class="w-full h-full p-1 focus:outline-none"
+            #commentInputEdit
+          ></textarea>
+          <div class="rounded border p-1" (click)="cancelEdit()">
+            Cancel Edit
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- up-vote bar, comment on comment, share, award... -->
+    <div class="col-start-3 flex flex-col">
+      <div class="flex gap-3 mb-4">
+        <!-- votes -->
+        <!-- ---------------------------- -->
+        <app-comment-votes
+          [commentId]="comment!._id"
+          [voteCount]="comment?.voteCount"
+          [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+        />
+
+        <!-- ----------------------------- -->
+
+        <!-- comment -->
+        <app-reply
+          [commentId]="comment!._id"
+          [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+          [replyCall]="replyToComment"
+        />
+        <!-- award icon -->
+        <app-awards
+          [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+        />
+
+        <!-- share icon -->
+        <app-share
+          [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+        />
+
+        <!-- ... menu Delete, edit stuff... -->
+        <app-menu
+          [menuToggle]="menuToggle"
+          [commentId]="comment!._id"
+          [replyDeleteComment]="deleteCommentCallBack"
+          [editCommentCall]="editComment"
+          [isDeleted]="comment!.ownerUserName == '[deleted]' ? true : false"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- below display -->
+  <!-- hide based on isCollapsed  -->
+  @if(comment?.childComments && comment?.childComments!.length > 0 &&
+  isCollapsed){
+  <div *ngFor="let commentChild of comment?.childComments; let i = index">
+    <app-comment
+      [comment]="commentChild"
+      [level]="level + 1"
+      [isCollapsed]="false"
+      [children]="true"
+    />
+  </div>
+  }
+</div>
+<!-- end of parent comment, div that will collapse to hide children... -->
+
+<!-- [commentRefresh]="commentRefresh" -->
+<!-- [replyHandleFunction]="replyHandleFunction" -->
+<!--  -->

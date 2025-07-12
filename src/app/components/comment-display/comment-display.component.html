@@ -1,10 +1,30 @@
-<div [ngClass]=""></div>
+<!-- <div [ngClass]=""></div> -->
 
 <div *ngFor="let comment of comments; let i = index">
+  <app-comment
+    [comment]="comment"
+    [commentRefreshForPost]="commentRefresh"
+    [replyHandleFunction]="replyHandleFunction"
+  />
+  <!-- @if(comment.childComments && comment.childComments.length && isCollapsed){
+   <app-comment-display
+    [comments]="comment.childComments"
+    [level]="level + 1"
+    [replyHandleFunction]="replyHandleFunction"
+    [isCollapsed]="false"
+    [children]="true"
+    [commentRefresh]="commentRefresh"
+  />  
+  } -->
+</div>
+
+@if(false){
+<div *ngFor="let comment of comments; let i = index">
+  <!-- <app-comment [comment]="comment" /> -->
+
   <div
     class="flex flex-col"
     [class]="comment.childComments.length > 0 ? 'border-l border-gray-300' : ''"
-    [ngClass]="dynamicClasses"
   >
     <div class="grid grid-cols-[20px_40px_minmax(0,1fr)] gap-1 rounded py-4">
       <!-- collapse -->
@@ -12,7 +32,7 @@
       <!-- collapse everything under this comments -->
       <div
         class="col-start-1 col-span-1 flex items-center justify-center bg-gray-100 text-gray-700 rounded-full hover:cursor-pointer hover:bg-gray-300"
-        (click)="collapseComments()"
+        (click)="collapseComments(comment._id)"
       >
         -
       </div>
@@ -20,7 +40,7 @@
       <!-- expand to see next level of comments  -->
       <div
         class="col-start-1 col-span-1 flex items-center justify-center bg-gray-100 text-gray-700 rounded-full hover:cursor-pointer hover:bg-gray-300"
-        (click)="collapseComments()"
+        (click)="collapseComments(comment._id)"
       >
         +
       </div>
@@ -73,13 +93,6 @@
             [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
             [replyCall]="replyToComment"
           />
-          <!-- <div
-            class="flex gap-2 items-center rounded-3xl px-3 p-1 hover:bg-gray-300 hover:cursor-pointer bar-color"
-            (click)="replyToComment(comment._id)"
-          >
-            <i class="bi bi-chat text-md font-semibold"></i>
-            <h4 class="font-semibold text-xs">Reply</h4>
-          </div> -->
           <!-- award icon -->
           <app-awards
             [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
@@ -94,7 +107,6 @@
           <app-menu
             [menuToggle]="menuToggle"
             [commentId]="comment._id"
-            [replyDeleteComment]="deleteCommentCallBack"
             [isDeleted]="comment.ownerUserName == '[deleted]' ? true : false"
           />
           <!-- <div
@@ -131,15 +143,16 @@
     <!-- below display -->
     <!-- hide based on isCollapsed  -->
     @if(comment.childComments && comment.childComments.length && isCollapsed){
-    <app-comment-display
+    <!-- <app-comment-display
       [comments]="comment.childComments"
       [level]="level + 1"
       [replyHandleFunction]="replyHandleFunction"
       [isCollapsed]="false"
       [children]="true"
       [commentRefresh]="commentRefresh"
-    />
+    /> -->
     }
   </div>
   <!-- end of parent comment, div that will collapse to hide children... -->
 </div>
+}

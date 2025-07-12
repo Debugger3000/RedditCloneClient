@@ -14,6 +14,8 @@
   >
     <div
       class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+      (click)="editComment()"
+      (click)="$event.stopPropagation()"
     >
       <i class="bi bi-pencil"></i>
       <h4 class="font-semibold text-sm">Edit</h4>
@@ -21,6 +23,7 @@
     <div
       class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
       (click)="deleteComment()"
+      (click)="$event.stopPropagation()"
     >
       <i class="bi bi-trash3 text-red-500"></i>
       <h4 class="font-semibold text-sm text-red-500">Delete</h4>
