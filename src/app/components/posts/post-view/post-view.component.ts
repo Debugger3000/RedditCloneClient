@@ -188,6 +188,7 @@ export class PostViewComponent implements OnInit, AfterViewInit {
   // will need to prompt post to refresh comments to update
   commentRefreshCallBack = (commentId: string | null | undefined) => {
     console.log('comments has been refreshed from post view !!!!', commentId);
+    console.log('POOOOOOOOOPY');
     this.getComments();
   };
 
@@ -236,8 +237,12 @@ export class PostViewComponent implements OnInit, AfterViewInit {
   getComments() {
     this.commentService.getCommentsByPost(this.postId).subscribe({
       next: (data: any) => {
-        console.log('Current comment data for this post  ', data);
-        this.commentData = data;
+        try {
+          console.log('Current comment data for this post  ', data);
+          this.commentData = data;
+        } catch (error) {
+          console.log('CARTER ERRR: ', error);
+        }
       },
       error: (error) => {
         console.log('Error for getting current comment data:', error);

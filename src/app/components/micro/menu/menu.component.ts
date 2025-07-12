@@ -24,6 +24,7 @@ export class MenuComponent {
   @Input() isDeleted: boolean = false;
 
   @Input() replyDeleteComment!: (id: string | null | undefined) => void;
+  @Input() editCommentCall!: (id: string | null | undefined) => void;
 
   @ViewChild('myDiv') myDiv!: ElementRef;
 
@@ -49,5 +50,10 @@ export class MenuComponent {
   deleteComment() {
     console.log('you clicked delete for function in menu ............');
     this.replyDeleteComment(this.commentId);
+  }
+
+  editComment() {
+    console.log('editing comment ehheheehehehhe');
+    this.editCommentCall(this.commentId);
   }
 }

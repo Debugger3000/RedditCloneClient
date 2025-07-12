@@ -17,6 +17,8 @@ import { ShareComponent } from '../micro/share/share.component';
 import { MenuComponent } from '../micro/menu/menu.component';
 import { ReplyComponent } from './reply/reply.component';
 
+import { CommentComponent } from './comment/comment.component';
+
 @Component({
   selector: 'app-comment-display',
   imports: [
@@ -30,6 +32,7 @@ import { ReplyComponent } from './reply/reply.component';
     ShareComponent,
     MenuComponent,
     ReplyComponent,
+    CommentComponent,
   ],
   templateUrl: './comment-display.component.html',
   styleUrl: './comment-display.component.scss',
@@ -45,16 +48,6 @@ export class CommentDisplayComponent {
   @Input() isCollapsed: boolean = true;
   @Input() children: boolean = false;
 
-  // @Input() image: string | null | undefined = '';
-  // @Input() type: string = '';
-  @Input() userImage: string | null | undefined = '';
-
-  // post stuff
-  @Input() username: string | null | undefined = '';
-  @Input() createdAt: string | null | undefined = '';
-  @Input() comment: string | null | undefined = '';
-  @Input() commentId: string | null | undefined = '';
-
   @Input() replyHandleFunction!: (id: string | null | undefined) => void;
   // given the initial replyHandle function from parent post component, to children further down the line...
   @Input() childReplyHandle!: (id: string | null | undefined) => void;
@@ -66,38 +59,8 @@ export class CommentDisplayComponent {
     state: false,
   };
 
-  // somewhat hardcoded comment indent nesting... for now...
-  get dynamicClasses(): { [key: string]: boolean } {
-    // const level = this.levelService.currentLevel;
-    return {
-      'ml-12': this.level === 1,
-      'ml-24': this.level === 2,
-      'ml-36': this.level === 3,
-      'ml-48': this.level === 4,
-      'ml-60': this.level === 5,
-      'ml-72': this.level === 6,
-    };
-  }
-
-  // @ViewChild('myDiv') myDiv!: ElementRef;
-
-  // @HostListener('document:click', ['$event'])
-  // onDocumentClick(event: MouseEvent): void {
-  //   if (!this.myDiv || !this.myDiv.nativeElement) return;
-  //   const clickedInside = this.myDiv.nativeElement.contains(event.target);
-  //   if (!clickedInside) {
-  //     this.closeCommentMenu();
-  //   }
-  // }
-
-  // refresh component after vote has been clicked
-  // refreshVote(state: boolean) {
-  //   this.userVote = state;
-  //   console.log('teheheheheheheheheheheheehehehe:', state);
-  // }
-
   // collapse comments
-  collapseComments() {
+  collapseComments(commentId: string) {
     this.isCollapsed = !this.isCollapsed;
   }
 
@@ -116,26 +79,4 @@ export class CommentDisplayComponent {
   closeCommentMenu() {
     this.menuToggle = { commentId: '', state: false };
   }
-
-  deleteCommentCallBack = (commentId: string | null | undefined) => {
-    console.log(
-      'comment delete callback in comment display has been called !!!!!!'
-    );
-    console.log('comment to be deleted id: ', commentId);
-    console.log('comment refresh function', this.commentRefresh);
-    this.commentService.deleteComment(commentId).subscribe({
-      next: (data: any) => {
-        console.log('Current comment data for this post  ', data);
-        this.commentRefresh(commentId);
-      },
-      error: (error) => {
-        console.log('Error for getting current comment data:', error);
-      },
-    });
-  };
-
-  // callParent(commentId: string) {
-  //   // this.commentRefresh(commentId);
-  //   console.log('poop brainer');
-  // }
 }
