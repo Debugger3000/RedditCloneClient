@@ -14,46 +14,48 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [HeaderComponent, GroupThreadsComponent, SideThreadsComponent, MainSectionComponent, PostViewOutsideComponent, NgFor],
+  imports: [
+    HeaderComponent,
+    GroupThreadsComponent,
+    SideThreadsComponent,
+    MainSectionComponent,
+    PostViewOutsideComponent,
+    NgFor,
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnInit, OnDestroy{
-
-  constructor(private generalService: GeneralService, private loginService: LoginService, private postService: PostService, private router: Router) {}
+export class HomeComponent implements OnInit, OnDestroy {
+  constructor(
+    private generalService: GeneralService,
+    private loginService: LoginService,
+    private postService: PostService,
+    private router: Router
+  ) {}
 
   // just for side panel
   sidePanelState = false;
 
-  currentViewVariable: string = 'home'
+  currentViewVariable: string = 'home';
   private subscription: Subscription = Subscription.EMPTY; // To hold the subscription for cleanup
 
   // posts data for this thread
-  postData: {posts: PostData[]} | null = null;
+  postData: { posts: PostData[] } | null = null;
 
   // isLoading
   isLoading = true;
 
-  
-
   ngOnInit(): void {
-    // Subscribe to the observable from the service
-    // this.subscription = this.generalService.currentView$.subscribe((value: string) => {
-    //   this.currentViewVariable = value; // Update the component variable when the service variable changes
-    // });
-
-    // console.log("check user data without GET: ",this.generalService.currentUserData);
-    // console.log("check user data with GET: ",this.generalService.getCurrentUserData());
     // check user auth to get header and stuff
     //check if user is logged in...
     this.loginService.checkAuth().subscribe({
       next: (data) => {
-        console.log("Data from is user Authenticated ", data);
+        console.log('Data from is user Authenticated ', data);
         this.loginService.isAuthenticated = true;
       },
       error: (error) => {
-        console.log("Error with checking if user is Authenticated:", error);
-      }
+        console.log('Error with checking if user is Authenticated:', error);
+      },
     });
 
     // Get posts
@@ -64,11 +66,9 @@ export class HomeComponent implements OnInit, OnDestroy{
         this.isLoading = false;
       },
       error: (error) => {
-        console.log("Error for getting current post data:", error);
-      }
-    }); 
-
-
+        console.log('Error for getting current post data:', error);
+      },
+    });
   }
 
   ngOnDestroy(): void {
@@ -76,24 +76,18 @@ export class HomeComponent implements OnInit, OnDestroy{
     this.subscription.unsubscribe();
   }
 
-
   // a post is clicked...
   postClicked(index: number) {
-    console.log("post has been clicked...");
-    this.router.navigate(['thread',this.postData?.posts[index]?.parentThread,this.postData?.posts[index]?._id]);
+    console.log('post has been clicked...');
+    this.router.navigate([
+      'thread',
+      this.postData?.posts[index]?.parentThread,
+      this.postData?.posts[index]?._id,
+    ]);
   }
-
-
-
-
-
-
-
-
 
   // side panel click
   sidePanelClick() {
     this.sidePanelState = !this.sidePanelState;
   }
-
 }

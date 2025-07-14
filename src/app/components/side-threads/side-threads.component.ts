@@ -12,8 +12,10 @@ import { NgFor } from '@angular/common';
   styleUrl: './side-threads.component.scss',
 })
 export class SideThreadsComponent implements OnInit {
-  constructor(private generalService: GeneralService) {}
-  threadService = inject(ThreadsService);
+  constructor(
+    private generalService: GeneralService,
+    private threadService: ThreadsService
+  ) {}
 
   currentJoinedThreads: ThreadData[] | null = null;
 
@@ -22,11 +24,16 @@ export class SideThreadsComponent implements OnInit {
   ngOnInit(): void {
     // grab threads that the user is joined too...
     // make sure
+    console.log(
+      'side panel threads oninit, grabbing threads now:  ',
+      this.generalService.currentUserData
+    );
     if (this.generalService.currentUserData) {
+      console.log('User data exists within side USER threads');
       this.threadService.getThreadByUser().subscribe({
         next: (data) => {
           // console.log("Data from is user Authenticated ", data);
-          // console.log("side panel threads: ",data);
+          console.log('side panel threads: ', data);
 
           this.currentJoinedThreads = data;
         },

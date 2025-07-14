@@ -41,16 +41,16 @@ export class VotesComponent implements OnInit, OnChanges {
   commentVoteCount: number | null | undefined = 0;
 
   ngOnInit(): void {
-    console.log('user vote value on VOTE COMP: ', this.usersVote);
+    // console.log('user vote value on VOTE COMP: ', this.usersVote);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['usersVote']) {
       this.usersVote = changes['usersVote'].currentValue;
-      console.log(
-        'ng on changes we changed it to value....',
-        changes['usersVote'].currentValue
-      );
+      // console.log(
+      //   'ng on changes we changed it to value....',
+      //   changes['usersVote'].currentValue
+      // );
     }
   }
 

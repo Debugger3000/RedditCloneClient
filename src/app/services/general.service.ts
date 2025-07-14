@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserData } from '../types/user';
+import { UserData, Votes, VotesComments } from '../types/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,29 @@ export class GeneralService {
   // public currentView$ = this.currentView.asObservable();
   currentUserData: UserData = null;
   showHeader: boolean = true;
+
+  // auth.service.ts
+  async initUser(): Promise<void> {
+    console.log('grabbing user data if there is any in INIT USER');
+    return firstValueFrom(
+      this.http.post<{
+        status: boolean;
+        _id: string;
+        username: string | null;
+        profileImage: string | null | undefined;
+        votes: Votes;
+        voteOnComments: VotesComments;
+      }>('/api/user/isAuth', {}, { withCredentials: true })
+    )
+      .then((user) => {
+        this.currentUserData = user;
+        console.log('Session restored:', user);
+      })
+      .catch(() => {
+        this.currentUserData = null;
+        console.log('No active session.');
+      });
+  }
 
   // Get and store current user Data
   setUserData(data: UserData) {
