@@ -4,6 +4,7 @@ import { GeneralService } from '../../services/general.service';
 import { ThreadData } from '../../types/thread';
 import { ThreadsService } from '../../services/threads.service';
 import { NgFor } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-side-threads',
@@ -20,31 +21,40 @@ export class SideThreadsComponent implements OnInit {
   currentJoinedThreads: ThreadData[] | null = null;
 
   clickState: boolean = true;
+  private sub!: Subscription;
 
   ngOnInit(): void {
     // grab threads that the user is joined too...
     // make sure
-    console.log(
-      'side panel threads oninit, grabbing threads now:  ',
-      this.generalService.currentUserData
-    );
-    if (this.generalService.currentUserData) {
-      console.log('User data exists within side USER threads');
-      this.threadService.getThreadByUser().subscribe({
-        next: (data) => {
-          // console.log("Data from is user Authenticated ", data);
-          console.log('side panel threads: ', data);
+    this.getThreadsForUser();
 
-          this.currentJoinedThreads = data;
-        },
-        error: (error) => {
-          console.log(
-            'Error for getting threads for user on left side panel...',
-            error
-          );
-        },
-      });
-    }
+    this.sub = this.threadService.threadJoined$.subscribe((threadId) => {
+      // console.log('subscript in recent has been triggered,', this.sub);
+      // run update threads, wait for changes, and then run get recent threads
+
+      if (threadId) {
+        this.getThreadsForUser();
+      }
+    });
+
+    console.log('User data exists within side USER threads');
+  }
+
+  getThreadsForUser() {
+    this.threadService.getThreadByUser().subscribe({
+      next: (data) => {
+        // console.log("Data from is user Authenticated ", data);
+        console.log('side panel threads: ', data);
+
+        this.currentJoinedThreads = data;
+      },
+      error: (error) => {
+        console.log(
+          'Error for getting threads for user on left side panel...',
+          error
+        );
+      },
+    });
   }
 
   // link
