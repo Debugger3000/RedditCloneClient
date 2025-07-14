@@ -42,8 +42,8 @@ export class HeaderComponent implements OnInit {
         this.username = data.username;
         this.loginService.isAuthenticated = true;
 
-        console.log(this.router.url);
-        console.log('cookie: ', document.cookie);
+        // console.log(this.router.url);
+        // console.log('cookie: ', document.cookie);
       },
       error: (error) => {
         console.log('Error with checking if user is Authenticated:', error);

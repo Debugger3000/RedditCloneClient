@@ -5,7 +5,7 @@
       (click)="titleClick()"
       class="flex justify-between gap-3 py-2 px-4 hover:bg-[#e5ebee] rounded hover:cursor-pointer"
     >
-      <h1 class="text-gray-500">Communities</h1>
+      <h1 class="text-gray-500">Recent</h1>
       <!-- icon -->
       @if (!this.clickState) {
       <i class="bi bi-chevron-up fs-4"></i>
@@ -17,7 +17,7 @@
     @if (currentJoinedThreads && clickState) {
     <div *ngFor="let thread of currentJoinedThreads; let i = index" class="">
       <div
-        class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee] rounded"
+        class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee]"
         (click)="threadLink(thread!._id)"
       >
         <div class="w-[30px] h-[30px]">

@@ -33,13 +33,17 @@ export class AppComponent implements OnInit {
 
   currentRoute: string = '';
 
-  ngOnInit(): void {
+  ngOnInit() {
     // log out the environment we are currently in
     console.log('Environment: ', environment.buildType);
 
+    // await this.generalService.initUser();
+
+    console.log('done running await in app comp...');
+
     this.currentRoute = this.router.url;
 
-    console.log('current route: ', this.currentRoute);
+    // console.log('current route: ', this.currentRoute);
 
     // if(this.generalService.currentUserData == null){
     //   this.router.navigate(['home']);
@@ -57,10 +61,12 @@ export class AppComponent implements OnInit {
           votes: data.votes,
           voteOnComments: data.voteOnComments,
         });
+
+        console.log('set user data from app component: ', data);
         this.loginService.isAuthenticated = true;
 
-        console.log(this.router.url);
-        console.log('cookie: ', document.cookie);
+        // console.log(this.router.url);
+        // console.log('cookie: ', document.cookie);
       },
       error: (error) => {
         console.log('Error with checking if user is Authenticated:', error);

@@ -1,22 +1,24 @@
-
-
 @if (this.routePath.length != 0) {
-<div class="flex gap-3 py-2 px-6 hover:bg-[#e5ebee] rounded-xl hover:cursor-pointer" (click)="linkRoute()">
-    <!-- icon here -->
-     <!-- when button is currently selected ??? -->
-    <!-- <i class="bi bi-house-door-fill"></i> -->
-    <!--  -->
-    <i [class]="icon" class="font-bold fs-1"></i>
-    <h2 class="">{{this.name}}</h2>
+<div
+  class="flex gap-3 py-2 px-6 hover:bg-[#e5ebee] rounded hover:cursor-pointer"
+  (click)="linkRoute()"
+>
+  <!-- icon here -->
+  <!-- when button is currently selected ??? -->
+  <!-- <i class="bi bi-house-door-fill"></i> -->
+  <!--  -->
+  <i [class]="icon" class="font-bold fs-1"></i>
+  <h2 class="">{{ this.name }}</h2>
 </div>
-}
-@else{
-    <div class="flex gap-3 py-2 px-6 rounded-xl hover:cursor-pointer hover:bg-[#e5ebee]">
-        <!-- icon here -->
-         <!-- when button is currently selected ??? -->
-        <!-- <i class="bi bi-house-door-fill"></i> -->
-        <!--  -->
-        <i [class]="icon" class="font-bold fs-1"></i>
-        <h2 class="">{{this.name}}</h2>
-    </div>
+} @else{
+<div
+  class="flex gap-3 py-2 px-6 rounded hover:cursor-pointer hover:bg-[#e5ebee]"
+>
+  <!-- icon here -->
+  <!-- when button is currently selected ??? -->
+  <!-- <i class="bi bi-house-door-fill"></i> -->
+  <!--  -->
+  <i [class]="icon" class="font-bold fs-1"></i>
+  <h2 class="">{{ this.name }}</h2>
+</div>
 }

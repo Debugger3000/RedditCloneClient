@@ -1,7 +1,7 @@
 <!-- w-[10%] max-[1250px]:w-[20%]  -->
 
 <section class="h-full">
-  @if(!this.sidePanelState) {
+  @if(this.sidePanelState) {
   <section class="border-r border-gray-400 p-4 pr-6 relative h-full">
     <!-- group-threads (home-popular-explore-all) -->
     <app-group-threads />
@@ -19,6 +19,9 @@
     </div>
     <!-- sub reddit section (show threads user is subscribed too) -->
     <app-side-threads />
+
+    <!-- recently visited threads.... !!!!! -->
+    <app-threads-recent />
   </section>
   } @else {
   <section class="border-r border-gray-300 p-4 relative h-full">
