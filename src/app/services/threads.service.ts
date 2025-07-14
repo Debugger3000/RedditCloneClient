@@ -2,12 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Thread, ThreadData } from '../types/thread';
 import { environment } from '../../environments/environment';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThreadsService {
   constructor(private http: HttpClient) {}
+
+  private threadEnteredSource = new Subject<string | null>(); // or any payload
+  threadEntered$ = this.threadEnteredSource.asObservable();
+
+  private threadJoined = new Subject<string | null>(); // or any payload
+  threadJoined$ = this.threadJoined.asObservable();
+
+  notifyThreadEntered(threadId: string | null) {
+    console.log('notify thread entered has been called....', threadId);
+    this.updateRecentThreads(threadId).subscribe({
+      next: (data: any) => {
+        console.log('update recent thread.... in services ', data);
+      },
+      error: (error) => {
+        console.log('Error for getting current thread page data:', error);
+      },
+    });
+    this.threadEnteredSource.next(threadId);
+  }
+
+  notifyThreadJoined(threadId: string | null) {
+    this.threadJoined.next(threadId);
+  }
 
   // Create a new thread
   createThread(threadData: Thread) {
@@ -57,6 +81,30 @@ export class ThreadsService {
       `${environment.apiRoute}/thread/${threadId}`,
       content,
       { withCredentials: true }
+    );
+  }
+
+  // --------------------------------
+  // Recent threads section services
+
+  // get recent user threads
+  getRecentThreads() {
+    return this.http.get<ThreadData[]>(
+      `${environment.apiRoute}/userData/recentThreads`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
+
+  // update recent threads - called when a thread page is accessed
+  updateRecentThreads(threadId: string | null) {
+    return this.http.patch(
+      `${environment.apiRoute}/userData/recentThreads`,
+      { threadId: threadId },
+      {
+        withCredentials: true,
+      }
     );
   }
 }

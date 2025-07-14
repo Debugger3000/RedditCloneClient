@@ -24,7 +24,9 @@
           <img [src]="thread?.threadImage" class="h-full w-full circle-div" />
         </div>
 
-        <h4 class="text-sm text-gray-800">r/{{ thread?.title }}</h4>
+        <h4 class="text-sm text-gray-800 text-ellipsis">
+          r/{{ thread?.title }}
+        </h4>
       </div>
     </div>
     }

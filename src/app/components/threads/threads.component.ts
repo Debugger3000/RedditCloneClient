@@ -66,21 +66,31 @@ export class ThreadsComponent implements OnInit {
     // Access the 'id' route parameter, load thread and posts based on thread id...
     this.activatedRoute.paramMap.subscribe((params) => {
       this.itemId = params.get('id');
-      this.getThread();
+      this.getThread('visit');
       this.getPosts();
     });
 
-    this.getThread();
+    this.getThread('visit');
     this.getPosts();
+
+    // update recent threads
   }
 
-  // get therad function
-  getThread() {
+  // get thread function
+  getThread(action: string) {
     this.threadService.getThread(this.itemId).subscribe({
       next: (data: any) => {
         console.log('Current THREAD PAGE DATA...  ', data);
-        this.threadData = data;
-        this.isUserJoined();
+        // for some reason, need to include both isUserJoined() and threadData = data, to both for update to work :)
+        if (action === 'visit') {
+          this.threadData = data;
+          this.isUserJoined();
+          this.threadService.notifyThreadEntered(this.threadData!._id);
+        } else if (action === 'join') {
+          this.threadData = data;
+          this.isUserJoined();
+          this.threadService.notifyThreadJoined(this.threadData!._id);
+        }
       },
       error: (error) => {
         console.log('Error for getting current thread page data:', error);
@@ -111,8 +121,8 @@ export class ThreadsComponent implements OnInit {
     if (this.threadData?._id) {
       this.threadService.joinThread(this.threadData?._id).subscribe({
         next: (data: any) => {
-          // console.log("Current join thread return: ", data);
-          this.getThreadCall();
+          // console.log('Current join thread return: ', data);
+          this.getThread('join');
         },
         error: (error) => {
           console.log('Error for joining a thread:', error);
@@ -136,11 +146,6 @@ export class ThreadsComponent implements OnInit {
         console.log('User is NOT joined, state is: ', this.isJoined);
       }
     }
-  }
-
-  // get Thread call function
-  getThreadCall() {
-    // should grab its own threads data from id in the url route
   }
 
   // a post is clicked...

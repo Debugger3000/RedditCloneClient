@@ -3,6 +3,7 @@ import { GeneralService } from '../../../services/general.service';
 import { ThreadsService } from '../../../services/threads.service';
 import { ThreadData } from '../../../types/thread';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-threads-recent',
@@ -19,26 +20,51 @@ export class ThreadsRecentComponent implements OnInit {
   currentJoinedThreads: ThreadData[] | null = null;
 
   clickState: boolean = true;
+  private sub!: Subscription;
 
   ngOnInit(): void {
-    console.log("recent threads init'd ");
+    this.getRecentThreads();
 
-    // grab thread stack on recent threads visited...
-    // if (this.generalService.currentUserData) {
-    //   this.threadService.getThreadByUser().subscribe({
-    //     next: (data) => {
-    //       // console.log("Data from is user Authenticated ", data);
-    //       // console.log("side panel threads: ",data);
-    //       this.currentJoinedThreads = data;
-    //     },
-    //     error: (error) => {
-    //       console.log(
-    //         'Error for getting threads for user on left side panel...',
-    //         error
-    //       );
-    //     },
-    //   });
-    // }
+    console.log("recent threads init'd ");
+    this.sub = this.threadService.threadEntered$.subscribe((threadId) => {
+      console.log('subscript in recent has been triggered,', this.sub);
+      // run update threads, wait for changes, and then run get recent threads
+
+      if (threadId) {
+        this.updateThreads(threadId);
+      }
+    });
+  }
+
+  // get recent threads
+  updateThreads(threadId: string | null) {
+    this.threadService.updateRecentThreads(threadId).subscribe({
+      next: (data) => {
+        this.getRecentThreads();
+      },
+      error: (error) => {
+        console.log(
+          'Error for getting threads for user on left side panel...',
+          error
+        );
+      },
+    });
+  }
+
+  getRecentThreads() {
+    this.threadService.getRecentThreads().subscribe({
+      next: (data) => {
+        // console.log("Data from is user Authenticated ", data);
+        console.log('recent thread data: ', data);
+        this.currentJoinedThreads = data;
+      },
+      error: (error) => {
+        console.log(
+          'Error for getting threads for user on left side panel...',
+          error
+        );
+      },
+    });
   }
 
   // link
