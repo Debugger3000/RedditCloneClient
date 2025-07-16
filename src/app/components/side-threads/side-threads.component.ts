@@ -22,11 +22,21 @@ export class SideThreadsComponent implements OnInit {
 
   clickState: boolean = true;
   private sub!: Subscription;
+  private subUser!: Subscription;
 
   ngOnInit(): void {
     // grab threads that the user is joined too...
     // make sure
-    this.getThreadsForUser();
+    if (this.generalService.currentUserData) {
+      this.getThreadsForUser();
+    }
+
+    this.subUser = this.generalService.userData$.subscribe((userData) => {
+      // this.threadService.notifyThreadEntered(this.threadData!._id);
+      if (userData) {
+        this.getThreadsForUser();
+      }
+    });
 
     this.sub = this.threadService.threadJoined$.subscribe((threadId) => {
       // console.log('subscript in recent has been triggered,', this.sub);

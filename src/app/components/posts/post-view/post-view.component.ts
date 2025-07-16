@@ -268,14 +268,14 @@ export class PostViewComponent implements OnInit, AfterViewInit {
   getPost() {
     this.postService.getPost(this.postId).subscribe({
       next: (data: any) => {
-        // console.log('Current post data...  ', data);
+        console.log('Current post data...  ', data);
         this.postData = data;
 
-        console.log('log for data.post._id: ', data!.user);
+        console.log('log for data.post._id: ', data!.owner);
         //get user
-        this.generalService.getUserById(data!.user).subscribe({
+        this.generalService.getUserById(data!.owner).subscribe({
           next: (data: any) => {
-            // console.log('Current User data on post...  ', data);
+            console.log('Current User data on post...  ', data);
             this.username = data.username;
             // console.log('Current username: ', this.username);
           },

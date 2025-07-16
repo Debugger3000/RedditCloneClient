@@ -61,7 +61,7 @@ export class PostViewOutsideComponent implements OnInit {
 
     // check to see if user has voted on this post or not
     this.userVote = this.voteService.checkUserVote(this.postData?._id);
-    console.log('usersvote: ', this.userVote);
+    // console.log('usersvote: ', this.userVote);
 
     // console.log('post data ID: ', this.postData?._id);
     // console.log('Comment count value: ', this.commentCount);

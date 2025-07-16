@@ -10,6 +10,7 @@ import { PostService } from '../../services/post.service';
 import { GeneralService } from '../../services/general.service';
 import { TimestampComponent } from '../micro/timestamp/timestamp.component';
 import { ThreadSideinfoComponent } from './thread-sideinfo/thread-sideinfo.component';
+import { PostContainerComponent } from '../posts/post-container/post-container.component';
 
 @Component({
   selector: 'app-threads',
@@ -20,6 +21,7 @@ import { ThreadSideinfoComponent } from './thread-sideinfo/thread-sideinfo.compo
     NgClass,
     TimestampComponent,
     ThreadSideinfoComponent,
+    PostContainerComponent,
   ],
   templateUrl: './threads.component.html',
   styleUrl: './threads.component.scss',
@@ -36,26 +38,12 @@ export class ThreadsComponent implements OnInit {
   generalService = inject(GeneralService);
 
   // thread data
-  threadData: ThreadData = {
-    _id: '',
-    title: 'loading',
-    bio: 'loading bio',
-    followersCount: 0,
-    followers: [''],
-    posts: [''],
-    links: [''],
-    owner: '',
-    threadImage: '',
-    tags: [''],
-    createdAt: '',
-    updatedAt: '',
-    __v: 0,
-  };
+  threadData: ThreadData = null;
   // posts data for this thread
-  postData: { posts: PostData[] } | null = null;
+  postData: PostData[] | null = null;
   // check if user is joined
   isJoined: boolean = false;
-  isLoading: boolean = true;
+  atBottomControl: boolean = false;
 
   // edit / delete menu variables
   isEditMenuUp: boolean = false;
@@ -67,11 +55,11 @@ export class ThreadsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.itemId = params.get('id');
       this.getThread('visit');
-      this.getPosts();
+      // this.getPosts();
     });
 
     this.getThread('visit');
-    this.getPosts();
+    // this.getPosts();
 
     // update recent threads
   }
@@ -84,8 +72,10 @@ export class ThreadsComponent implements OnInit {
         // for some reason, need to include both isUserJoined() and threadData = data, to both for update to work :)
         if (action === 'visit') {
           this.threadData = data;
-          this.isUserJoined();
-          this.threadService.notifyThreadEntered(this.threadData!._id);
+          if (this.generalService.currentUserData) {
+            this.isUserJoined();
+            this.threadService.notifyThreadEntered(this.threadData!._id);
+          }
         } else if (action === 'join') {
           this.threadData = data;
           this.isUserJoined();
@@ -98,18 +88,18 @@ export class ThreadsComponent implements OnInit {
     });
   }
 
-  getPosts() {
-    this.postService.getPostsForThread(this.itemId).subscribe({
-      next: (data: any) => {
-        // console.log("Current Post data for this thread: ", data);
-        this.postData = data;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.log('Error for getting current post data:', error);
-      },
-    });
-  }
+  // getPosts() {
+  //   this.postService.getPostsForThread(this.itemId).subscribe({
+  //     next: (data: any) => {
+  //       // console.log("Current Post data for this thread: ", data);
+  //       this.postData = data;
+  //       this.isLoading = false;
+  //     },
+  //     error: (error) => {
+  //       console.log('Error for getting current post data:', error);
+  //     },
+  //   });
+  // }
 
   // create a post for this thread, so reroute to new-post with thread id to display title and picture
   createPost() {
@@ -154,7 +144,7 @@ export class ThreadsComponent implements OnInit {
     this.router.navigate([
       'thread',
       this.threadData?._id,
-      this.postData?.posts[index]?._id,
+      this.postData![index]?._id,
     ]);
   }
 
@@ -171,9 +161,7 @@ export class ThreadsComponent implements OnInit {
   editThread() {
     // thread/edit/:id
     // route to edit page, pass id, and grab data on load for that page with data in the form...
-    // console.log("edit thread was pressed....");
     this.router.navigate(['edit', 'thread', this.threadData?._id]);
-    // this.router.navigate(['thread', 'edit', this.threadData?._id]);
   }
 
   // delete thread
@@ -188,4 +176,26 @@ export class ThreadsComponent implements OnInit {
       },
     });
   }
+
+  onScroll(event: Event) {
+    const target = event.target as HTMLElement;
+
+    const scrollTop = target.scrollTop;
+    const scrollHeight = target.scrollHeight;
+    const offsetHeight = target.offsetHeight;
+
+    const atBottom = scrollTop + offsetHeight >= scrollHeight - 100;
+    // console.log('scroll top: ', scrollTop);
+    if (atBottom && !this.atBottomControl) {
+      console.log('Scrolled to bottom of container');
+      console.log('bottom control: ', this.atBottomControl);
+      this.atBottomControl = true;
+      console.log('bottom control AFTER: ', this.atBottomControl);
+    }
+  }
+
+  flipBottomControl = () => {
+    console.log('flipped bott control back !');
+    this.atBottomControl = false;
+  };
 }

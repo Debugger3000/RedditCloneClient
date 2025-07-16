@@ -21,9 +21,17 @@ export class ThreadsRecentComponent implements OnInit {
 
   clickState: boolean = true;
   private sub!: Subscription;
+  private subUser!: Subscription;
 
   ngOnInit(): void {
-    this.getRecentThreads();
+    if (this.generalService.currentUserData) {
+      this.getRecentThreads();
+    }
+    this.subUser = this.generalService.userData$.subscribe((userData) => {
+      if (userData) {
+        this.getRecentThreads();
+      }
+    });
 
     console.log("recent threads init'd ");
     this.sub = this.threadService.threadEntered$.subscribe((threadId) => {

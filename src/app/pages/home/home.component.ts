@@ -12,6 +12,8 @@ import { PostViewOutsideComponent } from '../../components/posts/post-view-outsi
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 
+import { PostContainerComponent } from '../../components/posts/post-container/post-container.component';
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -21,6 +23,7 @@ import { Router } from '@angular/router';
     MainSectionComponent,
     PostViewOutsideComponent,
     NgFor,
+    PostContainerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -40,7 +43,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscription: Subscription = Subscription.EMPTY; // To hold the subscription for cleanup
 
   // posts data for this thread
-  postData: { posts: PostData[] } | null = null;
+  postData: PostData[] | null = null;
 
   // isLoading
   isLoading = true;
@@ -59,16 +62,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     // Get posts
-    this.postService.getPosts().subscribe({
-      next: (data: any) => {
-        // console.log("Current Post data for this thread: ", data);
-        this.postData = data;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.log('Error for getting current post data:', error);
-      },
-    });
+    // this.postService.getPosts(1, 10).subscribe({
+    //   next: (data: any) => {
+    //     // console.log("Current Post data for this thread: ", data);
+    //     this.postData = data;
+    //     this.isLoading = false;
+    //   },
+    //   error: (error) => {
+    //     console.log('Error for getting current post data:', error);
+    //   },
+    // });
   }
 
   ngOnDestroy(): void {
@@ -81,8 +84,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log('post has been clicked...');
     this.router.navigate([
       'thread',
-      this.postData?.posts[index]?.parentThread,
-      this.postData?.posts[index]?._id,
+      this.postData![index]?.parentThread,
+      this.postData![index]?._id,
     ]);
   }
 
