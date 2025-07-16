@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserData, Votes, VotesComments } from '../types/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -16,6 +16,21 @@ export class GeneralService {
   // variable controlling the current view of the middle section
   // (new/edit thread, new post, home page showing threads, a thread / its posts)
   // currentViewObject = '';
+  private userData = new Subject<UserData>(); // or any payload
+  userData$ = this.userData.asObservable();
+
+  // notifyThreadEntered(threadId: string | null) {
+  //   console.log('notify thread entered has been called....', threadId);
+  //   this.updateRecentThreads(threadId).subscribe({
+  //     next: (data: any) => {
+  //       console.log('update recent thread.... in services ', data);
+  //     },
+  //     error: (error) => {
+  //       console.log('Error for getting current thread page data:', error);
+  //     },
+  //   });
+  //   // this.userData.next(threadId);
+  // }
 
   // private currentView = new BehaviorSubject<string>('');
   // public currentView$ = this.currentView.asObservable();
@@ -55,6 +70,8 @@ export class GeneralService {
         votes: data.votes,
         voteOnComments: data.voteOnComments,
       };
+      // do this so we can observe this change and have components act well...
+      this.userData.next(data);
     }
     console.log('Current user data variable: ', this.currentUserData);
   }

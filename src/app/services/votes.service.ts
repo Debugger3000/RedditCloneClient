@@ -36,18 +36,21 @@ export class VotesService {
   // outsourced to votes service since it will share this function with some other components
   // check is user has voted on this post
   checkUserVote(postId: string | null | undefined): boolean | null | undefined {
-    let votes = this.generalService.currentUserData?.votes;
-    for (let i = 0; i < votes!.length; i++) {
-      let id = votes![i].postId;
-      let type = votes![i].voteType;
+    if (this.generalService.currentUserData) {
+      let votes = this.generalService.currentUserData?.votes;
+      for (let i = 0; i < votes!.length; i++) {
+        let id = votes![i].postId;
+        let type = votes![i].voteType;
 
-      if (id == postId) {
-        if (type !== null) {
-          return type;
-          console.log('assigning a value i think now; ', type);
+        if (id == postId) {
+          if (type !== null) {
+            return type;
+            console.log('assigning a value i think now; ', type);
+          }
         }
       }
     }
+
     return null;
   }
 
@@ -57,18 +60,20 @@ export class VotesService {
   ): boolean | null | undefined {
     let commentVotes = this.generalService.currentUserData?.voteOnComments;
 
-    if (commentVotes!.length < 1) {
-      return null;
-    }
+    if (this.generalService.currentUserData) {
+      if (commentVotes!.length < 1) {
+        return null;
+      }
 
-    for (let i = 0; i < commentVotes!.length; i++) {
-      let id = commentVotes![i].commentId;
-      let type = commentVotes![i].voteType;
+      for (let i = 0; i < commentVotes!.length; i++) {
+        let id = commentVotes![i].commentId;
+        let type = commentVotes![i].voteType;
 
-      if (id == commentId) {
-        if (type !== null) {
-          return type;
-          console.log('assigning a value i think now; ', type);
+        if (id == commentId) {
+          if (type !== null) {
+            return type;
+            console.log('assigning a value i think now; ', type);
+          }
         }
       }
     }
