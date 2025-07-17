@@ -65,19 +65,19 @@
   <div class="w-[75%] my-5 flex items-center justify-center">
     <h4 class="text-lg">No more Posts...</h4>
   </div>
-  } @else {
-  <div class="w-[75%] h-16 rounded-2xl border"></div>
-  }
-  <!-- bottom buffer zone to show we are at bottom and grabbing more data... -->
-
-  <!-- <div
+  } @else if(postData.length > 4) {
+  <div class="w-[75%] h-16 flex justify-center items-center">
+    <div class="">
+      <img src="/reddit-icon.png" height="75" width="75" />
+    </div>
+    <!-- <div
       class="flex w-full h-full justify-center items-center"
       id="isLoading-arrow"
     >
       <i class="bi bi-arrow-clockwise text-5xl text-gray-700"></i>
     </div> -->
-
-  } @else {
+  </div>
+  } } @else {
   <div
     class="flex w-full h-full justify-center items-center"
     id="isLoading-arrow"

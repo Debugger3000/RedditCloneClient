@@ -17,6 +17,10 @@
   border-radius: 50%;
 }
 
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
 .profile-hover:hover {
   // border: 1px #e5ebee solid;
   // box-shadow: 0 4px 5px #e5ebee;
