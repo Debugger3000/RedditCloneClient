@@ -64,12 +64,24 @@ export class PostContainerComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log('Child @Input() changes:', changes);
-    // console.log('atBttomcontrol: ', this.atBottomControl);
-    const isBottom = changes['threadAtBottom'].currentValue;
-    if (isBottom) {
-      this.page = this.page + 1;
-      this.loadThreadPosts();
+    console.log('Child @Input() changes:', changes);
+
+    if (Object.keys(changes).length == 4) {
+    } else {
+      for (const key of Object.keys(changes)) {
+        console.log('key: ', key);
+        console.log('new value: ', changes[key].currentValue);
+
+        if (key === 'threadId') {
+          this.loadThreadPosts();
+          this.page = 1;
+        } else if (key === 'threadAtBottom') {
+          if (key) {
+            this.page = this.page + 1;
+            this.loadThreadPosts();
+          }
+        }
+      }
     }
   }
 
@@ -101,6 +113,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
 
   // load thread posts
   loadThreadPosts() {
+    console.log('feed Type before loading threads call: ', this.feedType);
     this.postService
       .getPostsForThread(this.threadId, this.page, this.limit, this.feedType)
       .subscribe({
@@ -111,7 +124,9 @@ export class PostContainerComponent implements OnInit, OnChanges {
           } else {
             this.appendNextPosts(data);
           }
-          this.isLoading = !this.isLoading;
+          if (this.isLoading) {
+            this.isLoading = !this.isLoading;
+          }
           console.log('isloading: ', this.isLoading);
         },
         error: (error) => {
@@ -140,7 +155,6 @@ export class PostContainerComponent implements OnInit, OnChanges {
         this.flipBottom();
       }
     }
-    this.isLoading = !this.isLoading;
   }
 
   onScroll(event: Event) {
@@ -179,6 +193,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
       this.page = 1;
     }
     this.postSortToggle = !this.postSortToggle;
+    this.isLoading = !this.isLoading;
 
     // grab new data...
     if (this.type === 'home') {
