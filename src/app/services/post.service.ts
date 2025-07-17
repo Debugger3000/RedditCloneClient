@@ -17,9 +17,14 @@ export class PostService {
   }
 
   // get posts for a thread
-  getPostsForThread(threadId: string | null, page: number, limit: number) {
+  getPostsForThread(
+    threadId: string | null,
+    page: number,
+    limit: number,
+    feedType: string
+  ) {
     return this.http.get(
-      `${environment.apiRoute}/post/${threadId}?page=${page}&limit=${limit}`,
+      `${environment.apiRoute}/post/${threadId}?page=${page}&limit=${limit}&feedType=${feedType}`,
       {
         withCredentials: true,
       }
@@ -27,10 +32,10 @@ export class PostService {
   }
 
   // get posts ALL
-  getPosts(page: number, limit: number) {
+  getPosts(page: number, limit: number, feedType: string) {
     console.log('get posts in general called ehhehehe');
     return this.http.get(
-      `${environment.apiRoute}/post?page=${page}&limit=${limit}`,
+      `${environment.apiRoute}/post?page=${page}&limit=${limit}&feedType=${feedType}`,
       { withCredentials: true }
     );
   }

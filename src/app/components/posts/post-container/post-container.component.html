@@ -13,16 +13,45 @@
   "
   (scroll)="onScroll($event)"
 >
+  <!-- interaction bar -->
   <div class="flex gap-3 pb-2 border-b border-gray-200 w-[75%]">
-    <div class="flex gap-3 main-hover-bg-color rounded-full p-2">
-      <h1 class="text-gray-700 text-sm">Best</h1>
+    <div
+      class="flex gap-3 main-hover-bg-color items-center rounded-full p-2"
+      (click)="toggleSort()"
+    >
+      <h1 class="text-gray-700 text-sm">{{ feedType }}</h1>
       <i class="bi bi-chevron-down"></i>
     </div>
     <div class="flex gap-3 main-hover-bg-color rounded-full p-2">
       <i class="bi bi-box2"></i>
       <i class="bi bi-chevron-down"></i>
     </div>
+
+    <!-- drop down.... -->
+    @if(postSortToggle) {
+    <div
+      id="comment-menu"
+      #myDiv
+      class="absolute top-14 rounded-xl z-99 bg-white shadow-xl border border-gray-200 w-[250px]"
+    >
+      <div
+        class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+        [ngClass]="feedType == 'latest' ? 'bg-gray-200' : ''"
+        (click)="changeSort('latest')"
+      >
+        <h4 class="font-semibold text-sm">Latest</h4>
+      </div>
+      <div
+        class="flex items-center gap-3 py-2 px-4 hover:bg-gray-200 hover:cursor-pointer"
+        [ngClass]="feedType == 'oldest' ? 'bg-gray-200' : ''"
+        (click)="changeSort('oldest')"
+      >
+        <h4 class="font-semibold text-sm">Oldest</h4>
+      </div>
+    </div>
+    }
   </div>
+  <!-- ------------------------------------------------- -->
 
   @if(postData && !isLoading) {
   <div
@@ -32,7 +61,6 @@
     <!-- <app-post-view-outside [parentThreadId]="item." [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [commentCount]="item?.commentCount" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [parentThreadImage]="item?.parentThreadImage" [parentThreadTitle]="item?.parentThreadTitle" [type]="'home'"/> -->
     <app-post-view-outside [postData]="item" />
   </div>
-
   @if(endOfPosts){
   <div class="w-[75%] my-5 flex items-center justify-center">
     <h4 class="text-lg">No more Posts...</h4>

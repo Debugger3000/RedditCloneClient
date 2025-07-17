@@ -48,6 +48,11 @@ export class PostContainerComponent implements OnInit, OnChanges {
   limit: number = 5;
   page: number = 1;
 
+  // interaction bar toggle
+  postSortToggle = false;
+  // set default post sort to 'latest'
+  feedType: string = 'latest';
+
   ngOnInit(): void {
     console.log("post container is being init'd", this.type);
     if (this.type === 'home') {
@@ -70,16 +75,23 @@ export class PostContainerComponent implements OnInit, OnChanges {
 
   // load home posts
   loadHomePosts() {
-    this.postService.getPosts(this.page, this.limit).subscribe({
+    this.postService.getPosts(this.page, this.limit, this.feedType).subscribe({
       next: (data: any) => {
         console.log('Current data on home posts...  ', data);
         console.log('page: ', this.page);
+        console.log('feedType: ', this.feedType);
         if (this.page == 1) {
           this.postData = data;
         } else {
           this.appendNextPosts(data);
         }
-        this.isLoading = !this.isLoading;
+        console.log('isLoading: ', this.isLoading);
+        if (this.isLoading) {
+          this.isLoading = !this.isLoading;
+        }
+
+        console.log('isLoading: ', this.isLoading);
+        // this.isLoading = !this.isLoading;
       },
       error: (error) => {
         console.log('Error for getting user by id for post data:', error);
@@ -90,7 +102,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
   // load thread posts
   loadThreadPosts() {
     this.postService
-      .getPostsForThread(this.threadId, this.page, this.limit)
+      .getPostsForThread(this.threadId, this.page, this.limit, this.feedType)
       .subscribe({
         next: (data: any) => {
           console.log('Current Post data for this thread: ', data);
@@ -151,6 +163,28 @@ export class PostContainerComponent implements OnInit, OnChanges {
       if (this.type === 'home') {
         this.loadHomePosts();
       }
+    }
+  }
+
+  toggleSort() {
+    this.postSortToggle = !this.postSortToggle;
+  }
+
+  changeSort(type: string) {
+    if (type === 'latest' && this.feedType !== 'latest') {
+      this.feedType = 'latest';
+      this.page = 1;
+    } else if (type === 'oldest' && this.feedType !== 'oldest') {
+      this.feedType = 'oldest';
+      this.page = 1;
+    }
+    this.postSortToggle = !this.postSortToggle;
+
+    // grab new data...
+    if (this.type === 'home') {
+      this.loadHomePosts();
+    } else {
+      this.loadThreadPosts();
     }
   }
 }
