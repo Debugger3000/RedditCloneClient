@@ -1,7 +1,7 @@
 <section
   [classList]="
     clickState
-      ? 'h-[25%] border-b border-gray-200 pb-4 mt-4 flex flex-col'
+      ? 'border-b border-gray-200 pb-4 mt-4 flex flex-col'
       : 'border-b border-gray-200 pb-4 mt-4'
   "
 >
@@ -22,16 +22,11 @@
   @if (currentJoinedThreads && clickState) {
   <div class="flex-1 overflow-y-scroll hide-scrollbar">
     <div *ngFor="let thread of currentJoinedThreads; let i = index" class="">
-      <div
-        class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee]"
-        (click)="threadLink(thread!._id)"
-      >
-        <div class="w-[30px] h-[30px]">
-          <img [src]="thread?.threadImage" class="h-full w-full circle-div" />
-        </div>
-
-        <h4 class="text-sm text-gray-800">r/{{ thread?.title }}</h4>
-      </div>
+      <app-thread-panel-view
+        [threadId]="thread!._id"
+        [threadImage]="thread?.threadImage"
+        [title]="thread!.title"
+      />
     </div>
   </div>
   }

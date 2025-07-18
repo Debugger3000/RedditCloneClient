@@ -4,10 +4,11 @@ import { ThreadsService } from '../../../services/threads.service';
 import { ThreadData } from '../../../types/thread';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { ThreadPanelViewComponent } from '../thread-panel-view/thread-panel-view.component';
 
 @Component({
   selector: 'app-threads-recent',
-  imports: [CommonModule],
+  imports: [CommonModule, ThreadPanelViewComponent],
   templateUrl: './threads-recent.component.html',
   styleUrl: './threads-recent.component.scss',
 })
