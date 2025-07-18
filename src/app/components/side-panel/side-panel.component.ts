@@ -3,6 +3,7 @@ import { GeneralService } from '../../services/general.service';
 import { SideThreadsComponent } from '../side-threads/side-threads.component';
 import { GroupThreadsComponent } from '../group-threads/group-threads.component';
 import { ThreadsRecentComponent } from './threads-recent/threads-recent.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @Component({
   selector: 'app-side-panel',
@@ -10,6 +11,7 @@ import { ThreadsRecentComponent } from './threads-recent/threads-recent.componen
     SideThreadsComponent,
     GroupThreadsComponent,
     ThreadsRecentComponent,
+    ResourcesComponent,
   ],
   templateUrl: './side-panel.component.html',
   styleUrl: './side-panel.component.scss',

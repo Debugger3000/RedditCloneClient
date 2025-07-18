@@ -5,10 +5,11 @@ import { ThreadData } from '../../types/thread';
 import { ThreadsService } from '../../services/threads.service';
 import { NgFor } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { ThreadPanelViewComponent } from '../side-panel/thread-panel-view/thread-panel-view.component';
 
 @Component({
   selector: 'app-side-threads',
-  imports: [SidePanelBlockComponent, NgFor],
+  imports: [SidePanelBlockComponent, NgFor, ThreadPanelViewComponent],
   templateUrl: './side-threads.component.html',
   styleUrl: './side-threads.component.scss',
 })

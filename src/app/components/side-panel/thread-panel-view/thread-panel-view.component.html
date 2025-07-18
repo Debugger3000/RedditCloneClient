@@ -1,0 +1,10 @@
+<div
+  class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee]"
+  (click)="threadLink(threadId)"
+>
+  <div class="w-[30px] h-[30px]">
+    <img [src]="threadImage" class="h-full w-full circle-div" />
+  </div>
+
+  <h4 class="text-sm text-gray-800 truncate">r/{{ title }}</h4>
+</div>

@@ -2,14 +2,26 @@
 
 <section class="h-full">
   @if(this.sidePanelState) {
-  <section class="border-r border-gray-400 p-4 pr-6 relative h-full">
+  <section class="border-r border-gray-400 w-64 relative h-full">
     <!-- group-threads (home-popular-explore-all) -->
-    <app-group-threads />
+    <div
+      class="h-full overflow-y-auto overflow-x-hidden scrollbar-style p-4 pr-6"
+    >
+      <app-group-threads />
+      <!-- recently visited threads.... !!!!! -->
+      <app-threads-recent />
+
+      <!-- sub reddit section (show threads user is subscribed too) -->
+      <app-side-threads />
+
+      <!-- resources tabs just dummy tabs for looks for sure !!! -->
+      <app-resources />
+    </div>
 
     <!-- Side Panel collapse -->
     <div
       (click)="sidePanelClick()"
-      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
+      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-[999] bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
     >
       @if (!this.sidePanelState) {
       <i class="bi bi-chevron-left"></i>
@@ -17,17 +29,12 @@
       <i class="bi bi-list"></i>
       }
     </div>
-    <!-- sub reddit section (show threads user is subscribed too) -->
-    <app-side-threads />
-
-    <!-- recently visited threads.... !!!!! -->
-    <app-threads-recent />
   </section>
   } @else {
   <section class="border-r border-gray-300 p-4 relative h-full">
     <div
       (click)="sidePanelClick()"
-      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-99 bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
+      class="flex justify-center absolute items-center top-5 -right-4 border border-gray-400 rounded-full w-8 h-8 z-[999] bg-white hover:border-gray-500 hover:cursor-pointer shadow-md"
     >
       @if (!this.sidePanelState) {
       <i class="bi bi-chevron-left"></i>

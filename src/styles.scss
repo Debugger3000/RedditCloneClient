@@ -21,6 +21,16 @@
   scrollbar-width: none;
 }
 
+.scrollbar-style {
+  scrollbar-width: thin; /* Firefox */
+  // scrollbar-color: transparent rgb(235, 235, 240);
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-style:hover {
+  scrollbar-color: rgb(186, 182, 182) rgb(242, 239, 239);
+}
+
 .profile-hover:hover {
   // border: 1px #e5ebee solid;
   // box-shadow: 0 4px 5px #e5ebee;

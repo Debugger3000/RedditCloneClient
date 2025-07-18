@@ -10,7 +10,7 @@
     (click)="titleClick()"
     class="flex justify-between gap-3 py-2 px-4 hover:bg-[#e5ebee] rounded hover:cursor-pointer"
   >
-    <h1 class="text-gray-500">Communities</h1>
+    <h1 class="text-gray-500">Resources</h1>
     <!-- icon -->
     @if (!this.clickState) {
     <i class="bi bi-chevron-up fs-4"></i>
@@ -19,15 +19,24 @@
     }
   </div>
   <!-- display the threads that the user is joined too... -->
-  @if (currentJoinedThreads && clickState) {
+  @if (clickState) {
   <div class="flex-1 overflow-y-scroll hide-scrollbar">
-    <div *ngFor="let thread of currentJoinedThreads; let i = index" class="">
-      <app-thread-panel-view
-        [threadId]="thread!._id"
-        [threadImage]="thread?.threadImage"
-        [title]="thread!.title"
-      />
-    </div>
+    <section class="border-b border-gray-200 pb-4">
+      <div>
+        <!--  -->
+        <app-side-panel-block
+          [name]="'About Reddit'"
+          [icon]="'bi bi-person'"
+          [routePath]="'/home'"
+        />
+        <app-side-panel-block [name]="'Advertise'" [icon]="'bi bi-megaphone'" />
+        <app-side-panel-block
+          [name]="'Help'"
+          [icon]="'bi bi-question-circle'"
+        />
+        <app-side-panel-block [name]="'Blog'" [icon]="'bi bi-book'" />
+      </div>
+    </section>
   </div>
   }
 </section>
