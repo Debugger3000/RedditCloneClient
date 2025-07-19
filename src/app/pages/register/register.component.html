@@ -1,28 +1,98 @@
 <div class="h-screen w-screen flex items-center justify-center">
-    <div class="flex flex-col justify-center items-center rounded border border-gray-300 p-8">
-        <div class="flex gap-3 hover:cursor-pointer hover:scale-105" (click)="goHome('home')">
-            <img src="/Reddit-Logo.png" height="100" width="125"/>
-        </div>
-        <h2 class="text-4xl mb-6">Register</h2>
-        <form [formGroup]="userRegisterForm" (ngSubmit)="onSubmitRegister()">
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Username</label>
-                <input type="text" name="username" id="username" formControlName="username" required class=" rounded border border-gray-300"/>
-            </div>
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Email</label>
-                <input type="email" name="email" id="email" formControlName="email" required class=" rounded border border-gray-300"/>
-            </div>
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Password</label>
-                <input type="password" name="password" id="password" formControlName="password" required class=" rounded border border-gray-300"/>
-            </div>
-            <div class="flex items-center justify-center mb-4">
-                <button type="submit" class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center">Submit</button>
-            </div>
-            <div class="flex justify-center">
-                <h1 (click)="this.generalService.LinkToPage('/login')" class="text-xl text-blue-400 hover:cursor-pointer">Login</h1>
-            </div>
-        </form>
+  <div
+    class="flex flex-col w-[15%] justify-center items-center rounded border border-gray-300 p-8"
+  >
+    <div
+      class="flex gap-3 hover:cursor-pointer hover:scale-105"
+      (click)="goHome('home')"
+    >
+      <img src="/Reddit-Logo.png" height="100" width="125" />
     </div>
+    <h2 class="text-4xl mb-6">Register</h2>
+    <form
+      class="w-full"
+      [formGroup]="userRegisterForm"
+      (ngSubmit)="onSubmitRegister()"
+    >
+      <div class="w-full mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          formControlName="username"
+          required
+          class="rounded border border-gray-300"
+        />
+        <!-- error message -->
+        @if(!authFlags.usernameFlag){
+
+        <h4 class="text-sm text-red-800">
+          {{ FlagMessages.usernameMessage }}
+        </h4>
+
+        } @else if(!authFlags.usernameUniqueFlag){
+        <h4 class="text-sm text-red-800">
+          {{ FlagMessages.usernameUniqueMessage }}
+        </h4>
+        }
+      </div>
+      <div class="w-full mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          formControlName="email"
+          required
+          class="rounded border border-gray-300"
+        />
+        <!-- error message -->
+        @if(!authFlags.emailFlag){
+
+        <h4 class="text-sm text-red-800">{{ FlagMessages.emailMessage }}</h4>
+
+        } @else if(!authFlags.emailUniqueFlag){
+        <h4 class="text-sm text-red-800">
+          {{ FlagMessages.emailUniqueMessage }}
+        </h4>
+        }
+      </div>
+      <div class="w-full mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          formControlName="password"
+          required
+          class="rounded border border-gray-300"
+        />
+        <!-- error message -->
+        @if(!authFlags.passwordFlag){
+        <div>
+          <h4 class="text-sm text-red-800">
+            {{ FlagMessages.passwordMessage }}
+          </h4>
+        </div>
+        }
+      </div>
+      <div class="flex items-center justify-center mb-4">
+        <button
+          type="submit"
+          class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center"
+        >
+          Submit
+        </button>
+      </div>
+      <div class="flex justify-center">
+        <h1
+          (click)="this.generalService.LinkToPage('/login')"
+          class="text-xl text-blue-400 hover:cursor-pointer"
+        >
+          Login
+        </h1>
+      </div>
+    </form>
+  </div>
 </div>
