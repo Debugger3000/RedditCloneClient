@@ -37,6 +37,11 @@
   // padding: 64px;
 }
 
+.padding-macro {
+  //  max-[1600px]:pl-[150px] pl-[250px]
+  padding-left: 250px;
+}
+
 #isLoading-arrow {
   animation-duration: 10s;
   animation-name: spin;

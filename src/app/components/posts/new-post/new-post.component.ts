@@ -42,7 +42,8 @@ export class NewPostComponent implements OnInit {
     __v: 0,
   };
 
-  selectedTags: string = '';
+  selectedTag: string = '';
+  tagMessageFlag: boolean = false;
 
   ngOnInit(): void {
     // Access the 'id' route parameter
@@ -64,22 +65,36 @@ export class NewPostComponent implements OnInit {
   }
 
   addTag(tag: string) {
-    const parent = document.getElementById('tag-selected-div');
+    if (this.selectedTag === '') {
+      const parent = document.getElementById('tag-selected-div');
 
-    const newDiv = document.createElement('div');
-    newDiv.classList.add(
-      'flex',
-      'justify-between',
-      'rounded-xl',
-      'p-1',
-      'bg-orange-400',
-      'w-fit',
-      'gap-1',
-      'items-center'
-    );
-    newDiv.innerHTML = `<h4 class="font-semibold text-white">${tag}</h4><i class="bi bi-dash text-2xl text-white"></i>`;
-    parent?.appendChild(newDiv);
-    this.selectedTags = tag;
+      const newDiv = document.createElement('div');
+      newDiv.classList.add(
+        'flex',
+        'justify-between',
+        'rounded-xl',
+        'p-1',
+        'bg-orange-400',
+        'w-fit',
+        'gap-1',
+        'items-center'
+      );
+      newDiv.innerHTML = `<h4 class="font-semibold text-white" id="selected-tag">${tag}</h4><i class="bi bi-dash text-2xl text-white"></i>`;
+      parent?.appendChild(newDiv);
+      this.selectedTag = tag;
+      this.tagMessageFlag = false;
+    } else {
+      this.tagMessageFlag = true;
+    }
+  }
+
+  // removes the currently selected tag for this post
+  removeTag() {
+    const selectedTag = document.getElementById('tag-selected-div');
+    const child = selectedTag!.firstChild!;
+
+    selectedTag?.removeChild(child);
+    this.selectedTag = '';
   }
 
   // form group
@@ -101,7 +116,7 @@ export class NewPostComponent implements OnInit {
       ownerUserName: this.generalService.currentUserData?.username,
       parentThread: this.threadData?._id,
       parentThreadTitle: this.threadData?.title,
-      tag: this.selectedTags,
+      tag: this.selectedTag,
       parentThreadImage: this.threadData?.threadImage,
     };
     console.log('new object: ', newObject);
