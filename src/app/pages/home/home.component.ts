@@ -60,18 +60,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log('Error with checking if user is Authenticated:', error);
       },
     });
-
-    // Get posts
-    // this.postService.getPosts(1, 10).subscribe({
-    //   next: (data: any) => {
-    //     // console.log("Current Post data for this thread: ", data);
-    //     this.postData = data;
-    //     this.isLoading = false;
-    //   },
-    //   error: (error) => {
-    //     console.log('Error for getting current post data:', error);
-    //   },
-    // });
   }
 
   ngOnDestroy(): void {
@@ -79,15 +67,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // a post is clicked...
-  postClicked(index: number) {
-    console.log('post has been clicked...');
-    this.router.navigate([
-      'thread',
-      this.postData![index]?.parentThread,
-      this.postData![index]?._id,
-    ]);
-  }
+  // // a post is clicked...
+  // postClicked(index: number) {
+  //   console.log('post has been clicked...');
+  //   this.router.navigate([
+  //     'thread',
+  //     this.postData![index]?.parentThread,
+  //     this.postData![index]?._id,
+  //   ]);
+  // }
 
   // side panel click
   sidePanelClick() {

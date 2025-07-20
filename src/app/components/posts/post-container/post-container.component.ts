@@ -184,22 +184,27 @@ export class PostContainerComponent implements OnInit, OnChanges {
     this.postSortToggle = !this.postSortToggle;
   }
 
-  changeSort(type: string) {
-    if (type === 'latest' && this.feedType !== 'latest') {
-      this.feedType = 'latest';
-      this.page = 1;
-    } else if (type === 'oldest' && this.feedType !== 'oldest') {
-      this.feedType = 'oldest';
-      this.page = 1;
-    }
-    this.postSortToggle = !this.postSortToggle;
-    this.isLoading = !this.isLoading;
-
+  loadPosts() {
     // grab new data...
     if (this.type === 'home') {
       this.loadHomePosts();
     } else {
       this.loadThreadPosts();
     }
+  }
+
+  changeSort(type: string) {
+    if (type === 'latest' && this.feedType !== 'latest') {
+      this.feedType = 'latest';
+      this.page = 1;
+      this.isLoading = !this.isLoading;
+      this.loadPosts();
+    } else if (type === 'oldest' && this.feedType !== 'oldest') {
+      this.feedType = 'oldest';
+      this.page = 1;
+      this.isLoading = !this.isLoading;
+      this.loadPosts();
+    }
+    this.postSortToggle = !this.postSortToggle;
   }
 }

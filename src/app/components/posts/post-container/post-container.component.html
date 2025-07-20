@@ -14,7 +14,7 @@
   (scroll)="onScroll($event)"
 >
   <!-- interaction bar -->
-  <div class="flex gap-3 pb-2 border-b border-gray-200 w-[75%]">
+  <div class="flex gap-3 pb-2 border-b border-gray-200 w-[75%] relative">
     <div
       class="flex gap-3 main-hover-bg-color items-center rounded-full p-2"
       (click)="toggleSort()"
@@ -58,7 +58,6 @@
     *ngFor="let item of postData; let i = index"
     [classList]="type == 'home' ? 'w-[75%]' : 'w-full'"
   >
-    <!-- <app-post-view-outside [parentThreadId]="item." [title]="item!.title" [createdAt]="item!.createdAt" [textContent]="item!.textContent" [commentCount]="item?.commentCount" [user]="item!.user" [tag]="item!.tag" [postId]="item!._id" [parentThreadImage]="item?.parentThreadImage" [parentThreadTitle]="item?.parentThreadTitle" [type]="'home'"/> -->
     <app-post-view-outside [postData]="item" />
   </div>
   @if(endOfPosts){
