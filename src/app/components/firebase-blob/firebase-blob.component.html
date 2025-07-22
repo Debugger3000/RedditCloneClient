@@ -19,6 +19,11 @@
     <div class="border border-gray-200 rounded w-[100px] h-[100px]">
       @if(imagePreview){
       <img [src]="imagePreview" alt="Image Preview" class="w-full h-full" />
+      } @else {
+      <div class="h-full flex justify-center items-center">
+        <i class="bi bi-person text-2xl text-gray-700"></i>
+      </div>
+
       }
     </div>
   </div>

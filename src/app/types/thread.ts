@@ -6,6 +6,15 @@ export type Thread = Partial<{
   threadImage: string | ArrayBuffer | null;
 }>;
 
+export type ThreadNew = Partial<{
+  title: string | null;
+  bio: string | null;
+  links: string[] | null;
+  tags: string[] | null;
+  threadImage: string;
+  threadImagePath: string;
+}>;
+
 export type ThreadData = {
   _id: string | null;
   title: string | null;

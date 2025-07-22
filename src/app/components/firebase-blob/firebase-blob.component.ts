@@ -1,6 +1,17 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { storage } from './firebaseInit';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 
 @Component({
   selector: 'app-firebase-blob',
@@ -8,9 +19,9 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
   templateUrl: './firebase-blob.component.html',
   styleUrl: './firebase-blob.component.scss',
 })
-export class FirebaseBlobComponent implements OnChanges {
+export class FirebaseBlobComponent implements OnChanges, OnInit {
   fileReady: string | ArrayBuffer | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
+  imagePreview: string | ArrayBuffer | null | undefined = null;
   // current image selected
   currentImage: ArrayBuffer | null = null;
 
@@ -18,7 +29,20 @@ export class FirebaseBlobComponent implements OnChanges {
   imageStore: string | ArrayBuffer | null = null;
 
   @Input() formSubmitted: boolean = false;
-  @Input() firebaseCallBackParent!: (url: string) => void;
+  @Input() firebaseCallBackParent!: (
+    imageObject: {
+      url: string;
+      filePath: string;
+    } | null
+  ) => void;
+
+  @Input() previousImage: string | null | undefined = '';
+
+  ngOnInit(): void {
+    // if editing, then we set imagePreview to whatever existing image for (Thread, profile...)
+    console.log('previous image: ', this.previousImage);
+    this.imagePreview = this.previousImage;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     // if (changes['formSubmitted'].currentValue) {
@@ -33,6 +57,9 @@ export class FirebaseBlobComponent implements OnChanges {
         if (cur) {
           this.callUpload();
         }
+      } else if (key === 'previousImage') {
+        const newImage = changes['previousImage'].currentValue;
+        this.imagePreview = newImage;
       }
     }
     // form submitted, value is true, so upload to firebase storage
@@ -44,8 +71,9 @@ export class FirebaseBlobComponent implements OnChanges {
   }
 
   // return url
-  async uploadToFirebase(): Promise<string> {
-    // upload image
+  async uploadToFirebase(): Promise<{ url: string; filePath: string } | null> {
+    // if image was never changed, then we dont run any upload to firebase.
+    // Image never changed
     if (this.currentImage !== null) {
       // generate random string for filename
 
@@ -56,17 +84,18 @@ export class FirebaseBlobComponent implements OnChanges {
         const storageRef = ref(storage, filePath);
 
         const snapshot = await uploadBytes(storageRef, this.currentImage);
-        const url = getDownloadURL(snapshot.ref);
-        return url;
+        const url = await getDownloadURL(snapshot.ref);
+
+        return { url: url, filePath: filePath };
       } catch (error) {
         this.formSubmitted = false;
         console.error('Upload failed:', error);
-        return '';
+        return null;
       }
     }
     // submit thread with no image at this time. They can add one in edit later !
     else {
-      return '';
+      return null;
     }
   }
 
