@@ -68,10 +68,11 @@ export class ThreadsComponent implements OnInit {
   getThread(action: string) {
     this.threadService.getThread(this.itemId).subscribe({
       next: (data: any) => {
-        console.log('Current THREAD PAGE DATA...  ', data);
+        // console.log('Current THREAD PAGE DATA...  ', data);
         // for some reason, need to include both isUserJoined() and threadData = data, to both for update to work :)
         if (action === 'visit') {
           this.threadData = data;
+          console.log('thead data after got: ', this.threadData);
           if (this.generalService.currentUserData) {
             this.isUserJoined();
             this.threadService.notifyThreadEntered(this.threadData!._id);

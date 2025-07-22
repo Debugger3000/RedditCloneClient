@@ -23,7 +23,7 @@ export class SidePanelComponent implements OnInit {
   sidePanelState = true;
 
   ngOnInit(): void {
-    console.log("side panel OVERLORD has been init'd !!!", this.sidePanelState);
+    // console.log("side panel OVERLORD has been init'd !!!", this.sidePanelState);
   }
 
   // side panel click
