@@ -23,7 +23,9 @@ export class NewThreadComponent implements OnInit {
 
   // firebase - send image to storage / get url
   firebase: boolean = false;
-  firebaseCallbackBound!: (url: string) => void;
+  firebaseCallbackBound!: (
+    imageObject: { url: string; filePath: string } | null
+  ) => void;
 
   // create form items
   threadForm = new FormGroup({
@@ -92,9 +94,9 @@ export class NewThreadComponent implements OnInit {
     console.log('delete pressed and new array is: ', this.linkArray);
   }
 
-  firebaseCallBack(url: string) {
+  firebaseCallBack(imageObject: { url: string; filePath: string } | null) {
     // run submit code sending post for thread
-    console.log('firebase callback in new-thead, url value: ', url);
+    console.log('firebase callback in new-thead, url value: ', imageObject);
 
     console.log('thread form: ', this.threadForm.value);
     const object = this.threadForm.value;
@@ -105,14 +107,15 @@ export class NewThreadComponent implements OnInit {
       links: this.linkArray,
       tags: this.tagArray,
       username: this.generalService.currentUserData?.username,
-      threadImage: url,
+      threadImage: imageObject?.url,
+      threadImagePath: imageObject?.filePath,
     };
     console.log('new object: ', newObject);
 
     this.threadService.createThread(newObject).subscribe({
       next: (data: any) => {
         console.log('Data from new thread... ', data);
-        this.router.navigate(['/thread', data.thread._id]);
+        this.router.navigate(['/thread', data._id]);
       },
       error: (error) => {
         console.log('Error for creating new thread:', error);

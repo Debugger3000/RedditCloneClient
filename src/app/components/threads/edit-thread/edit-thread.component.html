@@ -1,75 +1,89 @@
+<section class="flex justify-center">
+  <div class="mt-5 w-[50%] p-4 border rounded border-gray-300 shadow-md">
+    <h1 class="text-3xl font-semibold text-center">
+      Editing Thread: {{ threadData?.title }}
+    </h1>
 
+    <form [formGroup]="threadForm" (ngSubmit)="formSubmit()">
+      <div class="mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Sub Reddit Name</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          formControlName="title"
+          required
+          class="rounded border border-gray-300 p-2"
+          value="{{ threadData?.title }}"
+        />
+      </div>
 
-<section>
-    <div>
-        <h1 class="text-3xl font-semibold text-center">Editing Thread: {{threadData?.title}}</h1>
+      <app-firebase-blob
+        [formSubmitted]="firebase"
+        [previousImage]="imagePreview"
+        [firebaseCallBackParent]="firebaseCallbackBound"
+      />
 
-        
+      <div class="my-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Bio</label>
+        <input
+          type="text"
+          name="bio"
+          id="bio"
+          formControlName="bio"
+          required
+          class="rounded border border-gray-300 p-2"
+          value="{{ threadData?.bio }}"
+        />
+      </div>
 
-        <form [formGroup]="threadForm" (ngSubmit)="threadFormSubmit()">
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Sub Reddit Name</label>
-                <input type="text" name="title" id="title" formControlName="title" required class=" rounded border border-gray-300 p-2" value={{threadData?.title}}/>
-            </div>
+      <!-- Tags -->
+      <div class="mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Tags</label>
+        <input
+          type="links"
+          name="tags"
+          id="tags-input"
+          required
+          class="rounded border border-gray-300 p-2"
+        />
+        <div
+          class="flex justify-center bg-gray-100 rounded hover:bg-orange-100 hover:cursor-pointer"
+          (click)="addDiv('tags-input', 'tags-div')"
+        >
+          <i class="bi bi-plus text-2xl"></i>
+        </div>
+        <!-- @if(tagArray.length !== 0){ -->
+        <div class="rounded border-gray-200 p-2 min-h-4" id="tags-div"></div>
+      </div>
 
+      <!-- Links -->
+      <div class="mb-4 flex flex-col gap-1">
+        <label class="font-bold text-gray-700 mr-4">Links</label>
+        <input
+          type="links"
+          name="links"
+          id="links-input"
+          required
+          class="rounded border border-gray-300 p-2"
+        />
+        <div
+          class="flex justify-center bg-gray-100 rounded hover:bg-orange-100 hover:cursor-pointer"
+          (click)="addDiv('links-input', 'links-div')"
+        >
+          <i class="bi bi-plus text-2xl"></i>
+        </div>
 
-
-            <div class="mb-4 flex items-center flex gap-5">
-                <div class="flex flex-col w-[40%]">
-                    <label class="font-bold text-gray-700 mr-4">Picture</label>
-                    <input type="file" name="image" id="image" formControlName="image" required class=" rounded border border-gray-300 p-2" (change)="onFileChange($event)"/>
-                </div>
-             Display image preview
-                <div>
-                <h3 class="mb-1">Image Preview:</h3>
-                    <div class="border border-gray-200 rounded w-[100px] h-[100px]">
-                        @if(imagePreview){
-                        <img [src]="imagePreview" alt="Image Preview" class="w-full h-full"/>
-                        }
-                    </div>
-                </div>
-            
-            </div>
-           
-            
-            
-            <div class="my-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Bio</label>
-                <input type="text" name="bio" id="bio" formControlName="bio" required class=" rounded border border-gray-300 p-2" value={{threadData?.bio}}/>
-            </div>
-
-            <!-- Tags -->
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Tags</label>
-                <input type="links" name="tags" id="tags-input" required class="rounded border border-gray-300 p-2"/>
-                <div class="flex justify-center bg-gray-100 rounded hover:bg-orange-100 hover:cursor-pointer" (click)="addDiv('tags-input','tags-div')"><i class="bi bi-plus text-2xl"></i></div>
-                
-                <div class="rounded border border-gray-200 p-2 min-h-4" id="tags-div"></div>
-                
-                
-                
-            </div>
-
-            <!-- Links -->
-            <div class="mb-4 flex flex-col gap-1">
-                <label class="font-bold text-gray-700 mr-4">Links</label>
-                <input type="links" name="links" id="links-input" required class="rounded border border-gray-300 p-2"/>
-                <div class="flex justify-center bg-gray-100 rounded hover:bg-orange-100 hover:cursor-pointer" (click)="addDiv('links-input','links-div')"><i class="bi bi-plus text-2xl"></i></div>
-                
-                <div class="rounded border border-gray-200 p-2 min-h-4" id="links-div"></div>
-                
-                
-                
-            </div>
-            <div class="flex items-center justify-center mb-4 mt-4">
-                <button type="submit" class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center">Submit</button>
-            </div>
-            
-
-
-
-
-        </form>
-    </div>
+        <div class="rounded border-gray-200 p-2 min-h-4" id="links-div"></div>
+      </div>
+      <div class="flex items-center justify-center mb-4 mt-4">
+        <button
+          type="submit"
+          class="p-1 rounded hover:cursor-pointer hover:opacity-75 text-white bg-orange-500 text-center"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
 </section>
-

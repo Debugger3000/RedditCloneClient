@@ -106,7 +106,7 @@ export class GeneralService {
 
   // editprofie
   editProfileApi(
-    object: { profileImage: string | ArrayBuffer | null | undefined },
+    object: { profileImage: string; profileImagePath: string },
     userId: string | null | undefined
   ) {
     return this.http.post(

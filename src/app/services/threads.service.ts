@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Thread, ThreadData } from '../types/thread';
+import { Thread, ThreadData, ThreadNew } from '../types/thread';
 import { environment } from '../../environments/environment';
 import { Subject } from 'rxjs';
 
@@ -34,7 +34,7 @@ export class ThreadsService {
   }
 
   // Create a new thread
-  createThread(threadData: Thread) {
+  createThread(threadData: ThreadNew) {
     return this.http.post(`${environment.apiRoute}/thread`, threadData, {
       withCredentials: true,
     });
@@ -76,7 +76,7 @@ export class ThreadsService {
   }
 
   // edit thread
-  editThread(threadId: string | null, content: Thread) {
+  editThread(threadId: string | null, content: ThreadNew) {
     return this.http.patch(
       `${environment.apiRoute}/thread/${threadId}`,
       content,
