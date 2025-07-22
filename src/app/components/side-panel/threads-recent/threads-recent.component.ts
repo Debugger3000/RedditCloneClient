@@ -34,9 +34,9 @@ export class ThreadsRecentComponent implements OnInit {
       }
     });
 
-    console.log("recent threads init'd ");
+    // console.log("recent threads init'd ");
     this.sub = this.threadService.threadEntered$.subscribe((threadId) => {
-      console.log('subscript in recent has been triggered,', this.sub);
+      // console.log('subscript in recent has been triggered,', this.sub);
       // run update threads, wait for changes, and then run get recent threads
 
       if (threadId) {
@@ -64,7 +64,7 @@ export class ThreadsRecentComponent implements OnInit {
     this.threadService.getRecentThreads().subscribe({
       next: (data) => {
         // console.log("Data from is user Authenticated ", data);
-        console.log('recent thread data: ', data);
+        // console.log('recent thread data: ', data);
         this.currentJoinedThreads = data;
       },
       error: (error) => {

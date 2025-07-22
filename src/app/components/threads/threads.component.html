@@ -10,11 +10,14 @@
       <!-- thread circle image -->
       <!-- <div class="bg-orange-700 circle-div border"></div> -->
 
+      @if((threadData?.title || threadData!.title!.length > 0) &&
+      threadData?.threadImage) {
       <app-thread-display
         [title]="threadData!.title"
         [type]="'thread-page'"
         [threadImage]="threadData?.threadImage"
       />
+      }
 
       <!-- New post, bell, options... -->
       <div class="flex items-center gap-3 pr-4">

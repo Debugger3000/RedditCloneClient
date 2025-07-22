@@ -34,12 +34,6 @@ export class RegisterComponent {
     usernameUniqueFlag: true,
     emailUniqueFlag: true,
   };
-  // emailFlag: boolean = true;
-  // usernameFlag: boolean = true;
-  // passwordFlag: boolean = true;
-  // // server side flags
-  // usernameUniqueFlag = false;
-  // emailUniqueFlag = false;
 
   readonly FlagMessages = {
     usernameMessage: 'Username needs to be at least 4 characters long',

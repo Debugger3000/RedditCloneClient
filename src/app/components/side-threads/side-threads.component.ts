@@ -48,14 +48,14 @@ export class SideThreadsComponent implements OnInit {
       }
     });
 
-    console.log('User data exists within side USER threads');
+    // console.log('User data exists within side USER threads');
   }
 
   getThreadsForUser() {
     this.threadService.getThreadByUser().subscribe({
       next: (data) => {
         // console.log("Data from is user Authenticated ", data);
-        console.log('side panel threads: ', data);
+        // console.log('side panel threads: ', data);
 
         this.currentJoinedThreads = data;
       },

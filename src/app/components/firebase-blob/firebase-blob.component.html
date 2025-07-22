@@ -1,0 +1,25 @@
+<p>firebase-blob works!</p>
+
+<div class="mb-4 flex items-center flex gap-5">
+  <div class="flex flex-col w-[40%]">
+    <label class="font-bold text-gray-700 mr-4">Picture</label>
+    <input
+      type="file"
+      name="image"
+      id="image"
+      formControlName="image"
+      required
+      class="rounded border border-gray-400 p-2"
+      (change)="onFileChange($event)"
+    />
+  </div>
+  <!-- Display image preview -->
+  <div>
+    <h3 class="mb-1">Image Preview:</h3>
+    <div class="border border-gray-200 rounded w-[100px] h-[100px]">
+      @if(imagePreview){
+      <img [src]="imagePreview" alt="Image Preview" class="w-full h-full" />
+      }
+    </div>
+  </div>
+</div>

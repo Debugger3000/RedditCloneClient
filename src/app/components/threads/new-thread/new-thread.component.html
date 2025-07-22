@@ -16,7 +16,14 @@
           class="rounded border border-gray-400 p-2"
         />
       </div>
-      <div class="mb-4 flex items-center flex gap-5">
+
+      <!-- firebase app component -->
+      <app-firebase-blob
+        [formSubmitted]="firebase"
+        [firebaseCallBackParent]="firebaseCallbackBound"
+      />
+
+      <!-- <div class="mb-4 flex items-center flex gap-5">
         <div class="flex flex-col w-[40%]">
           <label class="font-bold text-gray-700 mr-4">Picture</label>
           <input
@@ -29,7 +36,6 @@
             (change)="onFileChange($event)"
           />
         </div>
-        <!-- Display image preview -->
         <div>
           <h3 class="mb-1">Image Preview:</h3>
           <div class="border border-gray-200 rounded w-[100px] h-[100px]">
@@ -42,7 +48,7 @@
             }
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div class="my-4 flex flex-col gap-1">
         <label class="font-bold text-gray-700 mr-4">Bio</label>
