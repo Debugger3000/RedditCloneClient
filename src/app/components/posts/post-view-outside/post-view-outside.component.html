@@ -11,13 +11,13 @@
       <div class="flex items-center gap-1 ml-1">
         <div class="circle-div w-[30px] h-[30px] bg-blue-500">
           <!-- display user profile pic thing -->
-          @if(postData?.parentThreadImage) {<img
+          @if(postData?.parentThreadImage && type === 'home') {<img
             [src]="postData?.parentThreadImage"
             class="w-full h-full circle-div"
           />
-          } @else if(type === 'thread'){ @if(postUsersProfileImage.length > 0){
+          } @else if(type === 'thread'){ @if(postData?.ownerPicture){
           <img
-            [src]="postData?.parentThreadImage"
+            [src]="postData?.ownerPicture"
             class="w-full h-full circle-div"
           />
           } @else{

@@ -58,7 +58,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
     if (this.type === 'home') {
       this.loadHomePosts();
     } else if (this.type === 'thread') {
-      // console.log('calling posts for thread: ', this.threadId);
+      console.log('calling posts for thread: ', this.threadId);
       this.loadThreadPosts();
     }
   }
@@ -97,12 +97,12 @@ export class PostContainerComponent implements OnInit, OnChanges {
         } else {
           this.appendNextPosts(data);
         }
-        // console.log('isLoading: ', this.isLoading);
+        console.log('isLoading: ', this.isLoading);
         if (this.isLoading) {
           this.isLoading = !this.isLoading;
         }
 
-        // console.log('isLoading: ', this.isLoading);
+        console.log('isLoading: ', this.isLoading);
         // this.isLoading = !this.isLoading;
       },
       error: (error) => {
@@ -113,12 +113,15 @@ export class PostContainerComponent implements OnInit, OnChanges {
 
   // load thread posts
   loadThreadPosts() {
-    // console.log('feed Type before loading threads call: ', this.feedType);
+    console.log(
+      'feed Type before loading threads call: ----------------------------------------- ',
+      this.feedType
+    );
     this.postService
       .getPostsForThread(this.threadId, this.page, this.limit, this.feedType)
       .subscribe({
         next: (data: any) => {
-          // console.log('Current Post data for this thread: ', data);
+          console.log('POST DATA for thread: ', data);
           if (this.page == 1) {
             this.postData = data;
           } else {
@@ -127,7 +130,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
           if (this.isLoading) {
             this.isLoading = !this.isLoading;
           }
-          // console.log('isloading: ', this.isLoading);
+          console.log('isloading: ', this.isLoading);
         },
         error: (error) => {
           console.log('Error for getting current post data:', error);
