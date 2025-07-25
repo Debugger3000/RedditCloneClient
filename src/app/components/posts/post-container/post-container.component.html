@@ -58,7 +58,7 @@
     *ngFor="let item of postData; let i = index"
     [classList]="type == 'home' ? 'w-[75%]' : 'w-full'"
   >
-    <app-post-view-outside [postData]="item" />
+    <app-post-view-outside [postData]="item" [type]="type" />
   </div>
   @if(endOfPosts){
   <div class="w-[75%] my-5 flex items-center justify-center">
