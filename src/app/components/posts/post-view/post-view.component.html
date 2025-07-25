@@ -161,7 +161,7 @@
 
                     set comments 'commentOnComment(commentId)'
                 -->
-        @if(commentData == [] || commentData == null) {
+        @if(commentData !== [] || commentData !== null) {
         <app-comment-display
           [comments]="commentData"
           [replyHandleFunction]="handleCommentReply.bind(this)"
