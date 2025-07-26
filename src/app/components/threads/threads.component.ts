@@ -89,19 +89,6 @@ export class ThreadsComponent implements OnInit {
     });
   }
 
-  // getPosts() {
-  //   this.postService.getPostsForThread(this.itemId).subscribe({
-  //     next: (data: any) => {
-  //       // console.log("Current Post data for this thread: ", data);
-  //       this.postData = data;
-  //       this.isLoading = false;
-  //     },
-  //     error: (error) => {
-  //       console.log('Error for getting current post data:', error);
-  //     },
-  //   });
-  // }
-
   // create a post for this thread, so reroute to new-post with thread id to display title and picture
   createPost() {
     this.router.navigate(['post-new', this.threadData?._id]);
