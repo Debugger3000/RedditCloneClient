@@ -10,7 +10,7 @@
       <!-- thread circle image -->
       <!-- <div class="bg-orange-700 circle-div border"></div> -->
 
-      @if((threadData?.title) && threadData?.threadImage) {
+      @if((threadData?.title) || threadData?.threadImage) {
       <app-thread-display
         [title]="threadData!.title"
         [type]="'thread-page'"
