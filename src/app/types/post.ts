@@ -15,6 +15,7 @@ export type PostData = {
   parentThreadTitle: string | null;
   parentThreadImage: string | null | undefined;
   ownerPicture: string | null | undefined;
+  ownerUsername: string | null | undefined;
   commentCount: number | null | undefined;
   voteCount: number | null | undefined;
   owner: string | null;

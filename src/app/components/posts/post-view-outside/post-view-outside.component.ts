@@ -19,21 +19,19 @@ export class PostViewOutsideComponent implements OnInit {
 
   // posts data for this thread
   @Input() postData: PostData | null = null;
-
-  @Input() title: string | null = '';
-  @Input() textContent: string | null = '';
-  // @Input() createdAt: string | null = '';
-  @Input() user: string | null = '';
-  @Input() postId: string | null = '';
-  @Input() tag: string | null = '';
-  @Input() parentThreadId: string | null | undefined = '';
-  @Input() parentThreadImage: string | null | undefined = '';
-  @Input() parentThreadTitle: string | null | undefined = '';
-  @Input() commentCount: number | null | undefined = null;
-
   // post outside in home or macro, shows thread image
   // post outside in the thread itself, should show user profileImage
   @Input() type: string = '';
+
+  // @Input() title: string | null = '';
+  // @Input() textContent: string | null = '';
+  // @Input() user: string | null = '';
+  // @Input() postId: string | null = '';
+  // @Input() tag: string | null = '';
+  // @Input() parentThreadId: string | null | undefined = '';
+  // @Input() parentThreadImage: string | null | undefined = '';
+  // @Input() parentThreadTitle: string | null | undefined = '';
+  // @Input() commentCount: number | null | undefined = null;
 
   username: string | null = '';
   postUsersProfileImage: string = '';
@@ -48,16 +46,16 @@ export class PostViewOutsideComponent implements OnInit {
 
   ngOnInit(): void {
     //get users
-    this.generalService.getUserById(this.user).subscribe({
-      next: (data: any) => {
-        // console.log("Current User data on post...  ", data);
-        this.username = data.username;
-        this.postUsersProfileImage = data.profileImage;
-      },
-      error: (error) => {
-        console.log('Error for getting user by id for post data:', error);
-      },
-    });
+    // this.generalService.getUserById(this.user).subscribe({
+    //   next: (data: any) => {
+    //     // console.log("Current User data on post...  ", data);
+    //     this.username = data.username;
+    //     this.postUsersProfileImage = data.profileImage;
+    //   },
+    //   error: (error) => {
+    //     console.log('Error for getting user by id for post data:', error);
+    //   },
+    // });
 
     // check to see if user has voted on this post or not
     this.userVote = this.voteService.checkUserVote(this.postData?._id);

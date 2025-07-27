@@ -76,6 +76,7 @@ export class PostViewComponent implements OnInit, AfterViewInit {
     voteCount: null,
     owner: '',
     ownerPicture: '',
+    ownerUsername: '',
     parentThread: '',
     parentThreadImage: '',
     parentThreadTitle: '',
