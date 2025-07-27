@@ -24,12 +24,20 @@
           <app-default-user-image />
           } }
         </div>
+        <!-- display thread name or owner username -->
+        @if(!postData?.ownerUsername) {
         <h4
           class="font-semibold text-sm hover:text-blue-500"
           (click)="threadClicked()"
         >
           r/{{ postData?.parentThreadTitle }}
         </h4>
+        } @else {
+        <h4 class="font-semibold text-sm hover:text-blue-500">
+          r/{{ postData?.ownerUsername }}
+        </h4>
+        }
+
         <i class="bi bi-dot text-gray-600"></i>
         <h4 class="text-sm text-gray-500">
           <app-timestamp [timeStamp]="postData?.createdAt" [type]="'post'" />
@@ -51,7 +59,7 @@
     </div>
 
     <!-- Tag -->
-    @if(tag!.length > 0) {
+    @if(postData!.tag!.length > 0) {
     <div class="mb-3 w-fit">
       <div
         class="bg-blue-500 rounded-xl flex items-center justify-center w-fit p-1"

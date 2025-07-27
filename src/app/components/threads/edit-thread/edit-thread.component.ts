@@ -63,8 +63,8 @@ export class EditThreadComponent implements OnInit {
 
   // create form items
   threadForm = new FormGroup({
-    title: new FormControl(''),
-    bio: new FormControl(''),
+    title: new FormControl<string | null | undefined>(''),
+    bio: new FormControl<string | null | undefined>(''),
   });
 
   //add tag
@@ -268,6 +268,12 @@ export class EditThreadComponent implements OnInit {
         this.imagePreview = data.threadImage;
         this.popArrays();
         this.populateDivsOnLoad();
+
+        // set thread form values...
+        this.threadForm.setValue({
+          title: this.threadData?.title,
+          bio: this.threadData?.bio,
+        });
       },
       error: (error) => {
         console.log('Error for getting current thread page data:', error);
@@ -280,6 +286,8 @@ export class EditThreadComponent implements OnInit {
     console.log('thread form: ', this.threadForm.value);
     const object = this.threadForm.value;
     console.log('array: ', this.linkArray);
+
+    console.log('thread data BEFORE SUBMITER........', this.threadData);
 
     const newObject = {
       title: object.title,
