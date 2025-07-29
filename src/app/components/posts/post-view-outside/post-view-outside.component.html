@@ -9,20 +9,20 @@
     <div class="flex justify-between mb-1">
       <!-- user display generic pic with username -->
       <div class="flex items-center gap-1 ml-1">
-        <div class="circle-div w-[30px] h-[30px] bg-blue-500">
+        <div class="circle-div w-[30px] h-[30px]">
           <!-- display user profile pic thing -->
           @if(postData?.parentThreadImage && type === 'home') {<img
             [src]="postData?.parentThreadImage"
             class="w-full h-full circle-div"
           />
-          } @else if(type === 'thread'){ @if(postData?.ownerPicture){
+          } @else if(type === 'thread' && postData?.ownerPicture){
           <img
             [src]="postData?.ownerPicture"
             class="w-full h-full circle-div"
           />
           } @else{
           <app-default-user-image />
-          } }
+          }
         </div>
         <!-- display thread name or owner username -->
         @if(!postData?.ownerUsername) {
