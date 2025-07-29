@@ -60,15 +60,15 @@ export class TimestampComponent implements OnInit {
     // same year - months ago
     // different year - years ago
     if (today.getFullYear() != stamp.getFullYear()) {
-      return `${today.getFullYear() - stamp.getFullYear()}yrs ago`;
+      return `${today.getFullYear() - stamp.getFullYear()} yrs ago`;
     } else if (today.getMonth() != stamp.getMonth()) {
-      return `${today.getMonth() - stamp.getMonth()}mo ago`;
+      return `${today.getMonth() - stamp.getMonth()} months ago`;
     } else if (today.getDate() != stamp.getDate()) {
-      return `${today.getDate() - stamp.getDate()}days ago`;
-    } else if (today.getHours() - stamp.getHours()) {
-      return `${today.getHours() - stamp.getHours()}hours ago`;
+      return `${today.getDate() - stamp.getDate()} days ago`;
+    } else if (today.getHours() != stamp.getHours()) {
+      return `${today.getHours() - stamp.getHours()} hours ago`;
     } else {
-      return `${today.getMinutes() - stamp.getMinutes()}minutes ago`;
+      return `${today.getMinutes() - stamp.getMinutes()} minutes ago`;
     }
   }
 }
