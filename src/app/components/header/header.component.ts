@@ -28,33 +28,11 @@ export class HeaderComponent implements OnInit {
   currentSearchData: ThreadData[] | null = null;
   focusState = false;
   profileClicked = false;
-  profilePicture: string | null | undefined = '';
-  username: string | null = '';
 
   ngOnInit(): void {
     //check if user is logged in...
-    this.loginService.checkAuth().subscribe({
-      next: (data) => {
-        // console.log("Data from is user Authenticated ", data);
-
-        this.generalService.setUserData(data);
-        this.profilePicture = data.profileImage;
-        this.username = data.username;
-        this.loginService.isAuthenticated = true;
-
-        // console.log(this.router.url);
-        // console.log('cookie: ', document.cookie);
-      },
-      error: (error) => {
-        console.log('Error with checking if user is Authenticated:', error);
-      },
-    });
+    console.log('header user data: ', this.generalService.currentUserData);
   }
-
-  // actionClick(type: string){
-  //   this.generalService.changeMainView('new-thread');
-  // }
-
   // connecting function to call link from service
   linkTo(route: string, header: boolean) {
     this.generalService.LinkToPage(route);
@@ -79,7 +57,6 @@ export class HeaderComponent implements OnInit {
   }
 
   // wipe search array
-
   onFocus() {
     this.focusState = !this.focusState;
     console.log('focus state: ', this.focusState);

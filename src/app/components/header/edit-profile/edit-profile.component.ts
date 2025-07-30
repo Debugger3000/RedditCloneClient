@@ -4,6 +4,7 @@ import { GeneralService } from '../../../services/general.service';
 import { Router } from '@angular/router';
 import { UserData } from '../../../types/user';
 import { FirebaseBlobComponent } from '../../firebase-blob/firebase-blob.component';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,7 +13,7 @@ import { FirebaseBlobComponent } from '../../firebase-blob/firebase-blob.compone
   styleUrl: './edit-profile.component.scss',
 })
 export class EditProfileComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loginService: LoginService) {}
   generalService = inject(GeneralService);
 
   username: string | null | undefined = '';
@@ -29,19 +30,6 @@ export class EditProfileComponent implements OnInit {
     this.imagePreview = this.generalService.currentUserData?.profileImage;
 
     this.firebaseCallbackBound = this.postFormSubmit.bind(this);
-
-    // this.generalService
-    //   .getUserById(this.generalService.currentUserData?._id)
-    //   .subscribe({
-    //     next: (data: any) => {
-    //       console.log('Data from new thread... ', data);
-    //       this.username = data.username;
-    //       this.imagePreview = data.profileImage;
-    //     },
-    //     error: (error) => {
-    //       console.log('Error for creating new thread:', error);
-    //     },
-    //   });
   }
 
   // create form items
@@ -69,6 +57,19 @@ export class EditProfileComponent implements OnInit {
         .subscribe({
           next: (data: any) => {
             console.log('Data from new thread... ', data);
+            this.loginService.checkAuth().subscribe({
+              next: (data) => {
+                this.generalService.setUserData(data);
+                this.loginService.isAuthenticated = true;
+              },
+              error: (error) => {
+                console.log(
+                  'Error with checking if user is Authenticated:',
+                  error
+                );
+              },
+            });
+            // route to home after profile has updated...
             this.router.navigate(['home']);
           },
           error: (error) => {

@@ -97,12 +97,12 @@ export class PostContainerComponent implements OnInit, OnChanges {
         } else {
           this.appendNextPosts(data);
         }
-        console.log('isLoading: ', this.isLoading);
+        // console.log('isLoading: ', this.isLoading);
         if (this.isLoading) {
           this.isLoading = !this.isLoading;
         }
 
-        console.log('isLoading: ', this.isLoading);
+        // console.log('isLoading: ', this.isLoading);
         // this.isLoading = !this.isLoading;
       },
       error: (error) => {
@@ -121,7 +121,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
       .getPostsForThread(this.threadId, this.page, this.limit, this.feedType)
       .subscribe({
         next: (data: any) => {
-          console.log('POST DATA for thread: ', data);
+          // console.log('POST DATA for thread: ', data);
           if (this.page == 1) {
             this.postData = data;
           } else {
@@ -130,7 +130,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
           if (this.isLoading) {
             this.isLoading = !this.isLoading;
           }
-          console.log('isloading: ', this.isLoading);
+          // console.log('isloading: ', this.isLoading);
         },
         error: (error) => {
           console.log('Error for getting current post data:', error);

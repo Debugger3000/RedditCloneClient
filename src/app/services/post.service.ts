@@ -33,7 +33,7 @@ export class PostService {
 
   // get posts ALL
   getPosts(page: number, limit: number, feedType: string) {
-    console.log('get posts in general called ehhehehe');
+    // console.log('get posts in general called ehhehehe');
     return this.http.get(
       `${environment.apiRoute}/post?page=${page}&limit=${limit}&feedType=${feedType}`,
       { withCredentials: true }
