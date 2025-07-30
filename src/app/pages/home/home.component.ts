@@ -51,15 +51,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // check user auth to get header and stuff
     //check if user is logged in...
-    this.loginService.checkAuth().subscribe({
-      next: (data) => {
-        console.log('Data from is user Authenticated ', data);
-        this.loginService.isAuthenticated = true;
-      },
-      error: (error) => {
-        console.log('Error with checking if user is Authenticated:', error);
-      },
-    });
+    // this.loginService.checkAuth().subscribe({
+    //   next: (data) => {
+    //     console.log('Data from is user Authenticated ', data);
+    //     this.loginService.isAuthenticated = true;
+    //   },
+    //   error: (error) => {
+    //     console.log('Error with checking if user is Authenticated:', error);
+    //   },
+    // });
   }
 
   ngOnDestroy(): void {
