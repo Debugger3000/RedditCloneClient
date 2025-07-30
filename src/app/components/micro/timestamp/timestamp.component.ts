@@ -64,6 +64,9 @@ export class TimestampComponent implements OnInit {
     } else if (today.getMonth() != stamp.getMonth()) {
       return `${today.getMonth() - stamp.getMonth()} months ago`;
     } else if (today.getDate() != stamp.getDate()) {
+      if (today.getDate() - stamp.getDate() === 1) {
+        return `${today.getDate() - stamp.getDate()} day ago`;
+      }
       return `${today.getDate() - stamp.getDate()} days ago`;
     } else if (today.getHours() != stamp.getHours()) {
       return `${today.getHours() - stamp.getHours()} hours ago`;

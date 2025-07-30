@@ -67,16 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // // a post is clicked...
-  // postClicked(index: number) {
-  //   console.log('post has been clicked...');
-  //   this.router.navigate([
-  //     'thread',
-  //     this.postData![index]?.parentThread,
-  //     this.postData![index]?._id,
-  //   ]);
-  // }
-
   // side panel click
   sidePanelClick() {
     this.sidePanelState = !this.sidePanelState;
