@@ -126,16 +126,6 @@ export class ThreadsComponent implements OnInit {
     }
   }
 
-  // a post is clicked...
-  postClicked(index: number) {
-    console.log('post has been clicked...');
-    this.router.navigate([
-      'thread',
-      this.threadData?._id,
-      this.postData![index]?._id,
-    ]);
-  }
-
   // switch for edit menu on click
   openEditMenu() {
     this.isEditMenuUp = !this.isEditMenuUp;

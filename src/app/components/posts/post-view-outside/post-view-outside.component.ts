@@ -45,24 +45,8 @@ export class PostViewOutsideComponent implements OnInit {
   userVote: boolean | null | undefined = null;
 
   ngOnInit(): void {
-    //get users
-    // this.generalService.getUserById(this.user).subscribe({
-    //   next: (data: any) => {
-    //     // console.log("Current User data on post...  ", data);
-    //     this.username = data.username;
-    //     this.postUsersProfileImage = data.profileImage;
-    //   },
-    //   error: (error) => {
-    //     console.log('Error for getting user by id for post data:', error);
-    //   },
-    // });
-
     // check to see if user has voted on this post or not
     this.userVote = this.voteService.checkUserVote(this.postData?._id);
-    // console.log('usersvote: ', this.userVote);
-
-    // console.log('post data ID: ', this.postData?._id);
-    // console.log('Comment count value: ', this.commentCount);
   }
 
   // post clicked
@@ -90,32 +74,6 @@ export class PostViewOutsideComponent implements OnInit {
   hoverDownVote() {
     this.isDownVote = !this.isDownVote;
   }
-
-  // outsourced to votes service since it will share this function with some other components
-  // check is user has voted on this post
-  // checkUserVote() {
-  //   // console.log(
-  //   //   'users data from VOTE POST: ',
-  //   //   this.generalService.currentUserData
-  //   // );
-  //   let votes = this.generalService.currentUserData?.votes;
-  //   for (let i = 0; i < votes!.length; i++) {
-  //     let id = votes![i].postId;
-  //     let type = votes![i].voteType;
-  //     // console.log('current vote ID:', votes![i]);
-  //     // console.log('post id: ', this.postData?._id);
-  //     // console.log('TYPE OF FCKN: ', type);
-  //     if (id == this.postData?._id) {
-  //       if (type !== null) {
-  //         this.userVote = type;
-  //         console.log('assigning a value i think now; ', type);
-  //       }
-  //       // console.log('users vote for this post is: ', item.typeOfVote);
-  //     }
-  //     // console.log('votes on index', i, votes![i]);
-  //   }
-  //   console.log('value of user vote now: ', this.userVote);
-  // }
 
   // refresh component after vote has been clicked
   refreshVote(state: boolean) {
