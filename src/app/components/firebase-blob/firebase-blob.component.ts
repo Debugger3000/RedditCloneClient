@@ -12,6 +12,8 @@ import {
   getDownloadURL,
   deleteObject,
 } from 'firebase/storage';
+import { PostService } from '../../services/post.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-firebase-blob',
@@ -20,10 +22,13 @@ import {
   styleUrl: './firebase-blob.component.scss',
 })
 export class FirebaseBlobComponent implements OnChanges, OnInit {
+  constructor(private postService: PostService) {}
   fileReady: string | ArrayBuffer | null = null;
   imagePreview: string | ArrayBuffer | null | undefined = null;
   // current image selected
   currentImage: ArrayBuffer | null = null;
+  // image type
+  currentImageType: string = '';
 
   // image binary string data, store to load into object...
   imageStore: string | ArrayBuffer | null = null;
@@ -78,14 +83,36 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
       // generate random string for filename
 
       try {
+        // make request to server for SIGNED URL
         const fileName = Math.random().toString(36).substring(2, 10);
-
         const filePath = `images/${Date.now()}_${fileName}`;
+        console.log(
+          'file content type before signedurl GET: ',
+          this.currentImageType
+        );
+        // make request
+        const signedUrl = await firstValueFrom(
+          this.postService.uploadFirebase(filePath, this.currentImageType)
+        );
+
+        console.log('fetched signed URL: ', signedUrl.toString());
+
+        const response = await fetch(signedUrl.toString(), {
+          method: 'PUT',
+          headers: {
+            'Content-Type': this.currentImageType,
+          },
+          body: this.currentImage,
+        });
+
+        if (!response.ok) {
+          console.error('Upload failed:', response.status, response.statusText);
+          return null;
+        }
+
         const storageRef = ref(storage, filePath);
-
-        const snapshot = await uploadBytes(storageRef, this.currentImage);
-        const url = await getDownloadURL(snapshot.ref);
-
+        // const snapshot = await uploadBytes(storageRef, this.currentImage);
+        const url = await getDownloadURL(storageRef);
         return { url: url, filePath: filePath };
       } catch (error) {
         this.formSubmitted = false;
@@ -106,6 +133,7 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
   onFileChange(event: any) {
     const file = event.target.files[0];
     this.currentImage = file;
+    this.currentImageType = file.type;
     console.log('current image file: ', this.currentImage);
     const fileRead = new FileReader();
     // const fileReadStore = new FileReader();

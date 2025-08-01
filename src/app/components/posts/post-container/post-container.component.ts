@@ -89,7 +89,7 @@ export class PostContainerComponent implements OnInit, OnChanges {
   loadHomePosts() {
     this.postService.getPosts(this.page, this.limit, this.feedType).subscribe({
       next: (data: any) => {
-        // console.log('Current data on home posts...  ', data);
+        console.log('Current data on home posts...  ', data);
         // console.log('page: ', this.page);
         // console.log('feedType: ', this.feedType);
         if (this.page == 1) {
