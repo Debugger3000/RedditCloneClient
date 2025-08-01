@@ -54,4 +54,14 @@ export class PostService {
       withCredentials: true,
     });
   }
+
+  // firebase image upload
+  uploadFirebase(filePath: string, fileType: string) {
+    return this.http.get(
+      `${environment.apiRoute}/userData/firebase/upload?fileName=${filePath}&fileType=${fileType}`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }
