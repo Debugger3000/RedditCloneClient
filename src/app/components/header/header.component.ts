@@ -8,6 +8,8 @@ import { ThreadDisplayComponent } from '../threads/thread-display/thread-display
 import { LoginService } from '../../services/login.service';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { DefaultProfilePictureComponent } from '../micro/default-profile-picture/default-profile-picture.component';
+import { UserData } from '../../types/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -29,10 +31,22 @@ export class HeaderComponent implements OnInit {
   focusState = false;
   profileClicked = false;
 
+  userData?: UserData;
+  private userSub?: Subscription;
+
   ngOnInit(): void {
-    //check if user is logged in...
-    console.log('header user data: ', this.generalService.currentUserData);
+    this.userSub = this.generalService.userData$.subscribe((data) => {
+      console.log('Header got user data update:', data);
+      // You can now react to the change in the template or logic
+    });
   }
+
+  ngOnDestroy(): void {
+    if (this.userSub) {
+      this.userSub.unsubscribe(); // prevent memory leaks
+    }
+  }
+
   // connecting function to call link from service
   linkTo(route: string, header: boolean) {
     this.generalService.LinkToPage(route);

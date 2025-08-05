@@ -41,6 +41,7 @@ export class EditProfileComponent implements OnInit {
   postFormSubmit(imageObject: { url: string; filePath: string } | null) {
     // this.threadForm.setValue()
 
+    // make sure there is data to post...
     if (imageObject) {
       // console.log("thread form: ", this.threadForm.value);
       // const object = this.userForm.value;

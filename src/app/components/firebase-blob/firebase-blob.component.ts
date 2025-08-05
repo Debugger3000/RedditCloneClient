@@ -105,11 +105,14 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
           body: this.currentImage,
         });
 
+        // make sure response to upload photo is OK
+        // IF upload is bad, we reject any image URL or PATH for whatever structure (profile image, thread image, etc...)
         if (!response.ok) {
           console.error('Upload failed:', response.status, response.statusText);
           return null;
         }
 
+        // then grab image URL once its uploaded into firebase storage
         const storageRef = ref(storage, filePath);
         // const snapshot = await uploadBytes(storageRef, this.currentImage);
         const url = await getDownloadURL(storageRef);
