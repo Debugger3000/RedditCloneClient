@@ -23,19 +23,6 @@
         <!-- + Create Post -->
         @if(generalService.currentUserData) {
 
-        <!-- tehe  -->
-        <div
-          class="flex justify-center items-center p-2 main-hover-bg-color rounded-full w-[40px] h-[40px] hover:cursor-pointer"
-        >
-          <i class="bi bi-airplane text-2xl"></i>
-        </div>
-
-        <!-- cheeky commit ehhe -->
-        <div
-          class="flex justify-center items-center p-2 main-hover-bg-color rounded-full w-[40px] h-[40px] hover:cursor-pointer"
-        >
-          <i class="bi bi-pencil text-2xl"></i>
-        </div>
         <div
           class="flex justify-center items-center hover:cursor-pointer border border-gray-500 hover:border-gray-700 h-[40px] p-2 gap-1 rounded-full"
           (click)="createPost()"
