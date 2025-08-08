@@ -86,13 +86,14 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
         // make request to server for SIGNED URL
         const fileName = Math.random().toString(36).substring(2, 10);
         const filePath = `images/${Date.now()}_${fileName}`;
+        const fileType = this.currentImageType;
         console.log(
           'file content type before signedurl GET: ',
           this.currentImageType
         );
         // make request
         const signedUrl = await firstValueFrom(
-          this.postService.uploadFirebase(filePath, this.currentImageType)
+          this.postService.uploadFirebase(filePath, fileType)
         );
 
         console.log('fetched signed URL: ', signedUrl.toString());
@@ -116,7 +117,7 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
         const storageRef = ref(storage, filePath);
         // const snapshot = await uploadBytes(storageRef, this.currentImage);
         const url = await getDownloadURL(storageRef);
-        return { url: url, filePath: filePath };
+        return { url: fileType, filePath: filePath };
       } catch (error) {
         this.formSubmitted = false;
         console.error('Upload failed:', error);
@@ -148,26 +149,5 @@ export class FirebaseBlobComponent implements OnChanges, OnInit {
     };
 
     fileRead.readAsDataURL(file);
-
-    // fileRead.onloadend = () => {
-    //   this.fileReady = fileRead.result;
-    //   this.currentImage = fileRead.result;
-    //   this.imagePreview = fileRead.result; // Set image preview (Base64 for display)
-    //   console.log('file read and loaded....');
-    //   console.log('Result: ', fileRead.result);
-    // };
-
-    // fileReadStore.onloadend = () => {
-    //   this.imageStore = fileReadStore.result;
-    //   console.log('image store: ', this.imageStore);
-    // };
-
-    // Read the file as binary (ArrayBuffer) for processing binary data
-    // fileRead.readAsArrayBuffer(file[0]);
-    // fileReadStore.readAsText(file[0]);
-
-    // console.log('file: ', this.fileReady);
-    // console.log('file Reader object: ', fileRead);
-    // console.log('image preview: ', this.imagePreview);
   }
 }
