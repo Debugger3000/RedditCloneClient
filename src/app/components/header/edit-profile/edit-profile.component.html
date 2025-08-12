@@ -53,5 +53,17 @@
         </button>
       </div>
     </form>
+
+    <!-- error message section -->
+    @if(isEditLimitReached){
+
+    <section class="mt-5">
+      <div class="flex-col justify-center w-full">
+        <h4 class="text-red-700 text-2xl">
+          Error: {{ message }}. No more profile image changes today.
+        </h4>
+      </div>
+    </section>
+    }
   </div>
 </section>
