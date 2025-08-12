@@ -20,6 +20,10 @@ export class EditProfileComponent implements OnInit {
   imagePreview: string | null | undefined = '';
   firebase: boolean = false;
 
+  // resource limiter
+  isEditLimitReached = false;
+  message = '';
+
   firebaseCallbackBound!: (
     imageObject: { url: string; filePath: string } | null
   ) => void;
@@ -74,7 +78,11 @@ export class EditProfileComponent implements OnInit {
             this.router.navigate(['home']);
           },
           error: (error) => {
-            console.log('Error for creating new thread:', error);
+            console.log('Error for editing profile:', error);
+            if (error.status === 404 && !error.error.status) {
+              this.isEditLimitReached = true;
+              this.message = error.error.message;
+            }
           },
         });
     }
