@@ -2,9 +2,20 @@
   class="flex p-2 gap-2 items-center pl-4 hover:cursor-pointer hover:bg-[#e5ebee]"
   (click)="threadLink(threadId)"
 >
-  <div class="w-[30px] h-[30px]">
+  @if(threadImage){
+  <div class="w-[30px] h-[30px] bg-blue-300 circle-div">
     <img [src]="threadImage" class="h-full w-full circle-div" />
   </div>
+  } @else {
+  <div
+    class="w-[30px] h-[30px] bg-gray-100 circle-div flex justify-center items-center"
+  >
+    <i class="bi bi-people-fill text-orange-600"></i>
+    <!-- <div class="flex justify-center items-center w-full h-full object-contain">
+      <img src="/reddit-icon.png" height="75" width="75" />
+    </div> -->
+  </div>
+  }
 
   <h4 class="text-sm text-gray-800 truncate">r/{{ title }}</h4>
 </div>
