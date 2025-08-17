@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { GeneralService } from '../../../services/general.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-thread-panel-view',
-  imports: [],
+  imports: [NgIf],
   templateUrl: './thread-panel-view.component.html',
   styleUrl: './thread-panel-view.component.scss',
 })
