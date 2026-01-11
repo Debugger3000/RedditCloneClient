@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
-@import "tailwindcss";
+@use "tailwindcss";
+
+
 
 .bar-color {
   color: rgb(92, 108, 116);

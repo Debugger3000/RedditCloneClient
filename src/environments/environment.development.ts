@@ -1,6 +1,6 @@
 export const environment = {
   buildType: 'development',
-  apiRoute: '/api',
+  apiRoute: 'http://localhost:8080/api',
   firebase: {
     apiKey: 'AIzaSyCDV-oTmZhLvREBJ6YUOIRX0I_JHc-65fQ',
     authDomain: 'reddit-clone-blob.firebaseapp.com',

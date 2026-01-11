@@ -6,9 +6,11 @@
     <div class="border border-gray-800 rounded-xl py-2 px-4">
       <form [formGroup]="commentEdit" (ngSubmit)="editCommentSubmit()">
         <textarea
+          maxlength="100"
           formControlName="commentText"
           class="w-full h-full p-1 focus:outline-none"
           #commentText
+          
         ></textarea>
 
         <div class="p-1 flex flex-row justify-end gap-3">

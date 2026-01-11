@@ -60,39 +60,39 @@ export class RegisterComponent {
       this.userRegisterForm.get('email') &&
       this.userRegisterForm.get('password')
     ) {
-      console.log('no fieldss empty doing additional checks !');
-      const totalFlag = this.checkSecurity();
+      // console.log('no fieldss empty doing additional checks !');
+      // const totalFlag = this.checkSecurity();
 
       // if flags are safe to submit to backend
-      if (totalFlag) {
-        this.registerService
-          .registerUser(this.userRegisterForm.value)
-          .subscribe({
-            next: (data) => {
-              console.log('Data received back from Register: ', data);
-              this.generalService.showHeader = true;
-              this.generalService.setUserData(data);
-              this.router.navigate(['/home']);
-            },
-            error: (error) => {
-              // look at server status sent back
-              if (error.error.email === 0 && error.error.username === 0) {
-                this.authFlags.emailUniqueFlag = false;
-              } else {
-                this.authFlags.emailUniqueFlag = true;
-              }
+      // if (totalFlag) {
+      //   this.registerService
+      //     .registerUser(this.userRegisterForm.value)
+      //     .subscribe({
+      //       next: (data) => {
+      //         console.log('Data received back from Register: ', data);
+      //         this.generalService.showHeader = true;
+      //         this.generalService.setUserData(data);
+      //         this.router.navigate(['/home']);
+      //       },
+      //       error: (error) => {
+      //         // look at server status sent back
+      //         if (error.error.email === 0 && error.error.username === 0) {
+      //           this.authFlags.emailUniqueFlag = false;
+      //         } else {
+      //           this.authFlags.emailUniqueFlag = true;
+      //         }
 
-              if (error.error.username === 0 && error.error.email === 1) {
-                this.authFlags.usernameUniqueFlag = false;
-              } else {
-                this.authFlags.usernameUniqueFlag = true;
-              }
-              console.log('failed to register: ', error);
+      //         if (error.error.username === 0 && error.error.email === 1) {
+      //           this.authFlags.usernameUniqueFlag = false;
+      //         } else {
+      //           this.authFlags.usernameUniqueFlag = true;
+      //         }
+      //         console.log('failed to register: ', error);
 
-              console.log('Error on login: ', error);
-            },
-          });
-      }
+      //         console.log('Error on login: ', error);
+      //       },
+      //     });
+      // }
     }
   }
 

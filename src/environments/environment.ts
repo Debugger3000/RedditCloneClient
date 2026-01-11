@@ -1,7 +1,7 @@
 export const environment = {
   buildType: 'production',
   // apiRoute: 'https://redditcloneserver.onrender.com/api',
-  apiRoute: 'https://carter-rutherford.com/api',
+  apiRoute: 'http://127.0.0.1:30001/api',
   firebase: {
     apiKey: 'AIzaSyCDV-oTmZhLvREBJ6YUOIRX0I_JHc-65fQ',
     authDomain: 'reddit-clone-blob.firebaseapp.com',
